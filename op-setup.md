@@ -191,7 +191,7 @@ _Note: If you think there any env variable missing just add them inside the .env
 
     - `L1_RPC_URL` or `ETH_RPC_URL` — URL for your L1 node.
     - `PRIVATE_KEY` — Private key of the `Admin` account.
-    - `DEPLOYMENT_CONTEXT` - Name of the network, should be anything like "lumino-test"
+    - `DEPLOYMENT_CONTEXT` - Name of the network, should be anything like "zenbit-test"
 
 4. Pull the environment variables into context using `direnv`
 
@@ -298,7 +298,7 @@ Once you’ve configured your network, it’s time to deploy the L1 smart contra
 1. Create a `getting-started` deployment directory.
 
    ```bash
-   mkdir deployments/lumino-test
+   mkdir deployments/zenbit-test
    ```
 
 
@@ -327,7 +327,7 @@ We’ve set up the L1 side of things, but now we need to set up the L2 side of t
 ```bash
 cd ~/optimism/packages/contracts-bedrock
 
-CONTRACT_ADDRESSES_PATH=./deployments/17000-deploy.json DEPLOY_CONFIG_PATH=./deploy-config/lumino-test.json STATE_DUMP_PATH=./deployments/l2-allocs.json  forge script scripts/L2Genesis.s.sol:L2Genesis  --sig 'runWithStateDump()'
+CONTRACT_ADDRESSES_PATH=./deployments/17000-deploy.json DEPLOY_CONFIG_PATH=./deploy-config/zenbit-test.json STATE_DUMP_PATH=./deployments/l2-allocs.json  forge script scripts/L2Genesis.s.sol:L2Genesis  --sig 'runWithStateDump()'
 ```
 
 2. Head over to the `op-node` package.
@@ -341,7 +341,7 @@ CONTRACT_ADDRESSES_PATH=./deployments/17000-deploy.json DEPLOY_CONFIG_PATH=./dep
     ```bash
     go run cmd/main.go genesis l2 
     --l1-rpc <l1-rpc-value>
-    --deploy-config ../packages/contracts-bedrock/deploy-config/lumino-test.json 
+    --deploy-config ../packages/contracts-bedrock/deploy-config/zenbit-test.json 
     --l2-allocs ../packages/contracts-bedrock/deployments/l2-allocs.json 
     --l1-deployments ../packages/contracts-bedrock/deployments/17000-deploy.json 
     --outfile.l2 genesis.json  
