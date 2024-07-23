@@ -1,10 +1,6 @@
-https://geth.ethereum.org/docs/monitoring/dashboards#setting-up-prometheus
-
-https://docs.optimism.io/builders/node-operators/management/metrics
-
 # Intro
 
-This guide describes the step taken to set-up Grafana dashboards to track node performance for both the op-node and op-geth. This guide is based on the instructions provided by the Geth team in *“Monitoring Geth with Influx DB and Grafana”* (https://geth.ethereum.org/docs/monitoring/dashboards), with necessary variations to apply it to op-geth, as well as Optimism team in their *“Node Metrics and Monitoring”* guide (https://docs.optimism.io/builders/node-operators/management/metrics).
+This guide describes the steps taken to set up Grafana dashboards to track node performance for both the op-node and op-geth. This guide is based on the instructions provided by the Geth team in *“Monitoring Geth with Influx DB and Grafana”* (https://geth.ethereum.org/docs/monitoring/dashboards), with necessary variations to apply it to op-geth, as well as Optimism team in their *“Node Metrics and Monitoring”* guide (https://docs.optimism.io/builders/node-operators/management/metrics).
 
 # Prerequisites
 
@@ -14,8 +10,8 @@ To complete the steps in this guide, It’s important to have:
 - a running **Prysm** instance (or any other CL node)
 - a running **OP-Geth** instance
 - a running **OP-Node** instance
-- **InfluxDB** installed and set-up. You can check their download page here (https://www.influxdata.com/downloads/)
-- **Grafana** installed and set-up. You can check their download page here (https://grafana.com/grafana/download)
+- **InfluxDB** installed and set up. You can check their download page here (https://www.influxdata.com/downloads/)
+- **Grafana** installed and set up. You can check their download page here (https://grafana.com/grafana/download)
 - (OPTIONAL) **Prometheus** installed and set-up. You can check their download page here (https://prometheus.io/download/). In this guide, we will show how to run it using a Docker image at https://hub.docker.com/r/prom/prometheus.
 
 # Enable metrics on the OP-Node
@@ -62,7 +58,7 @@ docker run \
     prom/prometheus:latest
 ```
 
-Open now `http://localhost:9090` in your web browser to check the endpoint status. You should expect to see something like this 
+Now, open `http://localhost:9090` in your web browser to check the endpoint status. You should expect to see something like this 
 
 ![image](https://github.com/user-attachments/assets/a76aa589-60cc-488f-aedf-4ee6c60a6409)
 
@@ -100,7 +96,7 @@ show measurements
 
 # Setting up Grafana
 
-With both metrics enabled, next step is to configure dashboards on Grafana to visualize node performance. After installing Grafana, start it by running this command. Grafana UI will be reachable at `localhost:3000`
+With both metrics enabled, the next step is to configure dashboards on Grafana to visualize node performance. After installing Grafana, start it by running this command. Grafana UI will be reachable at `localhost:3000`
 
 ```bash
 sudo systemctl start grafana-server
