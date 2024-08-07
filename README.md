@@ -12,6 +12,7 @@ OpML uses a multi-phase fraud-proof to ensure the accuracy of machine learning r
 ### 1. State Transition Function Modeling
 
 The FPVM functions as a state transition system where a function _f_ maps a pre-state _S<sub>pre</sub>_ to a post-state _S<sub>post</sub>_ based on an executed instruction:
+
 $$ f(S_{pre})→ S_{post}$$
 
 For integration:
