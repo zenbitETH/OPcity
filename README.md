@@ -1,4 +1,7 @@
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
 # OPcity
+_Proposed during the [OP Governance Season 5](https://app.charmverse.io/op-grants/page-1306815702055122) and grant finalist during cycle 22_
 
 We will research the compatibility of the OP stack's Canon Fault Proof VM with the opML's Multi-Phase Fault Proof protocol. The goal is to implement a custom Fault Dispute Game that manages the challenges related to data availability states from the L2 rollup and the computation results from the Deep Neural Networks (DNN) of the multi-phase opML. This could be possible with an incentive mechanism for node verifiers that resolve disputes for both technologies.
 
@@ -8,19 +11,20 @@ OpML uses a multi-phase fraud-proof to ensure the accuracy of machine learning r
 
 ### 1. State Transition Function Modeling
 
-The FPVM functions as a state transition system where a function f maps a pre-state S_pre to a post-state S_post based on an executed instruction:
-
-Function: f(S_pre) -> S_post
+The FPVM functions as a state transition system where a function _f_ maps a pre-state _S<sub>pre</sub>_ to a post-state _S<sub>post</sub>_ based on an executed instruction:
+$$ f(S_{pre})→ S_{post}$$
 
 For integration:
 
-Proposed Framework Modification: Introduce an additional layer that handles complex decision trees or neural network outputs, which adjusts how the state transitions are computed, especially in handling error states or exceptions.
+- Proposed Framework Modification: Introduce an additional layer that handles complex decision trees or neural network outputs, which adjusts how the state transitions are computed, especially in handling error states or exceptions.
 
-Consider a modified state transition function f'(S_pre, D) where D represents data or decisions derived from opML processes, impacting the transition to S_post.
+- Consider a modified state transition function $$ f(S_{pre}, D)$$ where _D_ represents data or decisions derived from opML processes, impacting the transition to S_post.
 
-Modified Function: f'(S_pre, D) -> S_post'
+- Modified Function:
 
-Define a new state component that includes neural network inference results, which influences the transition process, particularly in how exceptions are handled.
+$$ f(S_{pre}, D)→ S_{post}$$ 
+
+- Define a new state component that includes neural network inference results, which influences the transition process, particularly in how exceptions are handled.
 
 ### 2. Memory Management Analysis
 
@@ -28,15 +32,17 @@ Given the detailed memory specifications:
 
 Heap and Memory Operations: Analyze the implications of integrating a mechanism for handling large datasets required by machine learning models directly within the memory structure of FPVM.
 
-Suppose M(S) is the memory utilization state function. Introduce M'(S, D) to handle additional data structures or caching mechanisms to optimize ML data handling.
+Suppose _M(S)_ is the memory utilization state function. Introduce _M'(S, D)_ to handle additional data structures or caching mechanisms to optimize ML data handling.
 
-Memory Function: M(S) -> M'(S, D)
+Memory Function: 
+
+$$ M(S)→ M'(S, D) $$
 
 ### 3. Syscalls and I/O Enhancements
 
-The proposed framework could potentially extend the syscall and I/O functionalities to better support ML-driven data processing:
+The proposed framework could potentially extend the `syscall` and `I/O` functionalities to better support ML-driven data processing:
 
-Extended Syscalls for ML: Introduce new syscalls specific to ML operations, such as data batching or model loading.
+Extended Syscalls for ML: Introduce new `syscalls` specific to ML operations, such as data batching or model loading.
 
 I/O Modeling: Adjust the I/O model to handle larger data streams efficiently, crucial for ML processes. Propose modifications like enhanced buffer management or asynchronous I/O operations.
 
