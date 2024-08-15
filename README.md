@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
 
 # OPcity
 _Proposed during the [OP Governance Season 5](https://app.charmverse.io/op-grants/page-1306815702055122) and grant finalist during cycle 22_
