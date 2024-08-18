@@ -1,4 +1,16 @@
-### Execution layer conclusions
+## Execution layer
+### Preparation
+
+Generate the JWT secret with openssl:
+
+```
+openssl rand -hex 32 | tr -d "\n" > "/tmp/jwtsecret"
+```
+
+This file needs to be passed to both the Execution Client and the Consensus Client. If you do not specify a JWT secret, then the execution and/or consensus layer client will automatically generate one for you. You will then have to specify this secret in the Consensus Layer client.
+
+### Pre-requisites:
+`git`, `make`, `go`, `gcc`
 
 For geth:
 
