@@ -12,7 +12,15 @@ This file needs to be passed to both the Execution Client and the Consensus Clie
 ### Pre-requisites:
 `git`, `make`, `go`, `gcc`
 
-For geth:
+Installing on linux:
+```
+sudo apt install git-all
+sudo apt install make
+sudo apt  install golang-go
+sudo apt  install gccgo-go
+```
+
+### For geth:
 Clone and build the master branch of Geth
 ```
 git clone https://github.com/ethereum/go-ethereum.git
