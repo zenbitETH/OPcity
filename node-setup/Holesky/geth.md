@@ -13,6 +13,15 @@ This file needs to be passed to both the Execution Client and the Consensus Clie
 `git`, `make`, `go`, `gcc`
 
 For geth:
+Clone and build the master branch of Geth
+```
+git clone https://github.com/ethereum/go-ethereum.git
+cd go-ethereum 
+make geth
+cd ..
+```
+
+From the custom_config_data folder start the client
 
 ```bash
 ./geth --datadir "geth-datadir" \
