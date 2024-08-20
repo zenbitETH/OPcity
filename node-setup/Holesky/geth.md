@@ -16,8 +16,8 @@ Installing on linux:
 ```
 sudo apt install git-all
 sudo apt install make
-sudo apt  install golang-go
-sudo apt  install gccgo-go
+sudo apt install golang-go
+sudo apt install gccgo-go
 ```
 
 ### For geth:
