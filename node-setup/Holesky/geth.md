@@ -1,4 +1,4 @@
-# Holesky Node setup
+# Geth (Execution Layer) setup
 
 ## Pre-requisites:
 `git`, `make`, `go`, `gcc`
@@ -11,9 +11,7 @@ sudo apt install golang-go
 sudo apt install gccgo-go
 ```
 
-## geth setup:
-
-### Install geth
+## Install geth
 Clone and build the master branch of Geth
 ```
 git clone https://github.com/ethereum/go-ethereum.git
@@ -23,14 +21,14 @@ cd ..
 mv build/bin/geth geth
 ```
 
-### Generate the JWT secret with openssl:
+## Generate the JWT secret with openssl:
 This file needs to be passed to both the Execution Client and the Consensus Client. If you do not specify a JWT secret, then the execution and/or consensus layer client will automatically generate one for you. You will then have to specify this secret in the Consensus Layer client.
 
 ```
 openssl rand -hex 32 | tr -d "\n" > "jwt.hex"
 ```
 
-### Start geth
+## Start geth
 
 > When running it with an L2 node on the same machine make sure you configure ports properly, because geth and op-geth use same ports
 
