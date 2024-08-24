@@ -19,7 +19,7 @@ For integration:
 
 - Proposed Framework Modification: Introduce an additional layer that handles complex decision trees or neural network outputs, which adjusts how the state transitions are computed, especially in handling error states or exceptions.
 
-- Consider a modified state transition function $$ f(S_{pre}, D)$$ where _D_ represents data or decisions derived from opML processes, impacting the transition to S_post.
+- Consider a modified state transition function $$ f(S_{pre}, D)$$ where _D_ represents data or decisions derived from opML processes, impacting the transition to S<sub>post</sub>.
 
 - Modified Function:
 
