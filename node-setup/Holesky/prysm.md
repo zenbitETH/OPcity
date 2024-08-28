@@ -34,7 +34,7 @@ curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh --out
 To derive the checkpoint sync url from the chain pass this flags:
 ```bash
 ./prysm.sh beacon-chain --verbosity=debug \
---jwt-secret= ./jwt.hex \
+--jwt-secret=../jwt.hex \
 --execution-endpoint=http://localhost:8551 \
 --holesky \
 --genesis-beacon-api-url=https://checkpoint-sync.holesky.ethpandaops.io \
