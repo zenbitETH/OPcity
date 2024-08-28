@@ -1,6 +1,6 @@
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
 # Introduction
+
+## Ethereum trillema 
 Fraud/fault proof is a scalability mechanism used in blockchain systems to detect and prove that a particular block or transaction is invalid through merkalized data, allowing nodes in the network to receive and verify block states without downloading the entire blockchain, assuming that there is at least one honest node willing to generate them.<sup>[1](https://arxiv.org/abs/1809.09044)</sup> The term was [introduced in 2019 in the _Fraud and Data Availability Proofs_](https://arxiv.org/abs/1809.09044) article to propose the mechanism as a scalability alternative to payment and state channels, and aimed to play a key role in sharding implementation.
 
 This mechanism is also known as interactive game<sup>[2](https://specs.optimism.io/fault-proof/index.html)</sup> where, any participant optimistacally assume that every proposed result is valid by default<sup>[3](https://arxiv.org/abs/2401.17555)</sup> and works as the proof system for the Optimistic Rollups, to determine that an invalid state transition took place according to the protocol rules and enable dispuete games that rewards honest participants for helping to mantain the integrity of the system.<sup>[4](https://l2beat.com/glossary#fraud-proof)</sup>
