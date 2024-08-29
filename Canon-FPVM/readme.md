@@ -30,6 +30,6 @@ In optimistic rollups, fraud/fault proofs come into play if a dispute arises to 
 
 [[6]](https://doi.org/10.48550/arXiv.1809.09044) Mustafa Al-Bassam, Alberto Sonnino, Vitalik Buterin: Fraud Proofs and Data Availability: Maximising Light Client Security and Scaling Blockchains with Dishonest Majorities. CoRRabs/1809.09044 (2018)
 
-[[7]](https://specs.optimism.io/fault-proof/index.html) Optimism. (2024). OP stack Specification.
+[[7]](https://specs.optimism.io/fault-proof/index.html) Optimism. OP stack Specification.
 
 [[8]](https://arxiv.org/abs/2401.17555) Conway, KD., So, C., Yu, X., & Wong, K. (2024). opML: Optimistic Machine Learning on Blockchain
