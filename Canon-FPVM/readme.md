@@ -11,7 +11,7 @@ Traditional chains like Bitcoin or Ethereum are secure and decentralized but wit
 
 In the context of rollups, there are two technologies capable to process both verifications with a proof mechanism as security safeguard:
 1. Optimistic Rollups, which assume all transactions are valid and uses fraud proofs to prove false transactions within 7 days. 
-2. Zero Knowledge (ZK) Rollups, that isntantly prove if transactions are valid or not using validity proofs.
+2. Zero Knowledge (ZK) Rollups, that instantly prove if transactions are valid or not using validity proofs.
 
 ### Fault Proofs
 In optimistic rollups, fraud/fault proofs come into play if a dispute arises to detect and prove that a particular block or transaction is invalid through merkalized data, allowing nodes in the network to receive and verify block states without downloading the entire blockchain, assuming that there is at least one honest node willing to generate them[[6]](https://arxiv.org/abs/1809.09044). This mechanism is also known as interactive game [[7]](https://specs.optimism.io/fault-proof/index.html) where, any participant optimistacally assume that every proposed result is valid by default[[8]](https://arxiv.org/abs/2401.17555).
