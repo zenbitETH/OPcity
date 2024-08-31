@@ -10,7 +10,7 @@ Before I kick off, note that this is a relatively long tutorial! You should prep
 6. Initialize op-geth
 7. Run op-geth
 8. Run op-node
-9. Get some Goerli ETH on your L2
+9. Get some Holesky ETH on your L2
 10. Send some test transactions
 11. Celebrate!
 
@@ -59,6 +59,7 @@ We’re going to be spinning up an EVM Rollup from the OP Stack source code.  We
     ```
 
 3. Install required modules. This is a slow process, while it is running you can already start building `op-geth`, as shown below.
+_Note: The main branch may not include package.json, you would need to `git checkout` to a branch with the latest version that includes that file to be able to run this command:_
 
     ```bash
     pnpm install
@@ -96,7 +97,7 @@ We’re going to be spinning up an EVM Rollup from the OP Stack source code.  We
 
 ## Get access to a Holesky node
 
-Since we’re deploying our OP Stack chain to Goerli, we’ll need to have access to a Goerli L1 node. We can either use a node provider like [Alchemy](https://www.alchemy.com/) (easier) or [run your own Holesky node](https://notes.ethereum.org/@launchpad/holesky) (harder).
+Since we’re deploying our OP Stack chain to Holesky, we’ll need to have access to a Holesky L1 node. We can either use a node provider like [Alchemy](https://www.alchemy.com/) (easier) or [run your own Holesky node](https://github.com/zenbitETH/OPcity/tree/main/node-setup/Holesky) (harder).
 
 ## Generate some keys
 
@@ -138,7 +139,8 @@ You can generate all of these keys with the `rekey` tool in the `contracts-bedro
 
 We get an output like the following:
 
-```Admin:
+```
+Admin:
 Successfully created new keypair.
 Address:     0xC4481aa21AeAcAD3cCFe6252c6fe2f161A47A771
 Private key: 0x3dd6681bda6458773e9e8aa6b45574b73a953eaea67ff6d9d00795da73e39177
@@ -153,7 +155,8 @@ Private key: 0x2e9c494f5a6c0325ea5bd2265132f73dd040a6d75bd4303866c10ff1ec51b356
 Sequencer:
 Successfully created new keypair.
 Address:     0x50987039A15c83C4090eD5ecfda9E7F07160D4a0
-Private key: 0x2c65361c17805b0b8da483cbc7fd462608f1c3fd73f4ac5e809082a2c52cf879```
+Private key: 0x2c65361c17805b0b8da483cbc7fd462608f1c3fd73f4ac5e809082a2c52cf879
+```
 
 I'll save these accounts and their respective private keys somewhere for now. Fund the `Admin` address with a small amount of Holesky ETH as we’ll use that account to deploy our smart contracts. You’ll also need to fund the `Proposer` and `Batcher` address — note that the `Batcher` burns through the most ETH because it publishes transaction data to L1.
 
@@ -162,13 +165,13 @@ Recommended funding amounts are as follows:
 - `Admin` — 2 ETH
 - `Proposer` — 5 ETH
 - `Batcher` — 10 ETH
-
+```
 ::: danger Not for production deployments
 
 The `cast wallet new` tool is *not* designed for production deployments. If we are deploying an OP Stack based chain into production, we should likely be using a combination of hardware security modules and hardware wallets.
 
 :::
-
+```
 ## Configure your network
 
 Once you’ve built both repositories, you’ll need head back to the Optimism Monorepo to set up the configuration for your chain. Currently, chain configuration lives inside of the [`contracts-bedrock`](https://github.com/ethereum-optimism/optimism/tree/129032f15b76b0d2a940443a39433de931a97a44/packages/contracts-bedrock) package.
@@ -400,7 +403,7 @@ Set these environment variables for the configuration
 | `SEQ_KEY`      | Private key of the `Sequencer` account
 | `BATCHER_KEY`  | Private key of the `Batcher` accounts, which should have at least 1 ETH
 | `PROPOSER_KEY` | Private key of the `Proposer` account
-| `L1_RPC`       | URL for the L1 (such as Goerli) you're using
+| `L1_RPC`       | URL for the L1 (such as Holesky) you're using
 | `RPC_KIND`     | The type of L1 server to which you connect, which can optimize requests. Available options are `alchemy`, `quicknode`, `parity`, `nethermind`, `debug_geth`, `erigon`, `basic`, and `any`
 | `L2OO_ADDR`    | The address of the `L2OutputOracleProxy`, available at `~/optimism/packages/contracts-bedrock/deployments/getting-started/L2OutputOracleProxy.json`
 

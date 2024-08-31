@@ -1,8 +1,13 @@
-# Introduction
+# OP stack theoretical framework
 
+## Introduction
+Optimistic rollups, a type of L2 solution, aggregate multiple transactions into batches and post them on the Ethereum mainnet, significantly reducing the data and computation required on Layer 1[[1]](https://www.notion.so/OP-city-stack-report-fff3905fdc3a800b8b07e6a55b59d456?pvs=21).. This approach enables faster and more cost-effective scalability by assuming transactions are valid by default[[2]](https://www.notion.so/OP-city-stack-report-fff3905fdc3a800b8b07e6a55b59d456?pvs=21).
 
+Optimism is a Layer 2 scaling solution for Ethereum, utilizing Optimistic Rollups to improve scalability, reduce transaction speed and costs, and maintain robust security[[3]](https://www.notion.so/OP-city-stack-report-fff3905fdc3a800b8b07e6a55b59d456?pvs=21). The core of this ecosystem is OP Mainnet, an EVM-equivalent Layer 2 blockchain directly connected to Ethereum, very similar to the Ethereum mainnet, with only minor differences, primarily involving specifying different network endpoints[[4]](https://www.notion.so/OP-city-stack-report-fff3905fdc3a800b8b07e6a55b59d456?pvs=21). OP Mainnet leverages the OP Stack, a modular, open-source software development stack maintained by the Optimism Collective. The OP stack facilitates the creation of Optimistic Rollups, production-ready Layer 2 blockchains, and allows developers to independently customize and upgrade components like consensus, execution, and settlement layers, fostering innovation and ensuring long-term adaptability.
 
-Blockchain scalability issues, particularly on the Ethereum network, have led to high transaction fees and slower processing times. Optimistic Rollups, as a Layer 2 scaling solution, offer a promising approach to address these challenges. The OP Stack provides a robust framework for building these solutions, focusing on simplicity, modularity, and Ethereum equivalence.
+The OP Stack also supports the Optimism Superchain, a network of interoperable OP Stack chains with common standards and protocols. This modular design allows for scalability, customization, interoperability and innovation, helping avoid the need for repeatedly building similar software from scratch[[4]](https://www.notion.so/OP-city-stack-report-fff3905fdc3a800b8b07e6a55b59d456?pvs=21).  The introduction of a permissionless Fault Proof System on OP Mainnet marks a significant step toward full decentralization, removing dependence on privileged roles for withdrawals and allowing any user to challenge and verify transactions, thus reducing reliance on centralized authorities. As the OP Stack evolves, it will incorporate additional functionalities, such as more sophisticated fault-proof systems and interoperability features, and paves the way for a robust, interconnected ecosystem of decentralized applications on Ethereum. The current iteration of the OP Stack, known as Optimism Bedrock, not only powers OP Mainnet but also simplifies deploying Optimistic Rollups and supports the Superchain concept.
+
+This vision aims to create a scalable and interconnected blockchain ecosystem, where multiple L2 chains can seamlessly interact while benefiting from shared security and development standards. As the technology proves its security and reliability, the plan is to extend these capabilities, including fraud proofs, to other networks within the Optimism ecosystem, such as Base, Metal, Mode, and Zora, further solidifying the Superchain concept and pushing the boundaries of Layer 2 scalability and interoperability [[5]](https://www.notion.so/OP-city-stack-report-fff3905fdc3a800b8b07e6a55b59d456?pvs=21).
 
 ## OP Stack
 
@@ -51,3 +56,16 @@ _Copy from [Optimism Docs](https://docs.optimism.io/)_
     >
 
     ![Op stack diagram](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fb93d7c62-4ce7-46c6-a8c7-8f9ce471d508%2F8cc7f860-ec39-4102-a455-0dd1d9e1e430%2FScreenshot_2024-01-04_at_10.47.03_a.m..png?table=block&id=e8e00522-7b8e-41e6-81fa-fbcf87929f4b&spaceId=b93d7c62-4ce7-46c6-a8c7-8f9ce471d508&width=2000&userId=9ec5d830-7a6e-4543-99a2-3a110d7fec88&cache=v2)
+
+
+    ## References
+
+    [[1]](https://plasma.io/plasma.pdf) Poon, J., & Buterin, V. (2016). Plasma: Scalable Autonomous Smart Contracts.
+
+    [[2]](https://vitalik.eth.limo/general/2021/01/05/rollup.html) Buterin, v. (2021) An Incomplete Guide to Rollups.
+
+    [[3]](https://docs.optimism.io/connect/resources/glossary#optimism-collective) Optimism documents: Glossary. 
+
+    [[4]](https://docs.optimism.io/chain/getting-started) Getting started: OP Mainnet.
+
+    [[5]](https://blog.oplabs.co/the-fault-proof-system-is-available-for-the-op-stack/) Optimism Developer Blog. Protocol Development: The Fault Proof System is available for the OP Stack.
