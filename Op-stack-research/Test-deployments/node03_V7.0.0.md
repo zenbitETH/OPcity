@@ -4,3 +4,8 @@
 2. [Proposer / 0x091D7Eb026534CA5B2a108aa9D290D81EBb9F093 ](https://holesky.etherscan.io/address/0x091D7Eb026534CA5B2a108aa9D290D81EBb9F093)
 3. [Batcher / 0xD96E551434D90822C35d2d74D634061b89411c84](https://holesky.etherscan.io/address/0xD96E551434D90822C35d2d74D634061b89411c84)
 4. [Sequencer / 0x31Fa6A26e15B0Bc0E94F6Ebd7272aA2aDFa0414E](https://holesky.etherscan.io/address/0x31Fa6A26e15B0Bc0E94F6Ebd7272aA2aDFa0414E)
+
+
+<figure>
+  <img src="./img/node03.png" alt="Test Deployment 01 / December 2023">
+</figure>
