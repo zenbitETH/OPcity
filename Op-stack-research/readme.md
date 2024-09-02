@@ -55,7 +55,9 @@ _Copy from [Optimism Docs](https://docs.optimism.io/)_
     > The Governance Layer refers to the general set of tools and processes used to manage system configuration, upgrades, and design decisions. This is a relatively abstract layer that can contain a wide range of mechanisms on a target OP Stack chain and on third-party chains that impact many of the other layers of the OP Stack.
     >
 
-    ![Op stack diagram](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fb93d7c62-4ce7-46c6-a8c7-8f9ce471d508%2F8cc7f860-ec39-4102-a455-0dd1d9e1e430%2FScreenshot_2024-01-04_at_10.47.03_a.m..png?table=block&id=e8e00522-7b8e-41e6-81fa-fbcf87929f4b&spaceId=b93d7c62-4ce7-46c6-a8c7-8f9ce471d508&width=2000&userId=9ec5d830-7a6e-4543-99a2-3a110d7fec88&cache=v2)
+    <figure>
+      <img src="./Test-deployments/img/opstack.png" alt="Test Deployment 01 / December 2023">
+    </figure>
 
 
     ## References
