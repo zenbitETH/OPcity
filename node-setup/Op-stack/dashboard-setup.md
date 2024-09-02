@@ -131,3 +131,7 @@ InfluxDB Details
 With the data source ready, the next step is to set up the dashboard. On the left bar, click on the "Dashboards" icon, then "Import". Paste this dashboard template link: https://grafana.com/grafana/dashboards/13877/
 
 Your OP-Geth node dashboard is now ready!
+
+  <figure>
+      <img src="../img/datavisualization.png" alt="Test Deployment 01 / December 2023">
+    </figure>
