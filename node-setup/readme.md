@@ -22,6 +22,10 @@ This stage outlines the steps to configure an L1 node, starting with acquiring t
 5. Install Prysm dependencies
 6. Install and start Prysm
 
+<figure>
+  <img src="./img/twonodesetup.png" alt="Test Deployment 01 / December 2023">
+</figure>
+
 ## B. Deploy a L2 rollup from the OP stack
 
 Building on the foundation of the L1 node, this stage documents the deployment of an L2 rollup using the OP Stack. We began by installing the necessary Optimism dependencies and building the source code. We then proceeded to deploy the L1 contracts and initialize the OP-GETH instance, which involved setting up and executing key components such as op-geth and op-node. The process culminated in obtaining Holesky ETH on the L2 network and sending test transactions, successfully demonstrating the deployment of a rollup in a controlled home environment
@@ -40,3 +44,7 @@ Building on the foundation of the L1 node, this stage documents the deployment o
 8. Run op-node
 9. Get some Holesky ETH on your L2
 10. Send some test transactions
+
+<figure>
+  <img src="./img/nodeOP.png" alt="Test Deployment 01 / December 2023">
+</figure>
