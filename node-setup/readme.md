@@ -2,7 +2,7 @@
 This section provides a comprehensive account of our hands-on experience setting up and running a node and deploying a rollup using the OP Stack. We conducted the setup process using two Intel NUC 13 PRO NUC13ANHi7 Arena Canyon devices, each equipped with a 13th-generation Intel Core i7-1360P CPU, 32GB RAM, and a 4TB SSD running Linux (Ubuntu).
 
 We relied on a remote VM and a third-party RPC service in the December tests. However, this setup presented significant challenges, particularly regarding the limitations of RPC calls and the restrictions imposed by proprietary hardware. The use of third-party RPC services introduced latency and potential security concerns, which hindered the overall performance of our test environment. Furthermore, the reliance on a remote VM limited our control over the hardware, leading to issues in scalability and reliability during the testing phase.
-
+ 
 To overcome these challenges, we transitioned to a home environment setup using the Intel NUC devices. This shift allowed us to bypass the limitations of third-party RPC services and gain full control over the hardware, leading to a more reliable and efficient testing environment. We documented the setup process in our GitHub repository, including all commands and screenshots, to guide others through the deployment process.
 
 We documented the setup process into two main stages required to deploy a rollup on the Holesky testnet:
