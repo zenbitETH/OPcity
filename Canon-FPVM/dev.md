@@ -3,148 +3,207 @@
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [System Architecture](#system-architecture)
-3. [Core Components](#core-components)
-   3.1. [MIPS.sol](#mipssol)
-   3.2. [mipsevm](#mipsevm)
-4. [Key Concepts](#key-concepts)
-   4.1. [State](#state)
-   4.2. [Witness Data](#witness-data)
-   4.3. [Pre-image Oracle](#pre-image-oracle)
-5. [Main Workflow](#main-workflow)
-6. [Important Functions](#important-functions)
-7. [Testing and Debugging](#testing-and-debugging)
-8. [Performance Considerations](#performance-considerations)
-9. [Future Improvements](#future-improvements)
+2. [Getting Started](#getting-started)
+3. [Project Architecture](#project-architecture)
+4. [Key Components](#key-components)
+5. [Development Workflow](#development-workflow)
+6. [Testing](#testing)
+7. [Contribution Guidelines](#contribution-guidelines)
+8. [Advanced Topics](#advanced-topics)
 
 ## 1. Introduction
 
-Cannon is an onchain MIPS instruction emulator designed to support EVM-equivalent fault proofs. It enables Geth to run onchain, one instruction at a time, as part of an interactive dispute game. The system consists of two main components: an onchain MIPS implementation (`MIPS.sol`) and an offchain Go implementation (`mipsevm`) to produce proofs for MIPS instructions.
+Cannon is an onchain MIPS instruction emulator designed to support EVM-equivalent fault proofs. It enables Geth to run onchain, one instruction at a time, as part of an interactive dispute game. This project is a critical component of the Optimism stack, providing a novel approach to blockchain scaling and security.
 
-## 2. System Architecture
+### Key Features
 
-Cannon's architecture is divided into two main parts:
+- MIPS32 instruction emulation
+- ELF file loading and execution
+- Merkleized memory model
+- State management and proof generation
+- Pre-image oracle integration
+- Onchain verification via Solidity contracts
 
-1. **Onchain Component**: Implemented in Solidity (`MIPS.sol`), this part verifies the execution of individual MIPS instructions within the EVM.
+## 2. Getting Started
 
-2. **Offchain Component**: Implemented in Go (`mipsevm`), this part emulates MIPS instructions, generates proofs, and interacts with the onchain component.
+### Prerequisites
 
-The system also includes a CLI for loading programs, transitioning states, and generating proofs.
+- Go 1.21 or higher
+- Solidity compiler (solc) 0.8.x
+- Make
 
-## 3. Core Components
+### Setup
 
-### 3.1. MIPS.sol
+1. Clone the repository:
+   ```
+   git clone https://github.com/ethereum-optimism/optimism.git
+   cd optimism/cannon
+   ```
 
-`MIPS.sol` is the onchain implementation of big-endian 32-bit MIPS instruction execution. It covers MIPS III, R3000 instructions and implements a minimal subset of the Linux kernel syscalls.
+2. Build the Cannon CLI:
+   ```
+   make cannon
+   ```
 
-Key features:
-- Instruction execution verification
-- Memory operations
-- Syscall handling
-- State management
+3. Build the example programs:
+   ```
+   make elf
+   ```
 
-### 3.2. mipsevm
+4. Run tests:
+   ```
+   make test
+   ```
 
-`mipsevm` is the Go package that implements the offchain MIPS emulator. It's responsible for:
+## 3. Project Architecture
 
-- Loading and executing MIPS programs
-- Generating proofs for instruction execution
-- Managing VM state
-- Handling pre-image requests
-- Providing interfaces for different VM implementations (e.g., single-threaded, multi-threaded)
+Cannon's architecture can be visualized as follows:
 
-Key sub-packages:
-- `memory`: Implements the VM's memory model
-- `program`: Handles program loading and patching
-- `exec`: Contains core execution logic for MIPS instructions
+```mermaid
+graph TD
+    A[Cannon CLI] --> B[mipsevm]
+    B --> C[Memory Management]
+    B --> D[Instruction Emulation]
+    B --> E[State Management]
+    B --> F[Proof Generation]
+    B --> G[Pre-image Oracle]
+    H[MIPS.sol] --> I[Onchain Verification]
+    J[PreimageOracle.sol] --> I
+```
 
-## 4. Key Concepts
+The project consists of several key components that work together to provide the MIPS emulation and proof generation capabilities.
 
-### 4.1. State
+## 4. Key Components
 
-The VM state consists of:
-- Memory content
-- Register values
-- Program counter (PC)
-- Other CPU-specific values (e.g., HI, LO registers)
-- VM metadata (e.g., step count, exit status)
+### 4.1 mipsevm
 
-State is encoded and decoded for proof generation and verification.
+The core of the Cannon project, `mipsevm` is a Go package that implements the MIPS emulator. It handles instruction execution, memory management, and state transitions.
 
-### 4.2. Witness Data
+Key files:
+- `mipsevm/mips.go`: Main MIPS instruction handling
+- `mipsevm/memory.go`: Merkleized memory implementation
+- `mipsevm/state.go`: State management and encoding
 
-Witness data is crucial for onchain verification. It includes:
-- Packed State: Compressed representation of the VM state
-- Memory Proofs: Merkle proofs for memory access
-- Pre-image Data: Data retrieved from the pre-image oracle
+Example usage:
 
-### 4.3. Pre-image Oracle
+```go
+state, err := LoadELF(elfProgram)
+if err != nil {
+    // Handle error
+}
 
-The pre-image oracle provides external data to the VM during execution. It's implemented using a specific ABI for communication through syscalls.
+us := NewInstrumentedState(state, oracle, os.Stdout, os.Stderr)
 
-## 5. Main Workflow
+for !us.state.Exited {
+    _, err := us.Step(false)
+    if err != nil {
+        // Handle error
+    }
+}
+```
 
-1. Load MIPS program into initial state
-2. Execute instructions step-by-step
-3. Generate witness data for each step
-4. Verify steps onchain using `MIPS.sol`
-5. Continue execution or resolve disputes based on verification results
+### 4.2 MIPS.sol
 
-## 6. Important Functions
+This Solidity contract implements the onchain MIPS instruction execution. It's used to verify individual steps of the computation during a dispute.
 
-### mipsevm
+Key functions:
+- `step`: Execute a single MIPS instruction
+- `getMerkleRoot`: Get the current memory merkle root
 
-#### State Management
-- `CreateInitialState`: Initialize the VM state
-- `GetState`: Retrieve current VM state
-- `EncodeWitness`: Encode the current state as witness data
+### 4.3 PreimageOracle.sol
 
-#### Execution
-- `Step`: Execute a single MIPS instruction
-- `ExecMipsCoreStepLogic`: Core logic for executing MIPS instructions
-- `handleSyscall`: Handle system calls during execution
+This contract implements the pre-image oracle interface, allowing the emulator to access external data during execution.
 
-#### Memory Operations
-- `SetMemory`: Write to VM memory
-- `GetMemory`: Read from VM memory
-- `MerkleProof`: Generate Merkle proof for memory access
+Key functions:
+- `readPreimage`: Read pre-image data
+- `loadKeccak256PreimagePart`: Load part of a Keccak256 pre-image
 
-#### Pre-image Oracle
-- `GetPreimage`: Retrieve pre-image data
-- `Hint`: Provide hints to the pre-image oracle
+### 4.4 Cannon CLI
 
-### MIPS.sol
+The command-line interface for interacting with the Cannon system. It provides commands for loading ELF files, running the emulator, and generating proofs.
 
-- `step`: Verify a single step of MIPS execution
-- `executeInstruction`: Execute a MIPS instruction onchain
-- `handleMemoryOp`: Handle memory operations
-- `handlePreimageOp`: Handle pre-image oracle operations
+Key commands:
+- `load-elf`: Load an ELF file into the initial state
+- `run`: Execute the loaded program
+- `witness`: Generate a witness for a given state
 
-## 7. Testing and Debugging
+## 5. Development Workflow
 
-Cannon includes extensive testing capabilities:
+1. Implement or modify features in the `mipsevm` package
+2. Update the Cannon CLI if necessary
+3. Write tests for new functionality
+4. Update Solidity contracts if changes affect onchain verification
+5. Run the full test suite
+6. Create a pull request with your changes
 
-- Unit tests for individual components
-- Integration tests for end-to-end workflows
-- Fuzzing tests to identify edge cases and vulnerabilities
-- Debugging tools for tracing execution and analyzing state
+## 6. Testing
 
-Key testing functions:
-- `TestEVM`: Test EVM execution of MIPS instructions
-- `FuzzStateSyscall*`: Fuzz testing for various syscalls
-- `RunVMTest_*`: Run specific VM tests (e.g. Claim)
+Cannon uses Go's built-in testing framework. Run tests with:
 
-## 8. Performance Considerations
+```
+make test
+```
 
-- Memory management: Efficient allocation and deallocation of pages
-- Proof generation: Optimize Merkle proof generation for large memory spaces
-- Onchain verification: Minimize gas costs for instruction verification
-- Pre-image oracle: Efficient handling of external data requests
+For fuzzing tests:
 
-## 9. Future Improvements
+```
+make fuzz
+```
 
-Potential areas for enhancement:
-- Support for additional MIPS instructions
-- Optimizations for faster offchain execution
-- Enhanced debugging and tracing capabilities
-- Expanded test coverage and fuzzing scenarios
+## 7. Contribution Guidelines
+
+1. Fork the repository and create a new branch for your feature or bug fix
+2. Follow Go and Solidity best practices and coding standards
+3. Write clear, concise commit messages
+4. Include tests for new functionality
+5. Update documentation as necessary
+6. Submit a pull request with a detailed description of your changes
+
+## 8. Advanced Topics
+
+### 8.1 Merkleized Memory Model
+
+Cannon uses a merkleized memory model to efficiently generate proofs for memory accesses. The memory is divided into 4KB pages, and a merkle tree is constructed to represent the entire memory space.
+
+Key concepts:
+- Page: 4KB block of memory
+- Merkle tree: Binary tree where each non-leaf node is the hash of its children
+- Merkle proof: Path from a leaf node to the root, used to prove the contents of a specific memory location
+
+### 8.2 State Encoding
+
+The state of the MIPS emulator is encoded in a compact format for efficient onchain verification. The encoding includes:
+
+- Memory merkle root
+- CPU registers
+- Program counter
+- Other essential state variables
+
+Example state encoding:
+
+```go
+func (s *State) EncodeWitness() StateWitness {
+    out := make([]byte, 0)
+    memRoot := s.Memory.MerkleRoot()
+    out = append(out, memRoot[:]...)
+    out = append(out, s.PreimageKey[:]...)
+    out = binary.BigEndian.AppendUint32(out, s.PreimageOffset)
+    // ... (additional state variables)
+    return out
+}
+```
+
+### 8.3 Pre-image Oracle Integration
+
+The pre-image oracle allows the emulator to access external data during execution. This is crucial for handling complex computations that require data not available within the initial state.
+
+Key concepts:
+- Local pre-images: Data stored locally
+- Keccak256 pre-images: Data retrieved based on Keccak256 hashes
+- Pre-image hints: Metadata to help locate pre-images
+
+Example pre-image request:
+
+```go
+preimage := m.preimageOracle.GetPreimage(preimage.Keccak256Key(wit.PreimageKey).PreimageKey())
+```
