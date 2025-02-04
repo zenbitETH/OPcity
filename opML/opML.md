@@ -5,7 +5,7 @@
 The opML system represents a significant advancement in blockchain-based machine learning, introducing an optimistic approach to ML computation verification. This analysis examines the architectural components and design decisions that enable opML to achieve its goals of efficient, scalable machine learning on blockchain systems.
 
 ## System Architecture
-The architecture of opML is built around four primary components that work in concert to enable efficient ML computation and verification. At its core, the Fraud Proof Virtual Machine (FPVM) serves as the foundation for deterministic computation. The FPVM implements a state transition function that processes instructions while maintaining verifiable state changes through a Merkle tree-based memory management system.
+The opML architecture comprises four primary components that collaborate to enable efficient ML computation and verification. At its core, the Fraud Proof Virtual Machine (FPVM) serves as the foundation for deterministic computation. The FPVM implements a state transition function that processes instructions while maintaining verifiable state changes through a Merkle tree-based memory management system.
 
 The memory layout of the FPVM is particularly noteworthy, as it employs a segmented approach that separates different types of data. The system allocates distinct regions for program code, input data, output results, oracle operations, and model parameters. This segmentation is managed through a Merkle tree structure with a depth of 27 levels, allowing for efficient state verification while supporting the full 32-bit address space.
 
