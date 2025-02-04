@@ -184,7 +184,7 @@ Initial State (S0) --> Final State (Sn)
 
 ## 5. Security Mechanisms
 
-The security model of opML is built around the AnyTrust assumption, which requires only a single honest validator to ensure system integrity. This approach differs from traditional consensus mechanisms that require majority honest participation. The system implements a challenge period during which validators can contest submitted results, with economic incentives structured to encourage honest behavior.
+The security model of opML is built around the AnyTrust assumption, which requires only one honest validator to maintain system integrity. This approach differs from traditional consensus mechanisms, which rely on a majority of honest participants. The system implements a challenge period, allowing validators to contest submitted results, with economic incentives structured to encourage honest behavior.
 
 The verification process is particularly elegant in its design. Each submitted result is accompanied by a state root derived from a Merkle tree structure, enabling efficient validation. Validators can inspect the result and, if necessary, initiate a challenge. The dispute resolution follows an interactive challenge process, which efficiently pinpoints the exact point of disagreement through binary search, ultimately identifying the precise instruction where the computation diverged.
 
