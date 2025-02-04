@@ -2,12 +2,14 @@
 
 ## Introduction
 
-The opML system represents a significant advancement in blockchain-based machine learning, introducing an optimistic approach to ML computation verification. This analysis examines the architectural components and design decisions that enable opML to achieve its goals of efficient, scalable machine learning on blockchain systems.
+The [opML (Optimistic Machine Learning)](https://arxiv.org/abs/2401.17555) system is a fraud-proof-based framework that enables efficient and scalable onchain machine learning (ML) inference. Unlike Zero-Knowledge Machine Learning (zkML), which relies on cryptographic validity proofs, opML adopts an optimistic verification model similar to optimistic rollups. Only when challenged does opML initiate an interactive fraud-proof process, efficiently pinpointing incorrect steps using a bisection dispute game and verifying disputes at minimal onchain cost.
+
+This analysis examines the architectural components and design decisions that enable opML to achieve its goals of efficient and scalable machine learning on blockchain systems.
 
 ## System Architecture
-The architecture of opML is built around four primary components that work in concert to enable efficient ML computation and verification. At its core, the Fraud Proof Virtual Machine (FPVM) serves as the foundation for deterministic computation. The FPVM implements a state transition function that processes instructions while maintaining verifiable state changes through a Merkle tree-based memory management system.
+The opML architecture comprises four primary components that collaborate to enable efficient ML computation and verification. At its core, the Fraud Proof Virtual Machine (FPVM) serves as the foundation for deterministic computation. The FPVM implements a state transition function that processes instructions while maintaining verifiable state changes through a Merkle tree-based memory management system.
 
-The memory layout of the FPVM is particularly noteworthy, as it employs a segmented approach that separates different types of data. The system allocates distinct regions for program code, input data, output results, oracle operations, and model parameters. This segmentation is managed through a Merkle tree structure with a depth of 27 levels, allowing for efficient state verification while supporting the full 32-bit address space.
+Notably, the FPVM’s memory layout employs a segmented approach to separate different data types. The system allocates distinct regions for program code, input data, output results, oracle operations, and model parameters. This segmentation is managed through a Merkle tree structure with a depth of 27 levels, allowing efficient state verification while supporting the full 32-bit address space.
 
 
 ## 1. System Architecture Overview
@@ -93,9 +95,9 @@ def VM(S_pre) -> S_post:
 
 ## 3. Machine Learning Engine
 
-Perhaps the most innovative aspect of opML's design is its dual-compilation approach in the Machine Learning Engine. The system compiles the same source code into two distinct targets: one optimized for native execution with full hardware acceleration support, and another for the FPVM environment. This dual-compilation strategy solves one of the fundamental challenges in blockchain-based ML: the trade-off between execution efficiency and verifiability.
+Perhaps the most innovative aspect of opML’s design is its dual-compilation approach in the Machine Learning Engine. The system compiles the same source code into two distinct execution targets: one optimized for native execution with full hardware acceleration support and another tailored for the FPVM environment. This dual-compilation strategy addresses one of the fundamental challenges in blockchain-based ML: balancing execution efficiency with verifiability.
 
-The native compilation target leverages modern hardware capabilities, including GPU acceleration through CUDA, enabling rapid computation for common cases. Meanwhile, the FPVM target ensures deterministic execution necessary for verification, implementing fixed-point arithmetic and software-based floating-point operations to maintain consistency across different environments.
+The native compilation target leverages modern hardware capabilities, including GPU acceleration via CUDA, enabling rapid computation for most cases. Meanwhile, the FPVM target ensures deterministic execution by implementing fixed-point arithmetic and software-based floating-point operations, preserving consistency across different environments and avoiding hardware-dependent discrepancies.
 
 ### 3.1 Dual Compilation System
 
@@ -119,11 +121,11 @@ Source Code
 
 ## 4. Fraud Proof Protocol
 
-The fraud proof system in opML draws inspiration from optimistic rollup systems like Optimism, but introduces several novel improvements tailored for ML workloads. The most significant innovation is the multi-phase dispute resolution process, which differs substantially from Optimism's single-phase approach.
+The fraud-proof system in opML draws inspiration from optimistic rollup architectures like Optimism but introduces several key improvements tailored to ML workloads. The most significant innovation is its multi-phase dispute resolution process, which differs substantially from Optimism’s single-phase approach.
 
-In the first phase, the system operates at the computation graph level, allowing for efficient identification of disputed nodes while permitting semi-native execution for undisputed portions. This approach significantly reduces the computational overhead compared to traditional fraud proof systems. When a dispute arises, the system narrows down the specific point of contention through a bisection protocol, similar to Optimism's approach but optimized for ML computations.
+In the first phase, the system operates at the computation graph level, enabling efficient identification of disputed nodes while allowing semi-native execution for undisputed portions. This approach significantly reduces computational overhead compared to traditional fraud-proof mechanisms. When a dispute arises, the system narrows the exact point of contention through a bisection protocol, similar to Optimism’s approach but optimized for ML computations.
 
-The second phase drills down to the instruction level within the disputed section, converting the relevant computation to FPVM instructions for final verification. This two-phase approach allows opML to maintain the security guarantees of fraud proofs while significantly reducing the performance overhead for most operations.
+The second phase drills down to the instruction level within the disputed section, converting the relevant computation into FPVM instructions for final verification. This two-phase approach allows opML to maintain the security guarantees of fraud proofs while significantly reducing performance overhead for most operations.
 
 
 ### 4.1 Multi-Phase Dispute Game
@@ -146,7 +148,8 @@ Phase 2 (Instruction Level):
 
 ### 4.2 Comparison with Optimism's Fault Proof
 
-While opML's fraud proof system shares conceptual similarities with Optimism's design, there are several key distinctions that make it more suitable for ML workloads. Unlike Optimism's general-purpose EVM execution, opML's FPVM is specifically optimized for ML computations, with support for efficient matrix operations and fixed-point arithmetic. The multi-phase dispute resolution process is another significant departure from Optimism's design, allowing for more efficient handling of ML-specific workloads.
+While opML’s fraud-proof system shares conceptual similarities with Optimism’s design, several key distinctions make it better suited for ML workloads. Unlike Optimism’s general-purpose EVM execution, opML’s Fraud Proof Virtual Machine (FPVM) is purpose-built for ML computations, incorporating efficient matrix operations and fixed-point arithmetic.
+Another significant departure from Optimism’s design is opML’s multi-phase dispute resolution process, which allows for more efficient handling of ML-specific workloads by optimizing execution and verification steps.
 
 Similarities with Optimism:
 - Challenge-response mechanism
@@ -181,9 +184,9 @@ Initial State (S0) --> Final State (Sn)
 
 ## 5. Security Mechanisms
 
-The security model of opML is built around the AnyTrust assumption, which requires only a single honest validator to ensure system integrity. This approach differs from traditional consensus mechanisms that require majority honest participation. The system implements a challenge period during which validators can contest submitted results, with economic incentives structured to encourage honest behavior.
+The security model of opML is built around the AnyTrust assumption, which requires only one honest validator to maintain system integrity. This approach differs from traditional consensus mechanisms, which rely on a majority of honest participants. The system implements a challenge period, allowing validators to contest submitted results, with economic incentives structured to encourage honest behavior.
 
-The verification process itself is particularly elegant in its design. When a result is submitted, it's accompanied by a state root derived from the Merkle tree structure. Validators can then examine the result and, if necessary, initiate a challenge. The challenge process uses an interactive dispute game that efficiently narrows down the point of disagreement through binary search, ultimately identifying the specific instruction where the computation diverged.
+The verification process is particularly elegant in its design. Each submitted result is accompanied by a state root derived from a Merkle tree structure, enabling efficient validation. Validators can inspect the result and, if necessary, initiate a challenge. The dispute resolution follows an interactive challenge process, which efficiently pinpoints the exact point of disagreement through binary search, ultimately identifying the precise instruction where the computation diverged.
 
 ### 5.1 AnyTrust Model
 
@@ -206,9 +209,9 @@ Rewards:
 
 ## 6. Performance Optimizations
 
-To address the practical challenges of handling large ML models, opML implements several key optimizations. The lazy loading mechanism is particularly noteworthy, allowing the system to work with models larger than available memory by loading only the required segments on demand. This is especially crucial for large language models like 7B-LLaMA, which would be impractical to load entirely into FPVM memory.
+To address the practical challenges of handling large ML models, opML implements several key optimizations. One of the most notable innovations is its lazy loading mechanism, which enables the system to work with models larger than available memory by loading only the necessary segments on demand. This is particularly crucial for large language models (LLMs) like 7B-LLaMA, which would be impractical to load entirely into FPVM memory.
 
-The semi-native execution capability represents another significant optimization. By allowing portions of the computation to execute in native environments when not under dispute, the system achieves performance comparable to traditional ML systems in the common case, while maintaining the ability to fall back to fully verifiable execution when needed.
+Another major optimization is semi-native execution, which allows portions of the computation to run in a native environment when not under dispute. This approach provides performance comparable to traditional ML systems in the common case while preserving the ability to fall back to fully verifiable execution when needed.
 
 ### 6.1 Lazy Loading
 
