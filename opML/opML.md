@@ -123,7 +123,7 @@ Source Code
 
 The fraud-proof system in opML draws inspiration from optimistic rollup architectures like Optimism but introduces several key improvements tailored to ML workloads. The most significant innovation is its multi-phase dispute resolution process, which differs substantially from Optimism’s single-phase approach.
 
-In the first phase, the system operates at the computation graph level, allowing for efficient identification of disputed nodes while permitting semi-native execution for undisputed portions. This approach significantly reduces the computational overhead compared to traditional fraud proof systems. When a dispute arises, the system narrows down the specific point of contention through a bisection protocol, similar to Optimism's approach but optimized for ML computations.
+In the first phase, the system operates at the computation graph level, enabling efficient identification of disputed nodes while allowing semi-native execution for undisputed portions. This approach significantly reduces computational overhead compared to traditional fraud-proof mechanisms. When a dispute arises, the system narrows the exact point of contention through a bisection protocol, similar to Optimism’s approach but optimized for ML computations.
 
 The second phase drills down to the instruction level within the disputed section, converting the relevant computation to FPVM instructions for final verification. This two-phase approach allows opML to maintain the security guarantees of fraud proofs while significantly reducing the performance overhead for most operations.
 
