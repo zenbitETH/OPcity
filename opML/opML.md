@@ -9,7 +9,7 @@ This analysis examines the architectural components and design decisions that en
 ## System Architecture
 The opML architecture comprises four primary components that collaborate to enable efficient ML computation and verification. At its core, the Fraud Proof Virtual Machine (FPVM) serves as the foundation for deterministic computation. The FPVM implements a state transition function that processes instructions while maintaining verifiable state changes through a Merkle tree-based memory management system.
 
-The memory layout of the FPVM is particularly noteworthy, as it employs a segmented approach that separates different types of data. The system allocates distinct regions for program code, input data, output results, oracle operations, and model parameters. This segmentation is managed through a Merkle tree structure with a depth of 27 levels, allowing for efficient state verification while supporting the full 32-bit address space.
+Notably, the FPVM’s memory layout employs a segmented approach to separate different data types. The system allocates distinct regions for program code, input data, output results, oracle operations, and model parameters. This segmentation is managed through a Merkle tree structure with a depth of 27 levels, allowing efficient state verification while supporting the full 32-bit address space.
 
 
 ## 1. System Architecture Overview
