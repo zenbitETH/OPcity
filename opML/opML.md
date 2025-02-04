@@ -95,7 +95,7 @@ def VM(S_pre) -> S_post:
 
 ## 3. Machine Learning Engine
 
-Perhaps the most innovative aspect of opML's design is its dual-compilation approach in the Machine Learning Engine. The system compiles the same source code into two distinct targets: one optimized for native execution with full hardware acceleration support, and another for the FPVM environment. This dual-compilation strategy solves one of the fundamental challenges in blockchain-based ML: the trade-off between execution efficiency and verifiability.
+Perhaps the most innovative aspect of opML’s design is its dual-compilation approach in the Machine Learning Engine. The system compiles the same source code into two distinct execution targets: one optimized for native execution with full hardware acceleration support and another tailored for the FPVM environment. This dual-compilation strategy addresses one of the fundamental challenges in blockchain-based ML: balancing execution efficiency with verifiability.
 
 The native compilation target leverages modern hardware capabilities, including GPU acceleration via CUDA, enabling rapid computation for most cases. Meanwhile, the FPVM target ensures deterministic execution by implementing fixed-point arithmetic and software-based floating-point operations, preserving consistency across different environments and avoiding hardware-dependent discrepancies.
 
