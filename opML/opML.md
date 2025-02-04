@@ -209,7 +209,7 @@ Rewards:
 
 ## 6. Performance Optimizations
 
-To address the practical challenges of handling large ML models, opML implements several key optimizations. The lazy loading mechanism is particularly noteworthy, allowing the system to work with models larger than available memory by loading only the required segments on demand. This is especially crucial for large language models like 7B-LLaMA, which would be impractical to load entirely into FPVM memory.
+To address the practical challenges of handling large ML models, opML implements several key optimizations. One of the most notable innovations is its lazy loading mechanism, which enables the system to work with models larger than available memory by loading only the necessary segments on demand. This is particularly crucial for large language models (LLMs) like 7B-LLaMA, which would be impractical to load entirely into FPVM memory.
 
 The semi-native execution capability represents another significant optimization. By allowing portions of the computation to execute in native environments when not under dispute, the system achieves performance comparable to traditional ML systems in the common case, while maintaining the ability to fall back to fully verifiable execution when needed.
 
