@@ -148,7 +148,8 @@ Phase 2 (Instruction Level):
 
 ### 4.2 Comparison with Optimism's Fault Proof
 
-While opML's fraud proof system shares conceptual similarities with Optimism's design, there are several key distinctions that make it more suitable for ML workloads. Unlike Optimism's general-purpose EVM execution, opML's FPVM is specifically optimized for ML computations, with support for efficient matrix operations and fixed-point arithmetic. The multi-phase dispute resolution process is another significant departure from Optimism's design, allowing for more efficient handling of ML-specific workloads.
+While opML’s fraud-proof system shares conceptual similarities with Optimism’s design, several key distinctions make it better suited for ML workloads. Unlike Optimism’s general-purpose EVM execution, opML’s Fraud Proof Virtual Machine (FPVM) is purpose-built for ML computations, incorporating efficient matrix operations and fixed-point arithmetic.
+Another significant departure from Optimism’s design is opML’s multi-phase dispute resolution process, which allows for more efficient handling of ML-specific workloads by optimizing execution and verification steps.
 
 Similarities with Optimism:
 - Challenge-response mechanism
