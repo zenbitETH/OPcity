@@ -1,4 +1,3 @@
-
 # OP Stack Protocol Updates
 
 | Protocol Upgrade | Upgrade Type | Testnet Release Date | Mainnet Release Date | OP Prop ID | OP Gov Author | Author Affiliation | GH PR | OP Gov Voting |
@@ -17,3 +16,81 @@
 | [**Granite**]() | Contracts Upgrade, Hard Fork | August 12, 2024 | September 11, 2024 | [**Protocol Upgrade #10**](https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733) | [inphi](https://gov.optimism.io/u/inphi/summary) | `OP Labs` | [#11531](https://github.com/ethereum-optimism/optimism/pull/11531) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/46514799174839131952937755475635933411907395382311347042580299316635260952272) |
 | [**Holocene**]() | Hard Fork | November 26, 2024 | January 9, 2025 | [**Upgrade Proposal #11**](https://gov.optimism.io/t/upgrade-proposal-11-holocene-network-upgrade/9313) | [Dragan_ZzZ](https://gov.optimism.io/u/Dragan_ZzZ/summary) | `OP Labs` | [#13334](https://github.com/ethereum-optimism/optimism/pull/13334) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/20127877429053636874064552098716749508236019236440427814457915785398876262515) |
 | **Isthmus** |  |  |  |  |  |  |  |  |
+
+## **Background: The Evolution of the OP Stack**
+
+The OP Stack is a modular, Ethereum-aligned framework for scaling blockchain ecosystems, developed as part of Optimism’s mission to enhance Layer 2 scalability while maintaining Ethereum’s security and decentralization. Its origins trace back to the **Plasma Group**, a research collective that initially focused on Plasma-based solutions before transitioning to **Optimistic Rollups** due to Plasma's data availability and exit game limitations[¹](https://plasma.build/t/rollup-plasma-for-mass-exits-complex-disputes/90). The shift towards rollups culminated in the **Optimistic Virtual Machine (OVM)**, a precursor to today’s OP Stack architecture, enabling general-purpose smart contract execution on Layer 2 while leveraging Ethereum’s security[²](https://medium.com/plasma-group/ethereum-smart-contracts-in-l2-optimistic-rollup-2c1cef2ec537).
+
+As the OP Stack matured, its design philosophy evolved towards **modularity, EVM equivalence, and developer accessibility**. The **Bedrock upgrade** (2023) marked a pivotal milestone, reducing code complexity, achieving execution-level Ethereum equivalence, and minimizing divergence from Ethereum’s Geth client[³](https://optimism.mirror.xyz/Fdpds7l4yE2VDpLN4AZQUCjpBYdoPrIHw6a4uzUepmw). This approach significantly streamlined development, enabling full compatibility with Ethereum tools and fostering the emergence of a broader **Superchain** ecosystem of interoperable Layer 2 networks[⁴](https://optimism.mirror.xyz/9ZMwZjst9SQpzIgEd4gN42UDjATyK3ZRClPFx9oMPp8).
+
+### **Metrics on Optimization and Performance Gains Before the OP Stack Release**
+
+Before the formalization of the OP Stack, key **scalability and efficiency challenges** were gradually addressed through incremental upgrades:
+
+- **Unipig Demo (Oct 2019)**:
+    - First **Optimistic Rollup prototype** showcased with Uniswap.
+    - **Transaction throughput:** Demonstrated ~10x improvement over Ethereum L1.
+    - **Gas costs:** Reduced transaction costs significantly compared to mainnet.
+- **SNX Testnet (Sep 2020)**:
+    - Introduced **Layer 2 smart contract execution**, reducing reliance on Ethereum L1.
+    - **Gas efficiency:** Transactions were processed **at 1/10th the cost of L1**.
+    - **Latency improvements:** Reduced finalization time compared to Ethereum’s average block time.
+- **Mainnet Launch (Jan 2021 - OVM Era)**:
+    - **Initial deployment:** Utilized a **custom Solidity transpiler**, introducing inefficiencies.
+    - **Complexity challenge:** Large code footprint (~25,000+ custom lines), making upgrades cumbersome.
+    - **State transition costs:** Higher than anticipated due to transpiler overhead.
+- **EVM Equivalence Upgrade (Oct 2021 - OVM)**:
+    - Removed the need for Solidity transpilers, achieving **full Ethereum compatibility**.
+    - **Execution efficiency:** Reduced codebase complexity by aligning with Ethereum’s standard execution model.
+    - **Throughput:** Improved to **~100 TPS**, setting the stage for further optimizations.
+- **Open Mainnet (Dec 2021 - OVM)**:
+    - Allowed **public smart contract deployment**, accelerating adoption and experimentation.
+    - **Developer adoption:** Marked the transition toward an **open ecosystem** for dApp developers.
+- **Bedrock Upgrade (2023)**:
+    - Reduced the OP Stack’s **code complexity by 90%**, improving maintainability.
+    - **Optimized gas costs**, making transactions **~30% cheaper**.
+    - **Throughput:** Increased to **~450 TPS**, setting the foundation for future rollup scalability.
+
+### **OP Stack Evolution Timeline**
+
+
+| Year  | Milestone                                    | Description |
+|-------|----------------------------------------------|-------------|
+| 2018  | **Plasma Group Founded**                    | Research nonprofit dedicated to scaling Ethereum via Plasma technology. |
+| 2019  | **Optimistic Rollups Introduced**           | Plasma limitations led to the development of the first Optimistic Rollup designs. |
+| Oct 2019  | **Unipig**                               | First Optimistic Rollup demo, developed with Uniswap to showcase transaction scalability. |
+| Sep 2020  | **SNX Testnet (OVM)**                   | Launched the first public testnet with Synthetix, testing Layer 2 smart contract interactions. |
+| Jan 2021  | **Mainnet Launch (OVM)**                | Optimism Layer 2 officially goes live on Ethereum mainnet with the OVM. |
+| Oct 2021  | **EVM Equivalence Upgrade (OVM)**       | Achieves full EVM compatibility, removing the need for Solidity transpilers. |
+| Dec 2021  | **Open Mainnet (OVM)**                  | Public deployment enabling any developer to deploy on Optimism. |
+| 2022  | **OP Stack Conceptualized**                 | Introduced as a modular blockchain framework separating execution, consensus, and settlement. |
+| 2023  | **Bedrock Upgrade Implemented**             | Reduced OP Stack code complexity, improved efficiency, and aligned with Ethereum Geth. |
+| 2024  | **Fault Proof Refinements & Superchain Expansion** | Introduction of modular fault proofs, Superchain network architecture, and expanded Layer 2 functionality. |
+
+
+### **Evolution of the Fault-Proof Mechanism**
+
+A critical component of the OP Stack’s security model is its **fault-proof mechanism**, which ensures the validity of Layer 2 state transitions through fraud detection rather than pre-execution verification. The initial implementation featured a monolithic **Cannon-based fault proof system**, which was later restructured to enhance modularity and reduce reliance on Optimism-specific execution logic.
+
+Key developments in fault proofs include:
+- **Cannon's Optimized Proof System**: Introduced an approach where the execution client compiles directly into the proof system, simplifying the verification process[⁵](https://specs.optimism.io/fault-proof/cannon-fault-proof-vm.html).
+- **Multi-Client Fault Proofs**: A strategic shift toward supporting multiple fault-proof implementations, increasing security resilience and minimizing the risks of single-client reliance[⁶](https://gov.optimism.io/t/final-protocol-upgrade-7-fault-proofs/8161).
+- **Introduction of Stage 1 Decentralization**: The **Guardian** upgrade improved security council threshold mechanisms, decentralizing the governance of fault proofs[⁷](https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157).
+- **Settlement Layer Refinement**: Modular proof verification was introduced, allowing future upgrades to transition toward **ZK-enabled rollups** without disrupting OP Stack’s core execution model[⁸](https://www.youtube.com/watch?v=jnVjhp41pcc).
+- **Modular Fraud Proofs Architecture**: A long-term goal of OP Stack fault proofs is **modular dispute resolution**, allowing new execution clients to integrate their own fraud-proof implementations efficiently[⁹](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/823).
+
+---
+
+### **References**
+
+1. Plasma Group. (2019). *Rollup Plasma for Mass Exits & Complex Disputes.* Plasma Build Forum. Retrieved from https://plasma.build/t/rollup-plasma-for-mass-exits-complex-disputes/90
+2. Floersch, K. (2019). *Ethereum Smart Contracts in L2: Optimistic Rollup.* Plasma Group Blog. Retrieved from https://medium.com/plasma-group/ethereum-smart-contracts-in-l2-optimistic-rollup-2c1cef2ec537
+3. The Optimism Collective. (2022). *A New Chapter.* Optimism Mirror. Retrieved from https://optimism.mirror.xyz/Fdpds7l4yE2VDpLN4AZQUCjpBYdoPrIHw6a4uzUepmw
+4. Optimism PBC. (2022). *The Future of Optimistic Ethereum*. Retrieved from https://optimism.mirror.xyz/9ZMwZjst9SQpzIgEd4gN42UDjATyK3ZRClPFx9oMPp8
+5. OP Stack Specification. (2023). Cannon Fault Proof Virtual Machine. Retrieved from https://specs.optimism.io/fault-proof/cannon-fault-proof-vm.html 
+6. Sutton, A. (2024). *Final Protocol Upgrade #7: Fault Proofs.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-protocol-upgrade-7-fault-proofs/8161
+7. Maurelian. (2024). *Final Protocol Upgrade #8: Guardian Security Council & Threshold Changes.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157
+8. Fichter, K. (2024). *Modular Rollup Theory Through the Lens of the OP Stack.* Devcon Bogotá. Retrieved from https://www.youtube.com/watch?v=jnVjhp41pcc
+9. Bayardo, R. (2024). *Fjord Upgrade Proposal.* GitHub. Retrieved from https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/823
+
+    
