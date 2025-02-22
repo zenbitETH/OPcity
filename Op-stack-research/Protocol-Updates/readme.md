@@ -84,70 +84,9 @@ Key developments in fault proofs include:
 
 # 2. Version Review
 
-## Bedrock
-
-The **Bedrock Upgrade**, released on **January 6, 2023**, marked a major evolution in Optimism’s transition from its **pre-OP Stack origins** to a fully modular framework. This upgrade was built around three core design principles:
-
-1. **Code Minimization**
-2. **Ethereum Equivalence**
-3. **Modularity**
-
-### **Code Minimization**
-
-Optimism’s early iterations had significant **technical debt**, largely stemming from the **OVM (Optimistic Virtual Machine)**. The OVM relied on a custom transpiler, which **introduced complexity** and increased maintenance overhead. Bedrock restructured the system, achieving a **100x reduction in custom code** compared to the original OVM, with an alternative client requiring only **1,000 lines of code**.
-
-A key inspiration for this was George Hotz’s famous reduction of **a 6,000-line transpiler to a 300-line Solidity compiler modification**, demonstrating the power of **simplified architecture**. This philosophy underpinned Bedrock’s streamlined approach, making it significantly more efficient and maintainable[¹⁰](https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs).
-
-### **Ethereum Equivalence Across Multiple Layers**
-
-The **2021 EVM Equivalence Upgrade** was a crucial step toward reducing differences between **Optimism and Ethereum**. However, Bedrock took this further by aligning **multiple layers of the OP Stack** to match Ethereum’s structure[¹¹](https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs):
-
-- **Execution Layer**: Reuses Ethereum’s battle-tested execution code, ensuring that transactions behave identically to those on L1 Ethereum.
-- **Consensus Layer**: Incorporates **Geth-based client architecture**, meaning that OP Stack rollups inherit Ethereum’s consensus updates without modification.
-- **Settlement Layer**: Defines a **shared state root format**, allowing Ethereum’s fraud-proof or validity-proof mechanisms to be integrated without additional modifications.
-- **Data Availability**: Implements **efficient batch submission methods**, reducing calldata costs while preserving Ethereum’s historical data structures.
-- **Networking:** Adopts Ethereum’s **peer-to-peer (P2P) networking model**, ensuring that Bedrock nodes can function similarly to Ethereum full nodes.
-
-Additionally, the **Optimism Docs** specify several OP Stack components that further contribute to Ethereum equivalence and modularity[¹²](https://docs.optimism.io/stack/components):
-
-- **Sequencing Layer**: Handles transaction ordering before execution, ensuring deterministic processing.
-- **Derivation Layer**: Processes transaction data from the data availability layer and constructs the rollup's canonical chain.
-- **Governance Layer**: Oversees protocol upgrades, security parameters, and network-level decisions through governance mechanisms¹².
-
-By mirroring **Ethereum’s structure and terminology**, Bedrock made it easier for **developers, auditors, and core Ethereum contributors** to transition to Optimism.
-
-### **Modularity**
-
-Bedrock’s **modular architecture** was a significant leap forward. Unlike earlier versions, where execution and proof mechanisms were tightly coupled, Bedrock:
-
-- **Separated execution and settlement layers**, allowing for the integration of different clients.
-- **Enabled support for multiple proof mechanisms**, including **fault proofs** and future **validity proofs (zk-SNARKs)**.
-- **Facilitated experimentation**, with projects like **OP Craft** showcasing Bedrock’s flexibility.
-
-This modularity prepared **Optimism** for future innovations and increased its **long-term sustainability**[¹⁰](https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs).
-
-### **Technical Improvements**
-
-Bedrock introduced several **critical enhancements** to OP Mainnet, including[¹⁰](https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs)’[¹¹](https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs):
-
-1. **Reduced Transaction Fees**: Optimized **batch compression** and **L1 data submission**, lowering costs for users.
-2. **Faster Transactions & Withdrawals**: Improved batch processing times reduced **L2-to-L1 withdrawal latency**.
-3. **Enhanced Cross-Chain Communication**: Streamlined **L1-L2 messaging**, improving interoperability.
-4. **Improved Node Performance**: Upgrades to node sync mechanisms led to **faster and more reliable network operations**.
-
-### **Bedrock’s Role in the OP Stack & Superchain Vision**
-
-Bedrock laid the foundation for the **OP Stack**, Optimism’s **open-source, modular blockchain framework**. This upgrade:
-
-- Defined **Optimism’s path toward the Superchain**, an interconnected network of OP-based chains.
-- Established **a unified rollup architecture**, easing the onboarding of **new Layer 2 chains**.
-- Made OP Mainnet a **testing ground for Ethereum innovations**, ensuring smoother upgrades.
-
-The **Bedrock Upgrade** was more than a technical enhancement—it was a pivotal step toward **Optimism’s vision of a decentralized, interoperable rollup ecosystem**[¹³](https://optimism.mirror.xyz/9ZMwZjst9SQpzIgEd4gN42UDjATyK3ZRClPFx9oMPp8).
-
 ## Upgrade process
 
-The upgrade process for the OP Stack and its Superchain ecosystem is designed to ensure smooth transitions across development, testing, and production environments. It involves three primary stages: **Devnet, Testnet, and Mainnet**. Each stage includes specific steps to ensure the integrity and compatibility of the upgrade[¹⁴](https://docs.optimism.io/operators/node-operators/network-upgrades).
+The upgrade process for the OP Stack and its Superchain ecosystem is designed to ensure smooth transitions across development, testing, and production environments. It involves three primary stages: **Devnet, Testnet, and Mainnet**. Each stage includes specific steps to ensure the integrity and compatibility of the upgrade[¹⁰](https://docs.optimism.io/operators/node-operators/network-upgrades).
 
 ### **Devnet**
 
@@ -186,7 +125,89 @@ The upgrade process for the OP Stack and its Superchain ecosystem is designed to
   <img src="./img/upgradeProcess.png" alt="OP Stack Upgrade Process">
 </figure>
 
----
+## Bedrock
+
+The **Bedrock Upgrade**, activated on **June 6, 2023**, marked a major evolution in Optimism’s transition from its **pre-OP Stack origins** to a fully modular framework. This upgrade was built around three core design principles:
+
+1. **Code Minimization**
+2. **Ethereum Equivalence**
+3. **Modularity**
+
+### **Code Minimization**
+
+Optimism’s early iterations had significant **technical debt**, largely stemming from the **OVM (Optimistic Virtual Machine)**. The OVM relied on a custom transpiler, which **introduced complexity** and increased maintenance overhead. Bedrock restructured the system, achieving a **100x reduction in custom code** compared to the original OVM, with an alternative client requiring only **1,000 lines of code**.
+
+A key inspiration for this was George Hotz’s famous reduction of **a 6,000-line transpiler to a 300-line Solidity compiler modification**, demonstrating the power of **simplified architecture**. This philosophy underpinned Bedrock’s streamlined approach, making it significantly more efficient and maintainable[¹¹](https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs).
+
+### **Ethereum Equivalence Across Multiple Layers**
+
+The **2021 EVM Equivalence Upgrade** was a crucial step toward reducing differences between **Optimism and Ethereum**. However, Bedrock took this further by aligning **multiple layers of the OP Stack** to match Ethereum’s structure[¹²](https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs):
+
+- **Execution Layer**: Reuses Ethereum’s battle-tested execution code, ensuring that transactions behave identically to those on L1 Ethereum.
+- **Consensus Layer**: Incorporates **Geth-based client architecture**, meaning that OP Stack rollups inherit Ethereum’s consensus updates without modification.
+- **Settlement Layer**: Defines a **shared state root format**, allowing Ethereum’s fraud-proof or validity-proof mechanisms to be integrated without additional modifications.
+- **Data Availability**: Implements **efficient batch submission methods**, reducing calldata costs while preserving Ethereum’s historical data structures.
+- **Networking:** Adopts Ethereum’s **peer-to-peer (P2P) networking model**, ensuring that Bedrock nodes can function similarly to Ethereum full nodes.
+
+Additionally, the **Optimism Docs** specify several OP Stack components that further contribute to Ethereum equivalence and modularity[¹³](https://docs.optimism.io/stack/components):
+
+- **Sequencing Layer**: Handles transaction ordering before execution, ensuring deterministic processing.
+- **Derivation Layer**: Processes transaction data from the data availability layer and constructs the rollup's canonical chain.
+- **Governance Layer**: Oversees protocol upgrades, security parameters, and network-level decisions through governance mechanisms.
+
+By mirroring **Ethereum’s structure and terminology**, Bedrock made it easier for **developers, auditors, and core Ethereum contributors** to transition to Optimism.
+
+### **Modularity**
+
+Bedrock’s **modular architecture** was a significant leap forward. Unlike earlier versions, where execution and proof mechanisms were tightly coupled, Bedrock:
+
+- **Separated execution and settlement layers**, allowing for the integration of different clients.
+- **Enabled support for multiple proof mechanisms**, including **fault proofs** and future **validity proofs (zk-SNARKs)**.
+- **Facilitated experimentation**, with projects like **OP Craft** showcasing Bedrock’s flexibility[4](https://optimism.io/).
+
+This modularity prepared **Optimism** for future innovations and increased its **long-term sustainability**[¹¹](https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs).
+
+### **Technical Improvements**
+
+Bedrock introduced several **critical enhancements** to OP Mainnet, including[¹¹](https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs)’[¹²](https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs):
+
+1. **Reduced Transaction Fees**: Optimized **batch compression** and **L1 data submission**, lowering costs for users.
+2. **Faster Transactions & Withdrawals**: Improved batch processing times reduced **L2-to-L1 withdrawal latency**.
+3. **Enhanced Cross-Chain Communication**: Streamlined **L1-L2 messaging**, improving interoperability.
+4. **Improved Node Performance**: Upgrades to node sync mechanisms led to **faster and more reliable network operations**.
+
+### **Bedrock’s Role in the OP Stack & Superchain Vision**
+
+Bedrock laid the foundation for the **OP Stack**, Optimism’s **open-source, modular blockchain framework**. This upgrade:
+
+- Defined **Optimism’s path toward the Superchain**, an interconnected network of OP-based chains.
+- Established **a unified rollup architecture**, easing the onboarding of **new Layer 2 chains**.
+- Made OP Mainnet a **testing ground for Ethereum innovations**, ensuring smoother upgrades.
+
+The **Bedrock Upgrade** was more than a technical enhancement—it was a pivotal step toward **Optimism’s vision of a decentralized, interoperable rollup ecosystem**[¹⁴](https://optimism.mirror.xyz/9ZMwZjst9SQpzIgEd4gN42UDjATyK3ZRClPFx9oMPp8).
+
+## Protocol Upgrade#1: Regolith
+
+The **Regolith Upgrade**, initially deployed on the **Optimism Goerli testnet on March 17, 2023**, was activated on **Optimism Mainnet concurrently with the Bedrock Upgrade on June 6, 2023**. Regolith was included in the Bedrock release, meaning **Optimism Mainnet was upgraded with Regolith already activated**[¹⁵](https://gov.optimism.io/t/final-upgrade-1-bedrock-protocol-upgrade-v2/5548).
+
+### **Key Differences Between Bedrock and Regolith**
+
+- **Scope of Changes**:
+    - *Bedrock*: Implemented a complete architectural redesign, segmenting the OP Stack into distinct components—consensus, execution, and settlement layers—to achieve a high degree of Ethereum equivalence and modularity.
+    - *Regolith*: Focuses on optimizing specific functionalities within the existing Bedrock framework, particularly enhancing the accuracy and efficiency of deposit system transactions.
+- **Technical Enhancements**:
+    - *Bedrock*: Introduced a modular architecture, enabling an Ethereum execution client to be adapted into an Optimism execution client with minimal code alterations. This upgrade also laid the groundwork for a multi-client ecosystem and improved performance metrics across the board.
+    - *Regolith*: Addresses issues identified during audits and testnet observations, refining gas accounting for system transactions, ensuring precise gas usage recording, and updating consensus commitments to enhance synchronization between Layer 2 nodes.
+
+### **Core Features of the Regolith Upgrade[¹⁶](https://specs.optimism.io/protocol/regolith/overview.html)**
+
+- **System Transaction Gas Accounting**: The `isSystemTx` boolean has been disabled, ensuring that system transactions now adhere to the same gas accounting rules as regular deposits.
+- **Accurate Gas Usage Recording**: The actual gas consumed during deposit execution is now recorded in the transaction receipt and deducted from the L2 block's gas pool. Any unused gas from deposits is not refunded with ETH, as it is burned on L1.
+- **Nonce Handling Enhancements**: A new optional field, `depositNonce`, has been added to transaction receipts. This field captures the nonce value of the deposit sender's account prior to the transaction's state transition, ensuring accurate metadata in RPC responses, especially for contract deployments via deposits.
+- **Consensus Commitment Updates**: The `gas` and `depositNonce` data are now integral to the consensus representation of the receipt, facilitating consistent synchronization between independent L2 nodes.
+- **L1-Cost Function Correction**: Adjustments have been made to the L1-cost function to more closely align with pre-Bedrock behavior, ensuring consistency in fee calculations.
+
+The **Regolith upgrade** is activated based on a specific L2 block timestamp, configured in both the rollup node (`regolith_time`) and the execution engine (`config.regolithTime`). These enhancements collectively improve the efficiency, accuracy, and security of deposit processing within the **OP Stack** framework.
 
 ### **References**
 
@@ -198,9 +219,11 @@ The upgrade process for the OP Stack and its Superchain ecosystem is designed to
 6. Sutton, A. (2024). *Final Protocol Upgrade #7: Fault Proofs.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-protocol-upgrade-7-fault-proofs/8161
 7. Maurelian. (2024). *Final Protocol Upgrade #8: Guardian Security Council & Threshold Changes.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157
 8. Fichter, K. (2024). *Modular Rollup Theory Through the Lens of the OP Stack.* Devcon Bogotá. Retrieved from https://www.youtube.com/watch?v=jnVjhp41pcc
-9. Bayardo, R. (2024). *Fjord Upgrade Proposal.* GitHub. Retrieved from https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/823 
-10. The Optimism Collective. (2023). *Building Bedrock*. Optimism Mirror. Retrieved from https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs
-11. The Optimism Collective. (2022). *Introducing the OP Stack*. Optimism Mirror. Retrieved from https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs
-12. OP Labs. (2025). *OP Stack Components*.Optimism Docs. Retrieved from https://docs.optimism.io/stack/components
-13. The Optimism Collective. (2023). *Preparing Optimism for the Superchain Future*. Optimism Mirror. Retrieved from https://optimism.mirror.xyz/9ZMwZjst9SQpzIgEd4gN42UDjATyK3ZRClPFx9oMPp8
-14. OP Labs. (2025) Upgrade Process. Optimism Docs. Retrieved from https://docs.optimism.io/operators/node-operators/network-upgrades#upgrade-process
+9. Bayardo, R. (2024). *Fjord Upgrade Proposal.* Optimism Governance. Retrieved from https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/823 
+10. OP Labs. (2025) *Upgrade Process.* Optimism Docs. Retrieved from https://docs.optimism.io/operators/node-operators/network-upgrades#upgrade-process
+11. The Optimism Collective. (2023). *Building Bedrock*. Optimism Mirror. Retrieved from https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs
+12. The Optimism Collective. (2022). *Introducing the OP Stack*. Optimism Mirror. Retrieved from https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs
+13. OP Labs. (2025). *OP Stack Components*. Optimism Docs. Retrieved from https://docs.optimism.io/stack/components
+14. The Optimism Collective. (2023). *Preparing Optimism for the Superchain Future*. Optimism Mirror. Retrieved from https://optimism.mirror.xyz/9ZMwZjst9SQpzIgEd4gN42UDjATyK3ZRClPFx9oMPp8
+15. Ben-Chain. (2023). *Upgrade #1: Bedrock Protocol Upgrade.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-1-bedrock-protocol-upgrade-v2/5548
+16. OP Stack Specification. (2023). *Protocol Upgrades: Regolith*. Retrieved from https://specs.optimism.io/protocol/regolith/overview.html
