@@ -82,9 +82,7 @@ Key developments in fault proofs include:
 ---
 
 
-# 2. Version Review
-
-## Upgrade process
+# 2. Upgrade process
 
 The upgrade process for the OP Stack and its Superchain ecosystem is designed to ensure smooth transitions across development, testing, and production environments. It involves three primary stages: **Devnet, Testnet, and Mainnet**. Each stage includes specific steps to ensure the integrity and compatibility of the upgrade[¹⁰](https://docs.optimism.io/operators/node-operators/network-upgrades).
 
@@ -125,7 +123,7 @@ The upgrade process for the OP Stack and its Superchain ecosystem is designed to
   <img src="./img/upgradeProcess.png" alt="OP Stack Upgrade Process">
 </figure>
 
-## Bedrock
+# Bedrock
 
 The **Bedrock Upgrade**, activated on **June 6, 2023**, marked a major evolution in Optimism’s transition from its **pre-OP Stack origins** to a fully modular framework. This upgrade was built around three core design principles:
 
@@ -133,13 +131,13 @@ The **Bedrock Upgrade**, activated on **June 6, 2023**, marked a major evoluti
 2. **Ethereum Equivalence**
 3. **Modularity**
 
-### **Code Minimization**
+## **Code Minimization**
 
 Optimism’s early iterations had significant **technical debt**, largely stemming from the **OVM (Optimistic Virtual Machine)**. The OVM relied on a custom transpiler, which **introduced complexity** and increased maintenance overhead. Bedrock restructured the system, achieving a **100x reduction in custom code** compared to the original OVM, with an alternative client requiring only **1,000 lines of code**.
 
 A key inspiration for this was George Hotz’s famous reduction of **a 6,000-line transpiler to a 300-line Solidity compiler modification**, demonstrating the power of **simplified architecture**. This philosophy underpinned Bedrock’s streamlined approach, making it significantly more efficient and maintainable[¹¹](https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs).
 
-### **Ethereum Equivalence Across Multiple Layers**
+## **Ethereum Equivalence Across Multiple Layers**
 
 The **2021 EVM Equivalence Upgrade** was a crucial step toward reducing differences between **Optimism and Ethereum**. However, Bedrock took this further by aligning **multiple layers of the OP Stack** to match Ethereum’s structure[¹²](https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs):
 
@@ -157,7 +155,7 @@ Additionally, the **Optimism Docs** specify several OP Stack components that f
 
 By mirroring **Ethereum’s structure and terminology**, Bedrock made it easier for **developers, auditors, and core Ethereum contributors** to transition to Optimism.
 
-### **Modularity**
+## **Modularity**
 
 Bedrock’s **modular architecture** was a significant leap forward. Unlike earlier versions, where execution and proof mechanisms were tightly coupled, Bedrock:
 
@@ -186,11 +184,11 @@ Bedrock laid the foundation for the **OP Stack**, Optimism’s **open-source, mo
 
 The **Bedrock Upgrade** was more than a technical enhancement—it was a pivotal step toward **Optimism’s vision of a decentralized, interoperable rollup ecosystem**[¹⁴](https://optimism.mirror.xyz/9ZMwZjst9SQpzIgEd4gN42UDjATyK3ZRClPFx9oMPp8).
 
-## Protocol Upgrade#1: Regolith
+# Protocol Upgrade#1: Regolith
 
 The **Regolith Upgrade**, initially deployed on the **Optimism Goerli testnet on March 17, 2023**, was activated on **Optimism Mainnet concurrently with the Bedrock Upgrade on June 6, 2023**. Regolith was included in the Bedrock release, meaning **Optimism Mainnet was upgraded with Regolith already activated**[¹⁵](https://gov.optimism.io/t/final-upgrade-1-bedrock-protocol-upgrade-v2/5548).
 
-### **Key Differences Between Bedrock and Regolith**
+## **Key Differences Between Bedrock and Regolith**
 
 - **Scope of Changes**:
     - *Bedrock*: Implemented a complete architectural redesign, segmenting the OP Stack into distinct components—consensus, execution, and settlement layers—to achieve a high degree of Ethereum equivalence and modularity.
@@ -199,7 +197,7 @@ The **Regolith Upgrade**, initially deployed on the **Optimism Goerli testnet 
     - *Bedrock*: Introduced a modular architecture, enabling an Ethereum execution client to be adapted into an Optimism execution client with minimal code alterations. This upgrade also laid the groundwork for a multi-client ecosystem and improved performance metrics across the board.
     - *Regolith*: Addresses issues identified during audits and testnet observations, refining gas accounting for system transactions, ensuring precise gas usage recording, and updating consensus commitments to enhance synchronization between Layer 2 nodes.
 
-### **Core Features of the Regolith Upgrade[¹⁶](https://specs.optimism.io/protocol/regolith/overview.html)**
+## **Core Features of the Regolith Upgrade[¹⁶](https://specs.optimism.io/protocol/regolith/overview.html)**
 
 - **System Transaction Gas Accounting**: The `isSystemTx` boolean has been disabled, ensuring that system transactions now adhere to the same gas accounting rules as regular deposits.
 - **Accurate Gas Usage Recording**: The actual gas consumed during deposit execution is now recorded in the transaction receipt and deducted from the L2 block's gas pool. Any unused gas from deposits is not refunded with ETH, as it is burned on L1.
@@ -207,9 +205,44 @@ The **Regolith Upgrade**, initially deployed on the **Optimism Goerli testnet 
 - **Consensus Commitment Updates**: The `gas` and `depositNonce` data are now integral to the consensus representation of the receipt, facilitating consistent synchronization between independent L2 nodes.
 - **L1-Cost Function Correction**: Adjustments have been made to the L1-cost function to more closely align with pre-Bedrock behavior, ensuring consistency in fee calculations.
 
-The **Regolith upgrade** is activated based on a specific L2 block timestamp, configured in both the rollup node (`regolith_time`) and the execution engine (`config.regolithTime`). These enhancements collectively improve the efficiency, accuracy, and security of deposit processing within the **OP Stack** framework.
+The **Regolith upgrade** is activated based on a specific L2 block timestamp, configured in both the rollup node (`regolith_time`) and the execution engine (`config.regolithTime`). These enhancements collectively improve the efficiency, accuracy, and security of deposit processing within the **OP Stack** framework.  
 
-### **References**
+# Protocol Upgrade #2: Canyon
+The **Canyon Protocol Upgrade** is a significant update within the OP Stack, aiming to align Layer 2 (L2) protocols with Ethereum's Shapella (Shanghai and Capella) enhancements while introducing specific improvements to optimize network performance and developer experience. This upgrade was activated on **January 11, 2024, at 17:00:01 UTC**, affecting multiple networks, including `op-mainnet`, `base-mainnet`, `pgn-mainnet`, and `zora-mainnet` [¹⁷](https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088). Prior to its mainnet deployment, the Canyon upgrade was released for testing on the **Optimism Goerli Testnet on November 14, 2023**, allowing developers and node operators to validate changes in a controlled environment[¹⁰](https://docs.optimism.io/operators/node-operators/network-upgrades).
+
+## **Key Features of the Canyon Upgrade**[¹⁷](https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088)
+
+**Integration of Shapella Enhancements**
+
+- **EIP-3651: Warm COINBASE** - Optimizes gas costs by marking the COINBASE address as warm, reducing expenses for transactions accessing it.
+- **EIP-3855: PUSH0 Instruction** - Introduces the `PUSH0` opcode, enabling the pushing of a zero value onto the stack, which enhances contract development efficiency.
+- **EIP-3860: Limit and Meter Initcode** - Sets limits and metering for initcode to prevent excessive resource consumption during contract creation.
+- **EIP-4895: Beacon Chain Push Withdrawals as Operations** - Facilitates validator withdrawals by processing them as system-level operations. In the OP Stack context, such withdrawals are prohibited in peer-to-peer (P2P) blocks and are set to an empty array during the Canyon phase.
+- **EIP-6049: Deprecate SELFDESTRUCT** - Advises against using the `SELFDESTRUCT` opcode due to its complexities and potential security implications.
+
+**EIP-1559 Parameter Adjustment**
+
+- The upgrade modifies the EIP-1559 fee mechanism by increasing the denominator from 50 to 250. This change aims to reduce base fee volatility, ensuring a more predictable fee structure for users.
+
+**Channel Ordering Refinement**
+
+- Enhances protocol efficiency by adjusting channel processing logic. The system now processes the first ready channel rather than the first channel in sequence, improving transaction handling and reducing potential delays.
+
+**Receipt Hash Modification**
+
+- Includes the deposit nonce in the deposit receipt hash, addressing previous inconsistencies and ensuring accurate transaction tracking.
+
+**Deployment of `create2Deployer`**
+
+- Standardizes contract deployment by deploying the `create2Deployer` contract to the address `0x13b0D85CcB8bf860b6b79AF3029fCA081AE9beF2` across all OP networks. This facilitates consistent contract creation processes for developers.
+
+### **Security and Implementation Considerations**[¹⁷](https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088)
+
+While the Canyon Upgrade was not subjected to an external audit, OP Labs conducted an internal security review. The incorporated Shapella changes have been active on Ethereum's Layer 1 without issues, suggesting a low-risk integration³. Other modifications, such as the EIP-1559 parameter change, channel ordering adjustment, and receipt hash update, are considered low-risk and have undergone testing³. The deployment of the `create2Deployer` contract involves modifying bytecode at a specific address; OP Labs has verified that this deployment matches the public ABI of the existing contract, ensuring consistency.
+
+Node operators are required to upgrade their nodes to stay in sync with the network. The upgrade is expected to proceed without downtime and does not introduce backward-incompatible changes for end users³. However, developers should be aware of the deprecation warning for the `SELFDESTRUCT` opcode, as its behavior is anticipated to change in future network upgrades.
+
+# **References**
 
 1. Plasma Group. (2019). *Rollup Plasma for Mass Exits & Complex Disputes.* Plasma Build Forum. Retrieved from https://plasma.build/t/rollup-plasma-for-mass-exits-complex-disputes/90
 2. Floersch, K. (2019). *Ethereum Smart Contracts in L2: Optimistic Rollup.* Plasma Group Blog. Retrieved from https://medium.com/plasma-group/ethereum-smart-contracts-in-l2-optimistic-rollup-2c1cef2ec537
@@ -227,3 +260,4 @@ The **Regolith upgrade** is activated based on a specific L2 block timestamp, 
 14. The Optimism Collective. (2023). *Preparing Optimism for the Superchain Future*. Optimism Mirror. Retrieved from https://optimism.mirror.xyz/9ZMwZjst9SQpzIgEd4gN42UDjATyK3ZRClPFx9oMPp8
 15. Ben-Chain. (2023). *Upgrade #1: Bedrock Protocol Upgrade.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-1-bedrock-protocol-upgrade-v2/5548
 16. OP Stack Specification. (2023). *Protocol Upgrades: Regolith*. Retrieved from https://specs.optimism.io/protocol/regolith/overview.html
+17. Trianglesphere. (2023). Upgrade Proposal #2 Canyon. Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088
