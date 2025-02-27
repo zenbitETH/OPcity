@@ -362,6 +362,84 @@ Span Batches achieved significant cost savings by reducing the size of L1 callda
 3. **Mainnet Synchronization**:
     - All OP Stack chains (Base, Zora, PGN) upgraded simultaneously to maintain Superchain consistency.
 
+# Protocol Upgrade #4: Superchain Config
+
+The **SuperchainConfig Upgrade**, activated in **February 2024**, introduced a **centralized configuration contract** for OP Chains and expanded security mechanisms, such as a **global pause system controlled by the Guardian**. This upgrade significantly enhanced the **governance, interoperability, and security** of the Optimism Superchain while maintaining backward compatibility[²¹](https://gov.optimism.io/t/upgrade-proposal-4/7534).
+
+## **Technical Features**
+
+### **1. Global SuperchainConfig Contract**[²²](https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md)
+
+- Introduced a **centralized L1 contract** managing shared configuration for **all OP Chains**.
+- Controls **`PAUSED_SLOT` (global pause state)** and **`GUARDIAN_SLOT` (authorized entity for emergency halts)**.
+- The **Guardian** (initially the **Optimism Foundation**) is responsible for pausing or unpausing the system across multiple chains in case of security risks.
+- Enables **cross-chain emergency response**, allowing a single Guardian to halt operations across multiple chains.
+
+### **2. Extended Pause Mechanism**[²²](https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md)
+
+- Previously, only **withdrawals** could be paused; now includes:
+    - **L1CrossDomainMessenger:** `relayMessage()`
+    - **L1StandardBridge:** `finalizeBridgeETH()`, `finalizeBridgeERC20()`
+    - **L1ERC721Bridge:** `finalizeBridgeERC721()`
+- Enhances **security by preventing invalid withdrawals** and fraudulent message relays.
+- The **Guardian’s authority** ensures a **faster, coordinated response** to systemic vulnerabilities affecting multiple OP Chains[²¹](https://gov.optimism.io/t/upgrade-proposal-4/7534).
+
+### **3. Cross-Chain Security Fixes[²³](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf)**
+
+- **Fix for TRST-H-1 vulnerability**: Closed a reentrancy loophole that allowed **double-withdrawals** during upgrades.
+- **Post-call success assertion added**: Ensures **withdrawal messages are not marked successful after external calls**.
+- **Fix validated in Sepolia testing** and verified in audit before deployment.
+
+### **4. OP Token Factory Enhancements**[²²](https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md)
+
+- **Supports custom decimal tokens** for greater ERC-20 compatibility.
+- **Deploys L2 tokens deterministically via CREATE2**, preventing **cross-chain address collisions**.
+
+### **5. Backward Compatibility**
+
+- No breaking changes for dApps or end-users[²²](https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md).
+- No client software updates required for **node operators[²³](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf)**.
+
+| Feauture | **Pre-SuperchainConfig** | **Post-SuperchainConfig** | **Improvement** |
+| --- | --- | --- | --- |
+| **Cross-Chain Pause Capability** | ❌ Limited to withdrawals | ✅ Extended to bridges & messages | Expanded control ¹ |
+| **Withdrawal Exploit Fix** | ❌ Vulnerable to reentrancy | ✅ TRST-H-1 fully mitigated | Security fixed ³ |
+| **Gas Metering Bug** | ❌ Temporary overuse allowed | ✅ Gas resets corrected | Stable gas usage ³ |
+| **Multi-Chain Configuration** | ❌ Independent per-chain | ✅ Centralized SuperchainConfig | Unified governance ² |
+
+## **Rollout Strategy**[²¹](https://gov.optimism.io/t/upgrade-proposal-4/7534)’[²²](https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md)’[**²³**](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf)
+
+### **1. Testnet Release and Pre-Deployment Testing**
+
+- The **SuperchainConfig contract** was deployed on **Sepolia Testnet** in early **2024** to validate **cross-chain governance and pause mechanisms**.
+- Developers tested **guardian controls**, **withdrawal pausing**, and **config propagation** before mainnet deployment.
+- Fix for **L1CrossDomainMessenger** upgrade bug tested in **live environment**.
+
+### **2. Governance Approval**
+
+- **January 25, 2024** – OP Labs introduced **Upgrade Proposal #4** on the **Optimism governance forum**.
+- Community discussion addressed concerns about **centralized pause authority** and **cross-chain security impacts**.
+- **February 15, 2024** – **Token House vote** approved the upgrade with **≈58.16M OP in favor**, exceeding quorum.
+- The **Citizens' House veto period** passed without objections, allowing the upgrade to proceed.
+
+### **3. Atomic Mainnet Execution**
+
+- **Mid-February 2024** – The upgrade was **deployed atomically** via a **single Ethereum transaction**, ensuring simultaneous updates to all **relevant L1 contracts**.
+- **No network downtime** was required, and **node operators** were **not required to update** their software.
+- **Bundled upgrade transaction** deployed **all L1 contract changes simultaneously**.
+- Prevented **attack vectors** during transition by ensuring full upgrade execution in **one block**.
+
+### **4. Impact on Node Operators**
+
+- **No software update required** – upgrade confined to **L1 smart contracts**.
+- New **SuperchainConfig settings** were **automatically integrated** into existing systems.
+
+### **5. Superchain Coordination**
+
+- **Encouraging adoption by OP Stack chains** (e.g., Base, Zora).
+- **Guardian role centralized under the Optimism Foundation** for **faster security response**.
+- OP Chains may choose their **own Guardian** or integrate with the **Optimism Foundation’s shared Guardian** for synchronized security.
+
 # **References**
 
 1. Plasma Group. (2019). *Rollup Plasma for Mass Exits & Complex Disputes.* Plasma Build Forum. Retrieved from https://plasma.build/t/rollup-plasma-for-mass-exits-complex-disputes/90
@@ -383,4 +461,7 @@ Span Batches achieved significant cost savings by reducing the size of L1 callda
 17. Trianglesphere. (2023). Upgrade Proposal #2 Canyon. Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088
 18. Testinprod. (2024). *Upgrade Proposal #4 Delta.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-proposal-3-delta-network-upgrade/7310
 19. Testinprod. (2024). *Span Batch Design Docs.* Op-Tip. Retrieved from [https://op-tip.notion.site/Span-Batch-Design-Docs-b85e599a47774dcdb8171cc84cab2476](https://www.notion.so/b85e599a47774dcdb8171cc84cab2476?pvs=21)
-20. OP Stack Specification. (2023). *Span Batches.* Retrieved from https://specs.optimism.io/protocol/delta/span-batches.html
+20. OP Stack Specification. (2023). *Span Batches.* Retrieved from https://specs.optimism.io/protocol/delta/span-batches.html 
+21. Maurelian. (2024). *Upgrade Proposal #5 Superchain Configuration.* Optimism Governance. Retrieved from: https://gov.optimism.io/t/upgrade-proposal-4/7534
+22. Maurelian. (2024). Superchain Config Specification.  Optimism Github. Retrieved from https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md
+23. Trust Security. (2024). Optimism Bedrock upgrade. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf
