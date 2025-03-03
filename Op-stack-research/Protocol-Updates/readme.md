@@ -409,36 +409,71 @@ The **SuperchainConfig Upgrade**, activated in **February 2024**, introduced a *
 
 ## **Rollout Strategy**[²¹](https://gov.optimism.io/t/upgrade-proposal-4/7534)’[²²](https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md)’[**²³**](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf)
 
-### **1. Testnet Release and Pre-Deployment Testing**
+1.  **Testnet Release and Pre-Deployment Testing**
+    - The **SuperchainConfig contract** was deployed on **Sepolia Testnet** in early **2024** to validate **cross-chain governance and pause mechanisms**.
+    - Developers tested **guardian controls**, **withdrawal pausing**, and **config propagation** before mainnet deployment.
+    - Fix for **L1CrossDomainMessenger** upgrade bug tested in **live environment**.
+2.  **Governance Approval**
+    - **January 25, 2024** – OP Labs introduced **Upgrade Proposal #4** on the **Optimism governance forum**.
+    - **February 15, 2024** – **Token House vote** approved the upgrade with **≈58.16M OP in favor**, exceeding quorum.
+    - The **Citizens' House veto period** passed without objections, allowing the upgrade to proceed.
+3.  **Atomic Mainnet Execution**
+    - **Mid-February 2024** – The upgrade was **deployed atomically** via a **single Ethereum transaction**, ensuring simultaneous updates to all **relevant L1 contracts**.
+    - **No network downtime** was required, and **node operators** were **not required to update** their software.
+4.  **Impact on Node Operators**
+    - **No software update required** – upgrade confined to **L1 smart contracts**.
+    - New **SuperchainConfig settings** were **automatically integrated** into existing systems.
+5.  **Superchain Coordination**
+    - **Encouraging adoption by OP Stack chains** (e.g., Base, Zora).
+    - **Guardian role centralized under the Optimism Foundation** for **faster security response**.
+    - OP Chains may choose their **own Guardian** or integrate with the **Optimism Foundation’s shared Guardian** for synchronized security.
 
-- The **SuperchainConfig contract** was deployed on **Sepolia Testnet** in early **2024** to validate **cross-chain governance and pause mechanisms**.
-- Developers tested **guardian controls**, **withdrawal pausing**, and **config propagation** before mainnet deployment.
-- Fix for **L1CrossDomainMessenger** upgrade bug tested in **live environment**.
+# Protocol Upgrade #5: Ecotone
+The **Ecotone Network Upgrade** is a pivotal update to the OP Stack, introducing **EIP-4844 blob transactions** for cheaper data availability, aligning the execution layer with Ethereum’s **Cancun/Dencun upgrade**, and improving **gas fee models**. Activated on **March 14, 2024**, Ecotone significantly reduces transaction costs while maintaining network security and performance[²⁴](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669).
 
-### **2. Governance Approval**
+## **Technical Features**[²⁴](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669)’[²⁵](https://specs.optimism.io/protocol/ecotone/overview.html)
 
-- **January 25, 2024** – OP Labs introduced **Upgrade Proposal #4** on the **Optimism governance forum**.
-- Community discussion addressed concerns about **centralized pause authority** and **cross-chain security impacts**.
-- **February 15, 2024** – **Token House vote** approved the upgrade with **≈58.16M OP in favor**, exceeding quorum.
-- The **Citizens' House veto period** passed without objections, allowing the upgrade to proceed.
+- **EIP-4844 “Blob” Data Support:** Ecotone adopted **Ethereum EIP-4844 (proto-danksharding blobs)** for L2 data availability\[1\]. Blobs allow the batch submitter (sequencer) to post transaction batches to Ethereum using blobs instead of calldata, significantly increasing data capacity. Blobs use a **separate fee market**, independent of L1 gas price, ensuring greater cost efficiency.
+- **New L1 Data Fee Pricing Model:** Optimism’s **Gas Price Oracle** was updated to include blob fee parameters, allowing accurate transaction fee estimation. The **L1Block** predeploy was extended to pass L1 blob base fee data to L2, improving fee predictability.
+- **Ethereum Dencun Compatibility (EVM Changes):** Ecotone integrated core protocol changes from Ethereum’s **Cancun/Dencun** upgrade, ensuring EVM equivalence between L2 and L1:
+    - **EIP-1153: Transient Storage** – Adds new opcodes (`TLOAD`/`TSTORE`) for efficient temporary storage.
+    - **EIP-5656: MCOPY Instruction** – Optimized memory copying opcode for faster execution.
+    - **EIP-6780: Restricted SELFDESTRUCT** – Modifies contract self-destruction behavior for improved security.
+    - **EIP-4788: Beacon Block Root Access** – Enables L2 smart contracts to verify L1 beacon chain state trustlessly.
+- **Protocol and Node Updates:** OP Stack node software was upgraded, requiring **op-node v1.7.0** and **op-geth v1.101308.2** for continued operation. Chain derivation logic was extended to support blob transactions.
 
-### **3. Atomic Mainnet Execution**
+## **Metrics & Performance Improvements**[²⁴](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669)’[²⁵](https://specs.optimism.io/protocol/ecotone/overview.html)
 
-- **Mid-February 2024** – The upgrade was **deployed atomically** via a **single Ethereum transaction**, ensuring simultaneous updates to all **relevant L1 contracts**.
-- **No network downtime** was required, and **node operators** were **not required to update** their software.
-- **Bundled upgrade transaction** deployed **all L1 contract changes simultaneously**.
-- Prevented **attack vectors** during transition by ensuring full upgrade execution in **one block**.
+- **Transaction Fee Reduction:** The introduction of blobs allowed **up to 80× reduction in fees**, with actual costs dropping to as low as **$0.0005 per transaction** on some OP Stack chains post-upgrade.
+- **Throughput & Capacity Gains:** Data availability throughput was **quadrupled**, enabling more transactions per L1 block without increasing costs.
+- **Security Enhancements:** The upgrade strengthened network security through Ethereum-aligned improvements, including **restricted SELFDESTRUCT and beacon root access**.
 
-### **4. Impact on Node Operators**
+## **Rollout Strategy**[²⁴](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669)
 
-- **No software update required** – upgrade confined to **L1 smart contracts**.
-- New **SuperchainConfig settings** were **automatically integrated** into existing systems.
+1. **Development & Internal Testing (Feb 2024)**
+    
+    OP Labs tested Ecotone on internal devnets, collaborating with Base and Conduit to validate blob data processing.
+    
+2. **Public Testnet Releases (Feb 6-21, 2024)**
+    
+    The upgrade was deployed on **OP Goerli and Base Goerli (Feb 6, 2024)** and later **OP Sepolia (Feb 21, 2024)**. These trials verified blob transaction handling and ensured no issues before mainnet deployment.
+    
+3.  **Governance Process (Feb 14 - Mar 6, 2024)**
+    
+    The upgrade proposal was introduced on **Feb 14, 2024**, discussed in the community, and approved in **Voting Cycle #19** on **March 6, 2024** with over 39 million OP voting in favor.
+    
+4.  **Citizens’ House Veto Period (Mar 7-13, 2024)**
+    
+    A one-week **veto period** followed the vote, but no vetoes were raised, confirming final governance approval.
+    
+5.  **Node Software Release & Operator Coordination (Early Mar 2024)**
+    
+    Node operators were required to upgrade to **op-node v1.7.0** and **op-geth v1.101308.2** ahead of activation.
+    
+6.  **Mainnet Activation & Execution (Mar 14, 2024)**
+    
+    The upgrade activated on **March 14, 2024, at 00:00:01 UTC** across OP Stack networks, ensuring a smooth transition without downtime. The upgrade was confirmed across multiple chains, with transaction fees dropping significantly.
 
-### **5. Superchain Coordination**
-
-- **Encouraging adoption by OP Stack chains** (e.g., Base, Zora).
-- **Guardian role centralized under the Optimism Foundation** for **faster security response**.
-- OP Chains may choose their **own Guardian** or integrate with the **Optimism Foundation’s shared Guardian** for synchronized security.
 
 # **References**
 
@@ -460,8 +495,10 @@ The **SuperchainConfig Upgrade**, activated in **February 2024**, introduced a *
 16. OP Stack Specification. (2023). *Protocol Upgrades: Regolith*. Retrieved from https://specs.optimism.io/protocol/regolith/overview.html
 17. Trianglesphere. (2023). Upgrade Proposal #2 Canyon. Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088
 18. Testinprod. (2024). *Upgrade Proposal #4 Delta.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-proposal-3-delta-network-upgrade/7310
-19. Testinprod. (2024). *Span Batch Design Docs.* Op-Tip. Retrieved from [https://op-tip.notion.site/Span-Batch-Design-Docs-b85e599a47774dcdb8171cc84cab2476](https://www.notion.so/b85e599a47774dcdb8171cc84cab2476?pvs=21)
+19. Testinprod. (2024). *Span Batch Design Docs.* Op-Tip. Retrieved from https://www.notion.so/b85e599a47774dcdb8171cc84cab2476?pvs=21
 20. OP Stack Specification. (2023). *Span Batches.* Retrieved from https://specs.optimism.io/protocol/delta/span-batches.html 
 21. Maurelian. (2024). *Upgrade Proposal #5 Superchain Configuration.* Optimism Governance. Retrieved from: https://gov.optimism.io/t/upgrade-proposal-4/7534
 22. Maurelian. (2024). Superchain Config Specification.  Optimism Github. Retrieved from https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md
 23. Trust Security. (2024). Optimism Bedrock upgrade. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf
+24. Bayardo, R. (2024). *Upgrade Proposal #5: Ecotone Network Upgrade.* Optimism Governance. Retrieved from https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669
+25. Optimism OP Stack Specs. (2024). *Ecotone Network Upgrade – Technical Specifications.* Retrieved from https://specs.optimism.io/protocol/ecotone/overview.html
