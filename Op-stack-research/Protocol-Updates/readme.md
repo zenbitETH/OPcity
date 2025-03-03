@@ -409,10 +409,9 @@ The **SuperchainConfig Upgrade**, activated in **February 2024**, introduced a *
 
 ## **Rollout Strategy**[²¹](https://gov.optimism.io/t/upgrade-proposal-4/7534)’[²²](https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md)’[**²³**](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf)
 
-1.  **Testnet Release and Pre-Deployment Testing**
+1. **Testnet Release and Pre-Deployment Testing**
     - The **SuperchainConfig contract** was deployed on **Sepolia Testnet** in early **2024** to validate **cross-chain governance and pause mechanisms**.
     - Developers tested **guardian controls**, **withdrawal pausing**, and **config propagation** before mainnet deployment.
-    - Fix for **L1CrossDomainMessenger** upgrade bug tested in **live environment**.
 2.  **Governance Approval**
     - **January 25, 2024** – OP Labs introduced **Upgrade Proposal #4** on the **Optimism governance forum**.
     - **February 15, 2024** – **Token House vote** approved the upgrade with **≈58.16M OP in favor**, exceeding quorum.
@@ -433,20 +432,41 @@ The **Ecotone Network Upgrade** is a pivotal update to the OP Stack, introducing
 
 ## **Technical Features**[²⁴](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669)’[²⁵](https://specs.optimism.io/protocol/ecotone/overview.html)
 
-- **EIP-4844 “Blob” Data Support:** Ecotone adopted **Ethereum EIP-4844 (proto-danksharding blobs)** for L2 data availability\[1\]. Blobs allow the batch submitter (sequencer) to post transaction batches to Ethereum using blobs instead of calldata, significantly increasing data capacity. Blobs use a **separate fee market**, independent of L1 gas price, ensuring greater cost efficiency.
-- **New L1 Data Fee Pricing Model:** Optimism’s **Gas Price Oracle** was updated to include blob fee parameters, allowing accurate transaction fee estimation. The **L1Block** predeploy was extended to pass L1 blob base fee data to L2, improving fee predictability.
-- **Ethereum Dencun Compatibility (EVM Changes):** Ecotone integrated core protocol changes from Ethereum’s **Cancun/Dencun** upgrade, ensuring EVM equivalence between L2 and L1:
-    - **EIP-1153: Transient Storage** – Adds new opcodes (`TLOAD`/`TSTORE`) for efficient temporary storage.
-    - **EIP-5656: MCOPY Instruction** – Optimized memory copying opcode for faster execution.
-    - **EIP-6780: Restricted SELFDESTRUCT** – Modifies contract self-destruction behavior for improved security.
-    - **EIP-4788: Beacon Block Root Access** – Enables L2 smart contracts to verify L1 beacon chain state trustlessly.
-- **Protocol and Node Updates:** OP Stack node software was upgraded, requiring **op-node v1.7.0** and **op-geth v1.101308.2** for continued operation. Chain derivation logic was extended to support blob transactions.
+**EIP-4844 “Blob” Data Support**
+
+- Ecotone adopted **Ethereum EIP-4844 (proto-danksharding blobs)** for L2 data availability. Blobs allow the batch submitter (sequencer) to post transaction batches to Ethereum using blobs instead of calldata, significantly increasing data capacity.
+- Blobs use a **separate fee market**, independent of L1 gas price, ensuring greater cost efficiency.
+
+**New L1 Data Fee Pricing Model**
+
+- Optimism’s **Gas Price Oracle** was updated to include blob fee parameters, allowing accurate transaction fee estimation.
+- The **L1Block** predeploy was extended to pass L1 blob base fee data to L2, improving fee predictability.
+
+**Ethereum Dencun Compatibility (EVM Changes)**
+
+Ecotone integrated core protocol changes from Ethereum’s **Cancun/Dencun** upgrade, ensuring EVM equivalence between L2 and L1:
+
+- **EIP-1153: Transient Storage** – Adds new opcodes (`TLOAD`/`TSTORE`) for efficient temporary storage.
+- **EIP-5656: MCOPY Instruction** – Optimized memory copying opcode for faster execution.
+- **EIP-6780: Restricted SELFDESTRUCT** – Modifies contract self-destruction behavior for improved security.
+- **EIP-4788: Beacon Block Root Access** – Enables L2 smart contracts to verify L1 beacon chain state trustlessly.
+
+**Protocol and Node Updates**
+
+- OP Stack node software was upgraded, requiring **op-node v1.7.0** and **op-geth v1.101308.2** for continued operation. Chain derivation logic was extended to support blob transactions.
 
 ## **Metrics & Performance Improvements**[²⁴](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669)’[²⁵](https://specs.optimism.io/protocol/ecotone/overview.html)
 
-- **Transaction Fee Reduction:** The introduction of blobs allowed **up to 80× reduction in fees**, with actual costs dropping to as low as **$0.0005 per transaction** on some OP Stack chains post-upgrade.
-- **Throughput & Capacity Gains:** Data availability throughput was **quadrupled**, enabling more transactions per L1 block without increasing costs.
-- **Security Enhancements:** The upgrade strengthened network security through Ethereum-aligned improvements, including **restricted SELFDESTRUCT and beacon root access**.
+**Transaction Fee Reduction**
+- The introduction of blobs allowed **up to 80× reduction in fees**, with actual costs dropping to as low as **$0.0005 per transaction** on some OP Stack chains post-upgrade.
+
+**Throughput & Capacity Gains**
+
+- Data availability throughput was **quadrupled**, enabling more transactions per L1 block without increasing costs.
+
+**Security Enhancements**
+
+- The upgrade strengthened network security through Ethereum-aligned improvements, including **restricted SELFDESTRUCT and beacon root access**.
 
 ## **Rollout Strategy**[²⁴](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669)
 
@@ -473,6 +493,94 @@ The **Ecotone Network Upgrade** is a pivotal update to the OP Stack, introducing
 6.  **Mainnet Activation & Execution (Mar 14, 2024)**
     
     The upgrade activated on **March 14, 2024, at 00:00:01 UTC** across OP Stack networks, ensuring a smooth transition without downtime. The upgrade was confirmed across multiple chains, with transaction fees dropping significantly.
+
+
+
+
+# Protocol Upgrade #6: Multi-chain Prep (MCP) L1
+The **Multi-Chain Prep (MCP) L1 Upgrade**, activated in **March 2024**, introduced foundational changes to the **OP Stack’s upgradeability and multi-chain architecture**. It enables OP Stack chains to **share a single set of L1 contract implementations**, allowing governance to **atomically upgrade all OP Chains in one transaction**. This improvement significantly enhances security, streamlines governance, and reduces deployment complexity across the **Superchain**[²⁶](https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677).
+
+## **Technical Features**[²⁶](https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677)’[²⁷](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_02-MCP_L1-Cantina.pdf)
+
+1.  **Standardized SystemConfig for OP Chains**
+    - **Unified L1 Configurations:** MCP introduced **SystemConfig**, a standardized contract for OP Stack rollups to retrieve **governance and fee parameters** from L1.
+    - **Mutable System Parameters:** Allowed real-time updates to **batcher parameters, gas configurations, and bridge settings**.
+    - **Optimized L1↔L2 Communication:** Ensured **cross-domain governance synchronization** across different OP Chains.
+2.  **L1 Contract Upgrade Framework**
+    - **Reused Implementations Across Chains:** Previously, each OP Chain deployed its own L1 contract implementations. MCP **standardized deployment processes**, enabling multiple OP Chains to **reuse** the same L1 contracts.
+    - **Backward-Compatible Upgrades:** Ensured **governance-approved upgrades** could be applied across chains **without breaking existing deployments**.
+3.  **Governance & Security Enhancements**
+    - **FeeVault Adjustments:** Introduced **gaps in FeeVault storage layout**, allowing future updates without **breaking contract upgradeability**.
+    - **Resource Config Consistency:** Addressed potential mismatches in **resource configurations**, ensuring accurate gas fee calculations.
+    - **Cross-Domain Messenger Security Updates:** Improved L1CrossDomainMessenger deployment flow **to prevent mismatched predeploy addresses**.
+
+## **Audit Findings & Risk Assessment**[²⁷](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_02-MCP_L1-Cantina.pdf)
+
+The **Cantina security audit** reviewed MCP from **January 22 to February 5, 2024**, identifying **14 issues**, including:
+
+**7 Low-Risk Findings:**
+
+- Addressing **deployment mismatches** across OP Chains.
+- Ensuring **correct initialization of L1 contracts**.
+- Refining **cross-domain message consistency**.
+
+**7 Informational Findings:**
+
+- Minor **storage layout documentation issues**.
+- **NatSpec documentation improvements** for contract clarity.
+- **L2OutputOracle test fixes** to improve reliability.
+
+No **critical, high-risk, or medium-risk vulnerabilities** were reported.
+
+## **Metrics & Performance Impact**[²⁶](https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677)
+
+**Standardized Governance Updates**
+
+- Unified governance updates across OP Chains, reducing coordination efforts and ensuring network-wide consistency.
+
+**L1 Contract Reusability**
+
+- Enabled OP Chains to share L1 contract implementations, eliminating redundant deployments and lowering maintenance overhead.
+
+**Gas Cost Optimization**
+
+- Streamlined contract configurations, reducing gas costs for L1↔L2 transactions by eliminating duplicated contract logic.
+
+**FeeVault Upgradeability**
+
+- Introduced flexible storage layouts, ensuring FeeVault can be upgraded in future iterations without breaking existing functionality.
+
+| **Metric** | **Before MCP** | **After MCP** | **Improvement** |
+| --- | --- | --- | --- |
+| **SystemConfig Governance Updates** | Individual updates per OP Chain | Unified across OP Chains | ✅ Standardized Governance |
+| **L1 Contract Reusability** | Separate deployments per chain | Shared contract implementations | ✅ Reduced Deployment Redundancy |
+| **Gas Costs for L1↔L2 Transactions** | Higher due to duplicate configurations | Lower due to streamlined config access | ✅ Lower Gas Costs |
+| **FeeVault Upgradeability** | Fixed storage layout | Gaps reserved for future upgrades | ✅ Increased Flexibility |
+
+## **Rollout Strategy**[²⁶](https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677)’[²⁷](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_02-MCP_L1-Cantina.pdf)
+
+1. **Internal Testing (Early January 2024)**
+    
+    OP Labs deployed the changes in controlled environments to ensure stability and assess functionality. This phase allowed developers to validate the modifications and conduct pre-audit reviews.
+    
+2. **Governance Proposal Submission (January 12, 2024)**
+    
+    The **governance proposal** was formally submitted, detailing the expected benefits, risks, and governance implications of the upgrade.
+    
+3. **Security Audit Review (January 22 – February 5, 2024)**
+    
+    Cantina Security conducted an audit of MCP L1, ensuring security robustness and validating the contract changes. No critical or high-risk issues were found.
+    
+4. **Testnet Deployment (February 6, 2024)**
+    
+    The upgrade was deployed on **OP Goerli and OP Sepolia**, allowing developers and node operators to test its functionality in a public environment.
+    
+5. **Community Discussion and Governance Voting (February 8 – February 22, 2024)**
+    - **Community Discussions (February 8 – February 15, 2024):** Governance members and developers reviewed testnet performance and discussed any remaining concerns.
+    - **Governance Voting (February 16 – February 22, 2024):** The upgrade moved into Voting Cycle #20 and received strong approval from the community.
+6. **Citizens’ House Review and Mainnet Activation (Mid-March 2024)**
+    - **Citizens’ House Veto Period:** Provided an opportunity for stakeholders to contest the decision before execution.
+    - **Mainnet Activation:** The upgrade was successfully deployed with no downtime or disruptions, marking a smooth transition to the new multi-chain framework.
 
 
 # **References**
@@ -502,3 +610,5 @@ The **Ecotone Network Upgrade** is a pivotal update to the OP Stack, introducing
 23. Trust Security. (2024). Optimism Bedrock upgrade. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf
 24. Bayardo, R. (2024). *Upgrade Proposal #5: Ecotone Network Upgrade.* Optimism Governance. Retrieved from https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669
 25. Optimism OP Stack Specs. (2024). *Ecotone Network Upgrade – Technical Specifications.* Retrieved from https://specs.optimism.io/protocol/ecotone/overview.html
+26. Diego. (2024). *Upgrade Proposal #6 Multi-Chain Prep L1.* Optimism Governance. Retrieved from https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677
+27. Cantina Security. (2024). *Multi-Chain Prep (MCP) L1 Audit Report.* Optimism GitHub. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_02-MCP_L1-Cantina.pdf
