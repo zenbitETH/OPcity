@@ -686,8 +686,8 @@ The **Fault Proofs Upgrade** (Upgrade #7) marks a significant milestone in Opt
 25. Optimism OP Stack Specs. (2024). *Ecotone Network Upgrade – Technical Specifications.* Retrieved from https://specs.optimism.io/protocol/ecotone/overview.html
 26. Diego. (2024). *Upgrade Proposal #6 Multi-Chain Prep L1.* Optimism Governance. Retrieved from https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677
 27. Cantina Security. (2024). *Multi-Chain Prep (MCP) L1 Audit Report.* Optimism GitHub. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_02-MCP_L1-Cantina.pdf
-28. OP Labs. (2024). *Feature-complete Fault Proofs on OP Sepolia.* OP Labs Blog Retrieved from https://blog.oplabs.co/open-source-and-feature-complete-fault-proofs-bring-permissionless-validation-to-the-op-sepolia-testnet/
-29. **Ajsutton**. (2024). *Upgrade Proposal #7: Fault Proofs.* Optimism Governance Retrieved from https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161
-30. OP Labs. (2024). *Fault Proofs Overview.* OP Stack Specifications Retrieved from https://specs.optimism.io/fault-proof/index.html
-31. OP Labs. (2024). *Fault Proof System Documentation.* Optimism Github Retrieved from https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx
-32. Optimism Release Notes. (2024). *v1.4.0-rc.4.* Optimism Github Retrieved from https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4
+28. OP Labs. (2024). *Feature-complete Fault Proofs on OP Sepolia.* OP Labs Blog. Retrieved from https://blog.oplabs.co/open-source-and-feature-complete-fault-proofs-bring-permissionless-validation-to-the-op-sepolia-testnet/
+29. Ajsutton. (2024). *Upgrade Proposal #7: Fault Proofs.* Optimism Governance. Retrieved from https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161
+30. OP Labs. (2024). *Fault Proofs Overview.* OP Stack Specification. Retrieved from https://specs.optimism.io/fault-proof/index.html
+31. OP Labs. (2024). *Fault Proof System Documentation.* Optimism Github. Retrieved from https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx
+32. Optimism Release Notes. (2024). *v1.4.0-rc.4.* Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4
