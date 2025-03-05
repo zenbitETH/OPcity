@@ -582,6 +582,80 @@ No **critical, high-risk, or medium-risk vulnerabilities** were reported.
     - **Citizens’ House Veto Period:** Provided an opportunity for stakeholders to contest the decision before execution.
     - **Mainnet Activation:** The upgrade was successfully deployed with no downtime or disruptions, marking a smooth transition to the new multi-chain framework.
 
+# Upgrade #7: Fault Proofs
+
+The **Fault Proofs Upgrade** (Upgrade #7) marks a significant milestone in Optimism’s decentralization roadmap, introducing **permissionless validation** and **interactive fraud-proof dispute resolution**. Prior to this, OP Mainnet relied on a **trusted proposer model**, where a privileged actor submitted L2 state roots to Ethereum. With this upgrade, any participant can propose state roots and challenge fraudulent claims, eliminating reliance on a single entity and enhancing security. The upgrade was deployed in multiple phases, starting with **testnet activation on March 19, 2024[²⁸](https://blog.oplabs.co/open-source-and-feature-complete-fault-proofs-bring-permissionless-validation-to-the-op-sepolia-testnet/)**, followed by **governance approval on May 29, 2024**, and **mainnet activation in early June 2024[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)**.
+
+## **Technical Features**
+
+1.  **Permissionless Validation & Output Proposals[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)’[³⁰](https://specs.optimism.io/fault-proof/index.html)**
+    - Previously, only a whitelisted proposer could submit L2 state roots to Ethereum.
+    - The upgrade enables **anyone** to propose an output state root, provided they post a **bond**.
+    - Proposals are now submitted to a **DisputeGameFactory** contract instead of a fixed oracle.
+    - The bond mechanism prevents **spam and malicious state root proposals**, ensuring economic security.
+    - Users are no longer dependent on a single trusted sequencer to finalize withdrawals; any participant can submit state roots.
+2.  **Fault Proof Dispute Game[³¹](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)**
+    - If a state root is suspected to be fraudulent, **any party can challenge it** by initiating a dispute.
+    - A binary bisection game is used to isolate the exact execution step where fraud occurs.
+    - The on-chain **MIPS-based Fault Proof VM** verifies disputed execution steps on L1.
+    - The **losing party’s bond is slashed**, discouraging malicious proposals.
+    - **Interactive game-based challenge resolution** ensures efficient fraud detection while minimizing L1 execution costs.
+3.  **Guardian Override & Security Council Backstop[³²](https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4)**
+    - A **guardian role** (Optimism’s Security Council) can intervene in emergencies to pause withdrawals.
+    - This serves as a **Stage 1 decentralization safeguard**, ensuring security while the system matures.
+    - Guardians have limited override power, preventing abuse and ensuring decentralization goals remain intact.
+4.  **Modular Multi-Proof Architecture[³⁰](https://specs.optimism.io/fault-proof/index.html)**
+    - The system is designed to support multiple fraud-proof mechanisms in the future.
+    - Future rollups may incorporate **zk-proofs or alternative dispute models** alongside fault proofs.
+    - The modular approach allows **plug-and-play integration** of different verification mechanisms.
+
+## **Metrics & Performance Impact**
+
+1.  **Security Improvements[³¹](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)**
+    - Eliminates reliance on a **trusted proposer**, reducing single points of failure.
+    - Ensures withdrawals can be processed **without privileged intervention**.
+    - Challenges fraudulent state roots using **on-chain execution verification**.
+    - **Decentralized fault proof submission** removes centralization risks and strengthens the rollup security model.
+2.  **Efficiency & Cost Considerations[³⁰](https://specs.optimism.io/fault-proof/index.html)**
+    - **Transaction throughput remains unchanged**, as the dispute process runs asynchronously.
+    - Posting an output proposal requires a **0.08 ETH bond**, discouraging frivolous challenges³.
+    - **Gas costs for dispute resolution are minimal** since only the final step of execution is verified on L1.
+    - **Optimized fraud-proof submission process** reduces the number of transactions required to confirm challenges.
+3.  **Comparison to Previous Models[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)**
+    - **Plasma Rollups:** Required users to monitor transactions actively, leading to potential data withholding risks.
+    - **OVM Era (2021-2023):** Fault proofs were theoretically included but never activated.
+
+## **Rollout Strategy[²⁸](https://blog.oplabs.co/open-source-and-feature-complete-fault-proofs-bring-permissionless-validation-to-the-op-sepolia-testnet/)’[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)**
+
+**October 2023 – MVP and Early Testing**
+
+- OP Labs delivered a **minimum viable fault-proof system (MVP)** to demonstrate the dispute framework in a controlled environment.
+- The MVP established the foundational logic for fraud-proof execution before broader testnet deployment.
+
+**March 19, 2024 – Testnet Activation**
+
+- The **feature-complete fault proof system** was deployed on **OP Sepolia**.
+- Developers tested permissionless validation and dispute mechanics in a real environment¹.
+- The testnet included **stress testing** for large-scale fraud-proof disputes.
+- Breaking changes to withdrawal logic were introduced, requiring dApp modifications.
+
+**April–May 2024 – Governance Discussions**
+
+- OP Labs engineer **Adrian Sutton** posted the [FINAL] governance proposal outlining permissionless fault proofs.
+- The Developer Advisory Board (DAB) provided an educational summary to ensure token holders understood the upgrade.
+- The proposal was moved into **Special Voting Cycle #23a** due to its importance.
+
+**May 16–29, 2024 – Governance Approval**
+
+- The **Token House vote** concluded with **58.4M OP in favor vs. 0.14M against**, achieving near-unanimous approval.
+- The **Citizens’ House veto period** passed without objections, finalizing governance ratification.
+
+**Early June 2024 – Mainnet Activation**
+
+- The **Security Council executed the upgrade**, deploying fault proofs to OP Mainnet.
+- **Withdrawals now require challenge verification**, ensuring correctness before funds are released.
+- OP Labs provided **extensive upgrade guidance** for node operators and validators.
+- The upgrade was deployed via a **single atomic transaction** to ensure a clean switchover.
 
 # **References**
 
@@ -612,3 +686,8 @@ No **critical, high-risk, or medium-risk vulnerabilities** were reported.
 25. Optimism OP Stack Specs. (2024). *Ecotone Network Upgrade – Technical Specifications.* Retrieved from https://specs.optimism.io/protocol/ecotone/overview.html
 26. Diego. (2024). *Upgrade Proposal #6 Multi-Chain Prep L1.* Optimism Governance. Retrieved from https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677
 27. Cantina Security. (2024). *Multi-Chain Prep (MCP) L1 Audit Report.* Optimism GitHub. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_02-MCP_L1-Cantina.pdf
+28. OP Labs. (2024). *Feature-complete Fault Proofs on OP Sepolia.* OP Labs Blog Retrieved from https://blog.oplabs.co/open-source-and-feature-complete-fault-proofs-bring-permissionless-validation-to-the-op-sepolia-testnet/
+29. **Ajsutton**. (2024). *Upgrade Proposal #7: Fault Proofs.* Optimism Governance Retrieved from https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161
+30. OP Labs. (2024). *Fault Proofs Overview.* OP Stack Specifications Retrieved from https://specs.optimism.io/fault-proof/index.html
+31. OP Labs. (2024). *Fault Proof System Documentation.* Optimism Github Retrieved from https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx
+32. Optimism Release Notes. (2024). *v1.4.0-rc.4.* Optimism Github Retrieved from https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4
