@@ -588,40 +588,101 @@ The **Fault Proofs Upgrade** (Upgrade #7) marks a significant milestone in Opt
 
 ## **Technical Features**
 
-1.  **Permissionless Validation & Output Proposals[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)’[³⁰](https://specs.optimism.io/fault-proof/index.html)**
-    - Previously, only a whitelisted proposer could submit L2 state roots to Ethereum.
+1. **Fault Proof System Overview[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)’[³⁰](https://specs.optimism.io/fault-proof/index.html)**
+    - Introduces an open-source, permissionless, and feature-complete fault proof system, the first of its kind in the Ethereum ecosystem, allowing anyone to validate transactions without special permissions (OP Labs Blog; OP Stack Specs).
+    - Aims to replace permissioned fraud-proof mechanisms with a decentralized dispute resolution process, enhancing trustlessness (Governance Post). Previously, only a whitelisted proposer could submit L2 state roots to Ethereum.
     - The upgrade enables **anyone** to propose an output state root, provided they post a **bond**.
     - Proposals are now submitted to a **DisputeGameFactory** contract instead of a fixed oracle.
-    - The bond mechanism prevents **spam and malicious state root proposals**, ensuring economic security.
     - Users are no longer dependent on a single trusted sequencer to finalize withdrawals; any participant can submit state roots.
-2.  **Fault Proof Dispute Game[³¹](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)**
-    - If a state root is suspected to be fraudulent, **any party can challenge it** by initiating a dispute.
+
+2.  **Fault Proof Dispute Game**[³⁰](https://specs.optimism.io/fault-proof/index.html) [**³¹**](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)
     - A binary bisection game is used to isolate the exact execution step where fraud occurs.
     - The on-chain **MIPS-based Fault Proof VM** verifies disputed execution steps on L1.
-    - The **losing party’s bond is slashed**, discouraging malicious proposals.
-    - **Interactive game-based challenge resolution** ensures efficient fraud detection while minimizing L1 execution costs.
-3.  **Guardian Override & Security Council Backstop[³²](https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4)**
-    - A **guardian role** (Optimism’s Security Council) can intervene in emergencies to pause withdrawals.
-    - This serves as a **Stage 1 decentralization safeguard**, ensuring security while the system matures.
-    - Guardians have limited override power, preventing abuse and ensuring decentralization goals remain intact.
-4.  **Modular Multi-Proof Architecture[³⁰](https://specs.optimism.io/fault-proof/index.html)**
+    - Supports multiple dispute game types: Cannon (using the Cannon VM), Permissioned Cannon (restricted version), and Alphabet (a non-production type for testing) (Sherlock Security Review; OP Stack Specs).
     - The system is designed to support multiple fraud-proof mechanisms in the future.
     - Future rollups may incorporate **zk-proofs or alternative dispute models** alongside fault proofs.
     - The modular approach allows **plug-and-play integration** of different verification mechanisms.
 
+3. **Bond Mechanism**[³⁰](https://specs.optimism.io/fault-proof/index.html) [**³¹**](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)
+    - Requires participants to post bonds when initiating or challenging claims in dispute games, incentivizing honest behavior (OP Stack Specs).
+    - Bonds are returned to honest participants or forfeited to challengers if claims are invalid, with initial bond sizes set at initialization (Sherlock Security Review).
+
+4. **Anchor State Registry**[³⁰](https://specs.optimism.io/fault-proof/index.html) [**³¹**](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)
+    - Introduces the AnchorStateRegistry contract to manage and anchor the fault proof system’s state to the blockchain, ensuring consistency and integrity (Sherlock Security Review; OP Stack Specs).
+5. **Guardian Override & Security Council Backstop[³²](https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4)** 
+
+- A **guardian role** (Optimism’s Security Council) can intervene in emergencies to pause withdrawals.
+- This serves as a **Stage 1 decentralization safeguard**, ensuring security while the system matures.
+- Guardians have limited override power, preventing abuse and ensuring decentralization goals remain intact.
+
+### Fault Proofs Components
+
+| **Name** | **Description** | **Type** | **Security Issues** |
+| --- | --- | --- | --- |
+| `DisputeGameFactory` | A factory contract that deploys new dispute game instances based on the game type. | Onchain Contract | M-3: Smart wallet bond theft due to use of tx.origin |
+| `FaultDisputeGame` | The main dispute game contract for challenging proposed outputs interactively. | Onchain Contract | M-4: Re-org attack bond loss due to lack of claim identification in move() |
+| `PermissionedDisputeGame` | A permissioned version of the dispute game, used for specific scenarios or testing. | Onchain Contract | None mentioned |
+| `AnchorStateRegistry` | Manages anchor states for the fault proof system, ensuring consistency and integrity. | Onchain Contract | M-2: L2 block number spoofing |
+| `DelayedWETH` | Handles delayed release of WETH bonds to allow off-chain monitoring time. | Onchain Contract | None mentioned |
+| `PreimageOracle` | Provides preimage data for the virtual machine to verify execution steps. | Onchain Contract | None mentioned |
+| `MIPS` | Virtual machine (MIPS emulator) for executing and verifying disputed execution steps. | Onchain Contract | None mentioned |
+| `OptimismPortal2` | Main entry point for L2 to L1 withdrawals, integrating with the fault proof system. | Onchain Contract | M-1: Incorrect game type casting; M-2: L2 block number spoofing |
+| `SystemConfig` | Manages system-wide configuration parameters for the OP Stack. | Onchain Contract | None mentioned |
+| `L1CrossDomainMessenger` | Facilitates message passing from L1 to L2. | Onchain Contract | None mentioned |
+| `L1StandardBridge` | Handles standard token bridging from L1 to L2. | Onchain Contract | None mentioned |
+| `L2ToL1MessagePasser` | Contract facilitating message passing from L2 to L1. | Onchain Contract | None mentioned |
+| `op-proposer` | Off-chain actor responsible for proposing L2 outputs. | Off-chain Feature | None mentioned |
+| `op-challenger` | Off-chain actor that monitors proposed outputs and initiates disputes if invalid. | Off-chain Feature | None mentioned |
+| `op-dispute-mon` | Off-chain monitoring service for dispute games, ensuring correct resolution. | Off-chain Feature | None mentioned |
+| `Guardian` | Off-chain actor able to intervene in the dispute process for emergency situations. | User | None mentioned |
+| `L2OutputOracle` | Previously used for submitting proposed L2 outputs; now deprecated. | Deprecated | Possibly related to M-2: L2 block number spoofing |
+
+### Fault Proof Primitives
+
+| **Name** | **Description** | **Type** | **Security Issues** |
+| --- | --- | --- | --- |
+| `ABSOLUTE_PRESTATE` | A constant representing the initial state before any execution in the dispute game. | Constant | None mentioned |
+| `CANNON` | A game type using the Cannon VM for dispute resolution. | Constant | None mentioned |
+| `PERMISSIONED_CANNON` | A permissioned game type using the Cannon VM. | Constant | None mentioned |
+| `DISPUTE_GAME_FINALITY_DELAY_SECONDS` | Constant defining the delay before a dispute game can be finalized. | Constant | None mentioned |
+| `PROOF_MATURITY_DELAY_SECONDS` | Constant defining the delay before a proof can be considered mature. | Constant | None mentioned |
+| `DEFENDER_WINS` | Constant indicating the defender has won the dispute game. | Constant | None mentioned |
+| `CHALLENGER_WINS` | Constant indicating the challenger has won the dispute game. | Constant | None mentioned |
+| `proveWithdrawalTransaction` | Function in OptimismPortal2 to prove a withdrawal transaction against a dispute game. | Function | M-1: Incorrect game type casting |
+| `finalizeWithdrawalTransaction` | Function in OptimismPortal2 to finalize a proven withdrawal after the delay period. | Function | None mentioned |
+| `setResourceConfig` | Function to configure resource limits in the system. | Function | None mentioned |
+| `create` | Function in DisputeGameFactory to create a new dispute game instance. | Function | M-3: Smart wallet bond theft |
+| `gameAtIndex` | Function to retrieve a dispute game instance by index. | Function | None mentioned |
+| `claimCredit` | Function to claim credit or bonds after a dispute game resolution. | Function | None mentioned |
+| `owner` | Variable representing the owner of a contract, typically with administrative privileges. | Variable | None mentioned |
+| `status` | Variable indicating the current status of a dispute game (e.g., ongoing, resolved). | Variable | None mentioned |
+| `createdAt` | Variable recording the timestamp when a dispute game was created. | Variable | None mentioned |
+| `resolvedAt` | Variable recording the timestamp when a dispute game was resolved. | Variable | None mentioned |
+
+### Sherlock Audit & Bug Hunt Results
+ To ensure the **Fault Proof System** was secure before mainnet activation, OP Labs engaged the Sherlock security community in a comprehensive audit contest and an accompanying bug hunt. The main **Sherlock audit contest** (Mar 27–Apr 4, 2024) found *no critical vulnerabilities* that could bypass the fault proof system’s safety mechanisms[³³](https://audits.sherlock.xyz/contests/205/report). Several medium-severity issues were identified, and **fixes for all reported issues were promptly merged and deployed to testnet**[³⁴](https://blog.oplabs.co/sherlock-audit-roundup/) ahead of the upgrade. 
+    
+Security issues are sourced from the Sherlock Audit Contest:
+    - M-1: Incorrect Game Type Casting: Affects OptimismPortal2 and proveWithdrawalTransaction.
+    - M-2: L2 Block Number Spoofing: Impacts AnchorStateRegistry, OptimismPortal2, and potentially L2OutputOracle.
+    - M-3: Smart Wallet Bond Theft: Linked to DisputeGameFactory and its create function.
+    - M-4: Re-org Attack Bond Loss: Affects FaultDisputeGame.
+    
+In parallel, a focused **Sherlock “bug hunt” contest** targeted the system’s fallback safety nets (e.g. the Security Council’s guardian override). This bug hunt confirmed that none of the discovered issues could subvert these fundamental safeguards[³⁵](https://audits.sherlock.xyz/contests/205?filter=questions). All findings from both the audit and bug hunt were addressed, resulting in significant security improvements to the fault proof implementation. Key enhancements included:
+    
+- **Dispute game timing fix:** Corrected a flaw in the “chess clock” logic of the `FaultDisputeGame`. Previously, a dispute could be **prematurely resolved when one team’s time ran out even if the opponent still had time remaining**, denying the opponent a fair chance to respond[**³¹**](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx). Left unpatched, this bug could have allowed an invalid claim to **“win” the dispute and be accepted as valid**. The issue, reported by the Offchain Labs team prior to the audit, was fixed and the chess-clock mechanism now correctly ensures neither side can timeout unfairly.
+
+- **Output validation hardening:** Fixed an unsafe type cast in the L1 portal contract that verifies L2 outputs. The audit revealed that the output proposal logic was casting a game type from 32-bit to 8-bit, which **could treat distinct game identifiers as equivalent**. In certain scenarios this bug would have allowed a malicious output root to bypass off-chain monitoring and be finalized as a valid withdrawal[³³](https://audits.sherlock.xyz/contests/205/report). The fix enforces proper type safety for game identifiers, closing this loophole and ensuring invalid outputs cannot slip through unnoticed.
+
+- **Better bond and game lifecycle security:** Implemented adjustments to dispute game initialization and bond handling based on auditor findings. For example, edge-case scenarios that could **trigger denial-of-service in the dispute game factory or lead to loss/theft of bond stakes** (such as exploits involving re-orgs or smart contract wallets in bonding) were identified and patched. These changes fortify the bonding mechanism and guarantee that honest participants’ stakes are protected under all conditions[³⁸](https://audits.sherlock.xyz/contests/205?filter=questions).
+
 ## **Metrics & Performance Impact**
 
-1.  **Security Improvements[³¹](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)**
-    - Eliminates reliance on a **trusted proposer**, reducing single points of failure.
-    - Ensures withdrawals can be processed **without privileged intervention**.
-    - Challenges fraudulent state roots using **on-chain execution verification**.
-    - **Decentralized fault proof submission** removes centralization risks and strengthens the rollup security model.
-2.  **Efficiency & Cost Considerations[³⁰](https://specs.optimism.io/fault-proof/index.html)**
+1.  **Efficiency & Cost Considerations[³⁰](https://specs.optimism.io/fault-proof/index.html)**
     - **Transaction throughput remains unchanged**, as the dispute process runs asynchronously.
-    - Posting an output proposal requires a **0.08 ETH bond**, discouraging frivolous challenges³.
-    - **Gas costs for dispute resolution are minimal** since only the final step of execution is verified on L1.
+    - Posting an output proposal requires a **0.08 ETH bond**, discouraging frivolous challenges.
     - **Optimized fraud-proof submission process** reduces the number of transactions required to confirm challenges.
-3.  **Comparison to Previous Models[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)**
+2.  **Comparison to Previous Models[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)**
     - **Plasma Rollups:** Required users to monitor transactions actively, leading to potential data withholding risks.
     - **OVM Era (2021-2023):** Fault proofs were theoretically included but never activated.
 
