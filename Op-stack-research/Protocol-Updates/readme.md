@@ -764,3 +764,7 @@ In parallel, a focused **Sherlock “bug hunt” contest** targeted the system
 30. OP Labs. (2024). *Fault Proofs Overview.* OP Stack Specification. Retrieved from https://specs.optimism.io/fault-proof/index.html
 31. OP Labs. (2024). *Fault Proof System Documentation.* Optimism Github. Retrieved from https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx
 32. Optimism Release Notes. (2024). *v1.4.0-rc.4.* Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4
+33. OP Labs. (2024). OP Stack FP Sherlock contest Handbook. Op Labs Notion. Retrieved from https://oplabs.notion.site/Public-OP-Stack-Fault-Proofs-Sherlock-Competition-Handbook-e4cfdf210a5c45c79230af19653163cc
+34. Sherlock. (2024). *Optimism Fault Proofs Contest Results*. Sherlock Bug Hunt on OP Fault Proofs. Retrieved from https://audits.sherlock.xyz/contests/205/report
+35. OP Labs. (2024). *Initial findings from the fault proof program Sherlock audit*. OP Labs Blog. Retrieved from https://blog.oplabs.co/sherlock-audit-roundup/
+36. Sherlock. (2024). *Optimism Fault Proofs Contest Questions*. Sherlock Bug Hunt on OP Fault Proofs Retrieved from https://audits.sherlock.xyz/contests/205?filter=questions
