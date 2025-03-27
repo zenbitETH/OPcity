@@ -586,16 +586,16 @@ No **critical, high-risk, or medium-risk vulnerabilities** were reported.
 
 The **Fault Proofs Upgrade** (Upgrade #7) marks a significant milestone in Optimism’s decentralization roadmap, introducing **permissionless validation** and **interactive fraud-proof dispute resolution**. Prior to this, OP Mainnet relied on a **trusted proposer model**, where a privileged actor submitted L2 state roots to Ethereum. With this upgrade, any participant can propose state roots and challenge fraudulent claims, eliminating reliance on a single entity and enhancing security. The upgrade was deployed in multiple phases, starting with **testnet activation on March 19, 2024[²⁸](https://blog.oplabs.co/open-source-and-feature-complete-fault-proofs-bring-permissionless-validation-to-the-op-sepolia-testnet/)**, followed by **governance approval on May 29, 2024**, and **mainnet activation in early June 2024[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)**.
 
-## **Technical Features**
+## **Technical Features** [²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)’[³⁰](https://specs.optimism.io/fault-proof/index.html)’[³¹](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)’[³²](https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4)’[³³](https://oplabs.notion.site/Public-OP-Stack-Fault-Proofs-Sherlock-Competition-Handbook-e4cfdf210a5c45c79230af19653163cc)
 
-1. **Fault Proof System Overview[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)’[³⁰](https://specs.optimism.io/fault-proof/index.html)**
+1. **Fault Proof System Overview**
     - Introduces an open-source, permissionless, and feature-complete fault proof system, the first of its kind in the Ethereum ecosystem, allowing anyone to validate transactions without special permissions (OP Labs Blog; OP Stack Specs).
     - Aims to replace permissioned fraud-proof mechanisms with a decentralized dispute resolution process, enhancing trustlessness (Governance Post). Previously, only a whitelisted proposer could submit L2 state roots to Ethereum.
     - The upgrade enables **anyone** to propose an output state root, provided they post a **bond**.
     - Proposals are now submitted to a **DisputeGameFactory** contract instead of a fixed oracle.
     - Users are no longer dependent on a single trusted sequencer to finalize withdrawals; any participant can submit state roots.
 
-2.  **Fault Proof Dispute Game**[³⁰](https://specs.optimism.io/fault-proof/index.html) [**³¹**](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)
+2.  **Fault Proof Dispute Game** 
     - A binary bisection game is used to isolate the exact execution step where fraud occurs.
     - The on-chain **MIPS-based Fault Proof VM** verifies disputed execution steps on L1.
     - Supports multiple dispute game types: Cannon (using the Cannon VM), Permissioned Cannon (restricted version), and Alphabet (a non-production type for testing) (Sherlock Security Review; OP Stack Specs).
@@ -603,17 +603,24 @@ The **Fault Proofs Upgrade** (Upgrade #7) marks a significant milestone in Opt
     - Future rollups may incorporate **zk-proofs or alternative dispute models** alongside fault proofs.
     - The modular approach allows **plug-and-play integration** of different verification mechanisms.
 
-3. **Bond Mechanism**[³⁰](https://specs.optimism.io/fault-proof/index.html) [**³¹**](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)
+3. **Bond Mechanism**
     - Requires participants to post bonds when initiating or challenging claims in dispute games, incentivizing honest behavior (OP Stack Specs).
     - Bonds are returned to honest participants or forfeited to challengers if claims are invalid, with initial bond sizes set at initialization (Sherlock Security Review).
 
-4. **Anchor State Registry**[³⁰](https://specs.optimism.io/fault-proof/index.html) [**³¹**](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx)
+4. **Anchor State Registry**
     - Introduces the AnchorStateRegistry contract to manage and anchor the fault proof system’s state to the blockchain, ensuring consistency and integrity (Sherlock Security Review; OP Stack Specs).
-5. **Guardian Override & Security Council Backstop[³²](https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4)** 
+5. **Guardian Override & Security Council Backstop** 
 
 - A **guardian role** (Optimism’s Security Council) can intervene in emergencies to pause withdrawals.
 - This serves as a **Stage 1 decentralization safeguard**, ensuring security while the system matures.
 - Guardians have limited override power, preventing abuse and ensuring decentralization goals remain intact.
+
+
+### Bridge contract relationships after Fault Proofs
+ 
+[![](https://mermaid.ink/img/pako:eNq9WG1v2zYQ_isC98UFZCt2LGdWhwFpkmYF0qVIWhQY_IWWzjZhidRIKomX5L_vLNkyKdFJM8zNh4Av99w9PN4L5UcSiwRIROaS5gvv6mbCPfxTxbRamJCLBw2S09Q7E1xLGms1IZXQ-m-7e3FzNjjq1LLldId45wScDPoWAuctCPCkHLRoXfW924xK7aZ11b_VlCdUJh8kS-bQaS68M2Ur27WkObXkzqRQ6lxklPHPoBTwOciOe9nAXeeaZUxlX4TUNO3YU0PutshBxgvUgkeasXmnuWDKrpSGbCtnTAyZc6byQsMlzeAj-kfIVae9ZMh_pEWqDYlOc8HUDSldQfL94usfHWPcuLT2rX1TIL1PHO8czTPBrUtbb6pO-f9VRdWZ96q6LPCmGeWdy2-nN-efTv90K4xTFi9bwYLqF1rnKgqCOdOLYtqLRRaAXoCEIuuKzQUG9UBLgCCBO0hFHuQ0XtI5qCDeBmZ3CokU8TJQMg6u-kHTXk-JdELKmHZtTPhE76iawXl4oqY1g2Z72SbpyojDk3VZNUjv37bID64LjRF_jUbSw3vYsrYj61g2Sdo15NAkbWs1SdeySbJZvg5Ns2mvJuresKgaFfTgNA1bO4qtRbNAtcv2QUkmlbmgbbbmu2_LZN1sHz-Fc9Nozdi9sQ6Cid54edfHfgrVe9QXGEZ3zm2uIUveemx5v3W7vz9ljOtgWkiOFChXM5BPrX7WAq8fWi-gzepudstWnyx1YCFNAgkxsDvwMiysePSnPT1gq8dqYv9Zi7PLlNo2NxC4tdqFa8_Zuj3U83cBmGs5LRR4SlON4GYxcR7prWDnSd6mpNES_i9wXEo9WRXyNcx8new0SSQe5clRvH4Iv-HbTNsK6yiI62uPJSBIeYwjmsc4ErN9KlrVqYxCVAUYMFoyzGVvKniyPsEuH810KB-qVbwlkAvFdHCPxSKR9N5D0aDM0n3Z-CK4DCV3Jla4MsaluIMAHiDGE3hbMHqyTOXNm9gd7Dsllce8TUkqPf_ClRnG8cuLxSxfgxlv4t0er2rt9mVeqpmmmKgpU7qpocm6hcQQxiTxMMRyiDUkVdDoVe7K721XophkMPPgQdcfjRhnUiwh-mU2G_vVuHvPEr2IBvnD-wYw7bdx0-nsB3AX16cGYvoqAjNW4rfNjt2YvopRZYqWX1hvgcWS4VVi3GxBR7OjF0F2G_IbfcV0roVq5oFvh7fvroJ-s2D51lvNuBHLWBWpGy9aOx-ojrGN-1-kwLTDQR1WO_9ZADua_HZu-M1w982XxNa974lP5nhSEs1oqsAnGUg8Kc7J49rchODrAlOFRDhELy3Xbf8ZQTnlfwmRkUjLAmFSFPNFraTIE0zBc0bxu7gWoYUWtyseb-eogUSP5IFEg0G_Fx6Hx_2T4TAcheOhT1Yk6o6Go144Ohqc9Ae_Ho-OwvDZJ_-UNoe9k-PxGHcGgzDsn4ShTyBheOrP1a9G5Y9HSAr7LMgzUXBNov549PwvfqlsVw?type=png)](https://mermaid.live/edit#pako:eNq9WG1v2zYQ_isC98UFZCt2LGdWhwFpkmYF0qVIWhQY_IWWzjZhidRIKomX5L_vLNkyKdFJM8zNh4Av99w9PN4L5UcSiwRIROaS5gvv6mbCPfxTxbRamJCLBw2S09Q7E1xLGms1IZXQ-m-7e3FzNjjq1LLldId45wScDPoWAuctCPCkHLRoXfW924xK7aZ11b_VlCdUJh8kS-bQaS68M2Ur27WkObXkzqRQ6lxklPHPoBTwOciOe9nAXeeaZUxlX4TUNO3YU0PutshBxgvUgkeasXmnuWDKrpSGbCtnTAyZc6byQsMlzeAj-kfIVae9ZMh_pEWqDYlOc8HUDSldQfL94usfHWPcuLT2rX1TIL1PHO8czTPBrUtbb6pO-f9VRdWZ96q6LPCmGeWdy2-nN-efTv90K4xTFi9bwYLqF1rnKgqCOdOLYtqLRRaAXoCEIuuKzQUG9UBLgCCBO0hFHuQ0XtI5qCDeBmZ3CokU8TJQMg6u-kHTXk-JdELKmHZtTPhE76iawXl4oqY1g2Z72SbpyojDk3VZNUjv37bID64LjRF_jUbSw3vYsrYj61g2Sdo15NAkbWs1SdeySbJZvg5Ns2mvJuresKgaFfTgNA1bO4qtRbNAtcv2QUkmlbmgbbbmu2_LZN1sHz-Fc9Nozdi9sQ6Cid54edfHfgrVe9QXGEZ3zm2uIUveemx5v3W7vz9ljOtgWkiOFChXM5BPrX7WAq8fWi-gzepudstWnyx1YCFNAgkxsDvwMiysePSnPT1gq8dqYv9Zi7PLlNo2NxC4tdqFa8_Zuj3U83cBmGs5LRR4SlON4GYxcR7prWDnSd6mpNES_i9wXEo9WRXyNcx8new0SSQe5clRvH4Iv-HbTNsK6yiI62uPJSBIeYwjmsc4ErN9KlrVqYxCVAUYMFoyzGVvKniyPsEuH810KB-qVbwlkAvFdHCPxSKR9N5D0aDM0n3Z-CK4DCV3Jla4MsaluIMAHiDGE3hbMHqyTOXNm9gd7Dsllce8TUkqPf_ClRnG8cuLxSxfgxlv4t0er2rt9mVeqpmmmKgpU7qpocm6hcQQxiTxMMRyiDUkVdDoVe7K721XophkMPPgQdcfjRhnUiwh-mU2G_vVuHvPEr2IBvnD-wYw7bdx0-nsB3AX16cGYvoqAjNW4rfNjt2YvopRZYqWX1hvgcWS4VVi3GxBR7OjF0F2G_IbfcV0roVq5oFvh7fvroJ-s2D51lvNuBHLWBWpGy9aOx-ojrGN-1-kwLTDQR1WO_9ZADua_HZu-M1w982XxNa974lP5nhSEs1oqsAnGUg8Kc7J49rchODrAlOFRDhELy3Xbf8ZQTnlfwmRkUjLAmFSFPNFraTIE0zBc0bxu7gWoYUWtyseb-eogUSP5IFEg0G_Fx6Hx_2T4TAcheOhT1Yk6o6Go144Ohqc9Ae_Ho-OwvDZJ_-UNoe9k-PxGHcGgzDsn4ShTyBheOrP1a9G5Y9HSAr7LMgzUXBNov549PwvfqlsVw)
+
+
 
 ### Fault Proofs Components
 
@@ -637,6 +644,8 @@ The **Fault Proofs Upgrade** (Upgrade #7) marks a significant milestone in Opt
 | `Guardian` | Off-chain actor able to intervene in the dispute process for emergency situations. | User | None mentioned |
 | `L2OutputOracle` | Previously used for submitting proposed L2 outputs; now deprecated. | Deprecated | Possibly related to M-2: L2 block number spoofing |
 
+
+
 ### Fault Proof Primitives
 
 | **Name** | **Description** | **Type** | **Security Issues** |
@@ -659,22 +668,23 @@ The **Fault Proofs Upgrade** (Upgrade #7) marks a significant milestone in Opt
 | `createdAt` | Variable recording the timestamp when a dispute game was created. | Variable | None mentioned |
 | `resolvedAt` | Variable recording the timestamp when a dispute game was resolved. | Variable | None mentioned |
 
-### Sherlock Audit & Bug Hunt Results
- To ensure the **Fault Proof System** was secure before mainnet activation, OP Labs engaged the Sherlock security community in a comprehensive audit contest and an accompanying bug hunt. The main **Sherlock audit contest** (Mar 27–Apr 4, 2024) found *no critical vulnerabilities* that could bypass the fault proof system’s safety mechanisms[³³](https://audits.sherlock.xyz/contests/205/report). Several medium-severity issues were identified, and **fixes for all reported issues were promptly merged and deployed to testnet**[³⁴](https://blog.oplabs.co/sherlock-audit-roundup/) ahead of the upgrade. 
+
+### Sherlock Audit & Bug Hunt Results [³⁴](https://audits.sherlock.xyz/contests/205/report)’[³⁵](https://blog.oplabs.co/sherlock-audit-roundup/)’[³⁶](https://audits.sherlock.xyz/contests/205?filter=questions)
+ To ensure the **Fault Proof System** was secure before mainnet activation, OP Labs engaged the Sherlock security community in a comprehensive audit contest and an accompanying bug hunt. The main **Sherlock audit contest** (Mar 27–Apr 4, 2024) found *no critical vulnerabilities* that could bypass the fault proof system’s safety mechanisms. Several medium-severity issues were identified, and **fixes for all reported issues were promptly merged and deployed to testnet** ahead of the upgrade. 
     
 Security issues are sourced from the Sherlock Audit Contest:
-    - M-1: Incorrect Game Type Casting: Affects OptimismPortal2 and proveWithdrawalTransaction.
-    - M-2: L2 Block Number Spoofing: Impacts AnchorStateRegistry, OptimismPortal2, and potentially L2OutputOracle.
-    - M-3: Smart Wallet Bond Theft: Linked to DisputeGameFactory and its create function.
-    - M-4: Re-org Attack Bond Loss: Affects FaultDisputeGame.
+- M-1: Incorrect Game Type Casting: Affects OptimismPortal2 and proveWithdrawalTransaction.
+- M-2: L2 Block Number Spoofing: Impacts AnchorStateRegistry, OptimismPortal2, and potentially L2OutputOracle.
+- M-3: Smart Wallet Bond Theft: Linked to DisputeGameFactory and its create function.
+- M-4: Re-org Attack Bond Loss: Affects FaultDisputeGame.
     
-In parallel, a focused **Sherlock “bug hunt” contest** targeted the system’s fallback safety nets (e.g. the Security Council’s guardian override). This bug hunt confirmed that none of the discovered issues could subvert these fundamental safeguards[³⁵](https://audits.sherlock.xyz/contests/205?filter=questions). All findings from both the audit and bug hunt were addressed, resulting in significant security improvements to the fault proof implementation. Key enhancements included:
+In parallel, a focused **Sherlock “bug hunt” contest** targeted the system’s fallback safety nets (e.g. the Security Council’s guardian override). This bug hunt confirmed that none of the discovered issues could subvert these fundamental safeguards. All findings from both the audit and bug hunt were addressed, resulting in significant security improvements to the fault proof implementation. Key enhancements included:
     
-- **Dispute game timing fix:** Corrected a flaw in the “chess clock” logic of the `FaultDisputeGame`. Previously, a dispute could be **prematurely resolved when one team’s time ran out even if the opponent still had time remaining**, denying the opponent a fair chance to respond[**³¹**](https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx). Left unpatched, this bug could have allowed an invalid claim to **“win” the dispute and be accepted as valid**. The issue, reported by the Offchain Labs team prior to the audit, was fixed and the chess-clock mechanism now correctly ensures neither side can timeout unfairly.
+- **Dispute game timing fix:** Corrected a flaw in the “chess clock” logic of the `FaultDisputeGame`. Previously, a dispute could be **prematurely resolved when one team’s time ran out even if the opponent still had time remaining**, denying the opponent a fair chance to respond. Left unpatched, this bug could have allowed an invalid claim to **“win” the dispute and be accepted as valid**. The issue, reported by the Offchain Labs team prior to the audit, was fixed and the chess-clock mechanism now correctly ensures neither side can timeout unfairly.
 
-- **Output validation hardening:** Fixed an unsafe type cast in the L1 portal contract that verifies L2 outputs. The audit revealed that the output proposal logic was casting a game type from 32-bit to 8-bit, which **could treat distinct game identifiers as equivalent**. In certain scenarios this bug would have allowed a malicious output root to bypass off-chain monitoring and be finalized as a valid withdrawal[³³](https://audits.sherlock.xyz/contests/205/report). The fix enforces proper type safety for game identifiers, closing this loophole and ensuring invalid outputs cannot slip through unnoticed.
+- **Output validation hardening:** Fixed an unsafe type cast in the L1 portal contract that verifies L2 outputs. The audit revealed that the output proposal logic was casting a game type from 32-bit to 8-bit, which **could treat distinct game identifiers as equivalent**. In certain scenarios this bug would have allowed a malicious output root to bypass off-chain monitoring and be finalized as a valid withdrawal. The fix enforces proper type safety for game identifiers, closing this loophole and ensuring invalid outputs cannot slip through unnoticed.
 
-- **Better bond and game lifecycle security:** Implemented adjustments to dispute game initialization and bond handling based on auditor findings. For example, edge-case scenarios that could **trigger denial-of-service in the dispute game factory or lead to loss/theft of bond stakes** (such as exploits involving re-orgs or smart contract wallets in bonding) were identified and patched. These changes fortify the bonding mechanism and guarantee that honest participants’ stakes are protected under all conditions[³⁸](https://audits.sherlock.xyz/contests/205?filter=questions).
+- **Better bond and game lifecycle security:** Implemented adjustments to dispute game initialization and bond handling based on auditor findings. For example, edge-case scenarios that could **trigger denial-of-service in the dispute game factory or lead to loss/theft of bond stakes** (such as exploits involving re-orgs or smart contract wallets in bonding) were identified and patched. These changes fortify the bonding mechanism and guarantee that honest participants’ stakes are protected under all conditions
 
 ## **Metrics & Performance Impact**
 
@@ -717,6 +727,8 @@ In parallel, a focused **Sherlock “bug hunt” contest** targeted the system
 - **Withdrawals now require challenge verification**, ensuring correctness before funds are released.
 - OP Labs provided **extensive upgrade guidance** for node operators and validators.
 - The upgrade was deployed via a **single atomic transaction** to ensure a clean switchover.
+
+
 
 # **References**
 
