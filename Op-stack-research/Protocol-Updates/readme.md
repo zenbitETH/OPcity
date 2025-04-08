@@ -790,6 +790,74 @@ June 5, 2025 – Mainnet Deployment
 - The upgrade was deployed to the Optimism Mainnet, executed atomically in a single transaction for all affected L1 contracts, requiring no node operator action.
 
 
+# Protocol Upgrade #9: Fjord
+
+Fjord, activated on July 10, 2024 aims to reduce execution fees for smart wallet applications, such as those supporting Apple’s FaceID, by implementing the RIP-7212 precompile for secp256r1 curve support. It also seeks to lower L1 data availability costs by 5–15% through Brotli compression and improve L1 data pricing robustness with FastLZ-based calculations. Additionally, it increases chain operator response time to L1 node issues by extending the maximum sequencer drift to 1800 seconds (30 minutes) from 600 seconds (10 minutes), preventing L2 chain halts. A key aspect is its interaction with the Fault Proof system, requiring updates to the L1 infrastructure, including op-program v1.2.0, to support new parameters and features. The upgrade’s significance lies in its focus on cost efficiency and operational resilience, building on previous upgrades like Fault Proofs (Upgrade #7), which introduced permissionless validation and dispute resolution. Fjord’s changes, particularly in data handling, may influence how fault proofs are processed, especially in terms of resource usage for the Fault Proof Virtual Machine (FPVM)[⁴⁰](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236).
+
+## Technical Features[⁴⁰](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236)’[⁴¹](https://specs.optimism.io/protocol/fjord/overview.html)
+
+1. **`RIP-7212` Precompile for `secp256r1` Curve**
+    
+    Implements support for the `secp256r1` curve, commonly used in smart wallet applications, reducing execution gas costs. This is detailed in the spec at Fjord Execution Engine, enhancing efficiency for applications like FaceID authentication.
+    
+2. **`Brotli` Compression for Channels**
+    
+    Adds `Brotli` as an optional compression algorithm for channels, aiming to reduce L1 data availability costs by 5–15%. This is specified in Fjord Derivation, potentially affecting how data is submitted to L1 for fault proof verification, though the core dispute process remains unchanged.
+    
+3. **`FastLZ` Based L1 Data Availability Cost Calculation**
+    
+    Introduces `FastLZ` compression for calculating L1 data costs, providing more accurate fee estimates. This is outlined in Fjord Fees, improving pricing robustness but not directly impacting fault proof mechanics.
+    
+4. **Deprecation of `getL1GasUsed` and `L1GasUsed`**
+    
+    Removes the `getL1GasUsed` method and `L1GasUsed` field from transaction receipts, streamlining fee calculations. This is detailed in Fjord Predeploys, with no direct effect on fault proofs but aligning with cost efficiency goals.
+    
+5. **Increased `MAX_SEQUENCER_DRIFT`**
+    
+    Raises the maximum sequencer drift from 600 seconds to 1800 seconds, giving operators more time to address L1 node issues. This is specified in Fjord Derivation, potentially reducing the frequency of sequencer-related disputes but not altering fault proof core functionality.
+    
+6. **Increased `MAX_RLP_BYTES_PER_CHANNEL` and `MAX_CHANNEL_BANK_SIZE`**
+    
+    Increases `MAX_RLP_BYTES_PER_CHANNEL` from 10,000,000 to 100,000,000 and `MAX_CHANNEL_BANK_SIZE` from 100,000,000 to 1,000,000,000, allowing for larger data batches. This is detailed in Fjord Derivation. The change could cause more resource usage in the FPVM, as noted in security considerations, but is considered reasonable as it handles data in larger chunks rather than increasing total data processed.
+    
+
+### Impact on Fault Proofs[⁴⁰](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236)
+
+- The increase in channel sizes directly impacts the `FPVM`, potentially requiring more computational resources for processing disputes involving larger data sets.
+- Fjord’s changes do not alter the core dispute game mechanics, such as the binary bisection game or the `MIPS`based VM, but the larger data batches may affect efficiency and cost for challengers.
+- The requirement for `op-program v1.2.0`, part of the Fault Proofs L1 infrastructure update, suggests compatibility with Fjord’s new parameters, though specific changes in `op-program v1.2.0` were not detailed in available sources. This update likely ensures the fault proof system can handle the increased channel sizes and new compression methods without disruption.
+
+## Metrics & Performance[⁴⁰](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236)
+
+- **Cost Reduction:**`Brotli` compression is expected to reduce L1 data availability costs by 5–15%, as per the governance proposal, making transactions cheaper and potentially lowering the cost for challengers in fault proofs.
+- **Operational Resilience:** The increased max sequencer drift to 30 minutes reduces the likelihood of L2 chain halts due to L1 issues, potentially decreasing the need for emergency fault proof interventions.
+- **Fault Proof Resource Usage:**
+    
+    The increase in `MAX_RLP_BYTES_PER_CHANNEL` and `MAX_CHANNEL_BANK_SIZE` may lead to higher resource usage in the `FPVM` for processing disputes with larger data sets. However, security considerations note that this is manageable, as it affects the size of data handled at once rather than the total data, with similar resource consumption as submitting multiple smaller channels previously.
+    
+
+## Rollout Strategy[⁴⁰](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236)
+
+**May 30, 2024 – Proposal Finalization and Community Review**
+
+- The upgrade proposal was posted to the Optimism Governance Forum, initiating community review and discussion.
+
+**June 2024 – Governance Voting**
+
+- The Token House approved the upgrade during Special Voting Cycle #23b. The Citizens’ House veto period followed with no objections.
+
+**June–July 2024 – Testing and Preparation**
+
+- Fjord was tested on internal devnets and Sepolia. Node operators were instructed to upgrade clients. Fault Proofs infrastructure was upgraded to `op-program v1.2.0`.
+
+**July 10, 2024 – Mainnet Activation**
+
+- The upgrade was deployed at 16:00:01 UTC, automatically enabled on upgraded nodes.
+
+**Contingency – Emergency Cancellation Option**
+
+- A safeguard `-override.fjord` flag was available to disable the upgrade in case of critical issues.
+
 
 # **References**
 
@@ -832,3 +900,5 @@ June 5, 2025 – Mainnet Deployment
 37. Maurelian. (2024). *Protocol Upgrade #8 Guardian*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157
 38. L2Beat. (2024). *Introducing the Stages Framework for rollups*. L2Beat blog. Retrieved from https://l2beat.com/blog/introducing-stages-framework 
 39. Cantina. (2024). *Optimism Safe Extensions Competition*. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_05_SafeLivenessExtensions-Cantina.pdf
+40. Bayardo. (2024). *Upgrade Proposal #9: Fjord Network Upgrade.* Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236
+41. OP Labs. (2024). *Fjord Network Upgrade.* OP Stack Specification. Retrieved from https://specs.optimism.io/protocol/fjord/overview.html
