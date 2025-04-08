@@ -858,6 +858,61 @@ Fjord, activated on July 10, 2024 aims to reduce execution fees for smart wallet
 
 - A safeguard `-override.fjord` flag was available to disable the upgrade in case of critical issues.
 
+# Protocol Upgrade #10: Granite
+
+Protocol Upgrade #10 Granite was activated on September 11, 2024. It represents a pivotal security enhancement to the Optimism (OP) Stack, focusing on fortifying the Fault Proofs system to ensure the integrity and reliability of permissionless validation[⁴²](https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733). Granite is a security-centric update, responding to vulnerabilities discovered in third-party audits conducted by Spearbit[⁴³](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf), Cantina[⁴⁴](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-MIPS_Cantina.pdf), Code4rena[⁴⁵](https://github.com/code-423n4/2024-07-optimism-findings) and Inmunifi[⁴⁶](https://immunefi.com/bug-bounty/optimism/information/), none of which had been exploited at the time of the proposal. The upgrade targets the Fault Proofs system, including the `MIPS` Virtual Machine (VM). It also includes parameter adjustments, such as reducing the ChannelTimeout, and role enhancements for the `Guardian` and `DeputyGuardian`, aiming to mitigate single points of failure and improve system resilience.
+
+## Technical Features[⁴²](https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733)’[⁴³](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)’[⁴⁴](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-MIPS_Cantina.pdf)’[⁴⁵](https://github.com/code-423n4/2024-07-optimism-findings)’[⁴⁶](https://immunefi.com/bug-bounty/optimism/information/)
+
+1. **Security fixes from multi-party audits**
+    - **Cantina 3.1.1**: Fixed allocation overflow in the `MIPS VM` which allowed arbitrary code execution via excessive memory usage (~115B gas).
+    - **C4 H-01**: Addressed invalid `DISPUTED_L2_BLOCK_NUMBER` being passed to the VM, which could cause incorrect dispute resolutions.
+    - **Spearbit 5.1.1**: Resolved out-of-gas bug in `PreimageOracle.loadPrecompilePreimagePart`, ensuring safe dispute data loading.
+    - **C4 H-02**: Corrected flaws in the `LPP challenge period`, which allowed uncounterable claims.
+    - **Cantina 3.3.5**: Fixed the implementation of `srav` instruction in `MIPS`, along with other medium-severity bugs such as unaligned memory reads, unchecked arithmetic ops, and silent syscalls.
+2. **Parameter Adjustments**
+    - Reduced `ChannelTimeout` from 300 to 50 L1 blocks to improve responsiveness of dispute timelines.
+    - Updated `DelayedWETH.recover` to support transfers requiring >2300 gas, improving bond recovery reliability.
+3. **Role Enhancements**
+    - Extended the `Guardian` and `DeputyGuardian` roles to set anchor state, improving security during emergency invalid state prevention.
+4. **L2 Hardfork Changes**
+    - Limited `ecPairing` precompile input size to 112,687 bytes to prevent abuse and DoS via oversized inputs.
+5. **Client and Infra Updates**
+    - Required upgrade to `op-geth` and `op-node` clients to incorporate VM logic changes, precompile limits, and other security fixes.
+
+## Metrics & Performance[⁴²](https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733)
+
+- **Fault Proof Improvements:**
+    - Lowered `ChannelTimeout`(50 L1 blocks )accelerates game resolution
+    - Anchor state enhancements ensure invalid finalizations can be stopped
+    - VM fixes ensure precise MIPS execution and safe memory access
+- **Performance Impact:**
+    - No changes to throughput or latency
+    - Zero downtime during deployment
+    - Clients upgraded smoothly with backward-compatible changes
+
+## Rollout Strategy[⁴²](https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733)
+
+**August 16, 2024 – Proposal Publication and Audit Completion**
+
+- OP Labs published the Granite upgrade proposal and completed third-party audits by Cantina, Spearbit, and Code4rena.
+
+**Late August 2024 – Governance Approval**
+
+- Following discussion, the Token House approved the proposal. No veto was exercised by the Citizens' House.
+
+**Pre-Deployment – Permissioned Fallback Activation**
+
+- The permissioned fallback was temporarily enabled to restrict output submissions to a trusted proposer during the vulnerability mitigation phase.
+
+**September 11, 2024 – Mainnet Activation**
+
+- The Granite upgrade was deployed on OP Mainnet at 16:00:01 UTC, including an L2 hardfork. All nodes had upgraded in advance.
+
+**Post-Deployment – Permissionless Mode Restored**
+
+- The permissioned fallback was removed, restoring permissionless output proposals under the hardened system.
+
 
 # **References**
 
@@ -902,3 +957,8 @@ Fjord, activated on July 10, 2024 aims to reduce execution fees for smart wallet
 39. Cantina. (2024). *Optimism Safe Extensions Competition*. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_05_SafeLivenessExtensions-Cantina.pdf
 40. Bayardo. (2024). *Upgrade Proposal #9: Fjord Network Upgrade.* Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236
 41. OP Labs. (2024). *Fjord Network Upgrade.* OP Stack Specification. Retrieved from https://specs.optimism.io/protocol/fjord/overview.html
+42. Inphi (2024). *Upgrade Proposal #10: Granite Network Upgrade*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733 
+43. Spearbit. (2024). *Base Fault Proofs (No MIPS) – Security Review*. Spearbit Audit Report. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf
+44. Cantina. (2024). *Base Fault Proofs MIPS – Security Review*. Cantina Audit Report. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-MIPS_Cantina.pdf
+45. Code4rena. (2024). *Optimism July 2024 Audit Contest – Findings Report*. Code4rena Competition Report. Retrieved from GitHub: https://github.com/code-423n4/2024-07-optimism-findings 
+46.  Immunefi. (2025). *Optimism Bug Bounty Program*. Retrieved from https://immunefi.com/bug-bounty/optimism/information/
