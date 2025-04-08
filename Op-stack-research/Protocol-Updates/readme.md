@@ -728,6 +728,67 @@ In parallel, a focused **Sherlock “bug hunt” contest** targeted the system
 - OP Labs provided **extensive upgrade guidance** for node operators and validators.
 - The upgrade was deployed via a **single atomic transaction** to ensure a clean switchover.
 
+# Protocol Upgrade #8: Guardian
+
+Protocol Upgrade #8 – `Guardian` – is a pivotal enhancement to the OP Stack, advancing Optimism's security and governance structure[³⁷](https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157/1) to meet Stage 1 decentralization under the L2Beat framework[³⁸](https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe). This upgrade reassigns the `Guardian`role from the Optimism Foundation to a new `Guardian Safe`, introduces liveness enforcement modules to maintain quorum reliability within the `Security Council Safe`, and transfers control over key upgrade mechanisms to community governance. The technical implementation was isolated to smart contract changes; no alterations to execution clients or node operator software were required. These changes mitigate single-point-of-failure risks and ensure that withdrawal halts and upgrade authority now reside with a decentralized, multi-sig council[³⁷](https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157/1).
+
+## Technical Features[³⁷](https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157/1)
+
+1. **Increased threshold for`Security Council Safe`**
+    
+    Elevated `Security Council Safe` threshold from 4-of-13 to **10-of-13, e**nforcing a ≥75% supermajority for critical governance actions. This shift significantly reduces the potential for small collusions or compromised multisig members to disrupt protocol operations.
+    
+2. **Integration of`LivenessModule` and `LivenessGuard`** 
+    
+    Introduced `LivenessModule` and `LivenessGuard` to ensure council operability. These modules enforce a 14-week liveness interval: if a signer is inactive during that period, they can be removed without triggering the full approval threshold. Should the number of active owners drop below 8, the module allows the `Optimism Foundation` Safe to assume emergency control, preventing governance paralysis.
+    
+3. **`Guardian Safe` for emergency control**
+    
+    Reassigned the `Guardian` role to a new `Guardian Safe`, 1-of-1 Safe whose sole owner is the `Security Council Safe`. This Guardian can pause/unpause withdrawals, blacklist `DisputeGame` instances, and intervene post-Fault Proofs upgrade if a bug could allow invalid state finalization. The role was previously centralized in the Foundation.
+    
+4. **`DeputyGuardianModule` for the Foundation**
+    
+    Added a `DeputyGuardianModule` granting the Foundation conditional emergency rights to act on the Guardian’s behalf. The `Security Council Safe` retains ultimate authority and may revoke this access at any time.
+    
+5. **Transfer of `L2 ProxyAdmin` ownership to `Security Council Safe`** 
+    
+    Transferred `L2 ProxyAdmin` contract ownership from the Foundation to the aliased L1 address of the `Security Council Safe`, eliminating unilateral upgrade risk over L2 contracts, especially withdrawal logic.
+    
+
+## Metrics & Performance[³⁹](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_05_SafeLivenessExtensions-Cantina.pdf)
+
+Given the focus on governance and security, performance metrics are centered around the Cantina audit outcomes, conducted from May 6th to May 10th, 2024, identified 143 issues in total, with no critical or high-risk findings, a strong indicator of security robustness. However, there were six medium-risk issues:
+
+- Owner censorship due to address ordering in `LivenessGuard`
+- Threshold conflicts with external config changes in `LivenessModule`
+- Reentrancy marking all owners as live during `execTransaction()`
+- `lastLive` state inconsistencies after removal
+- Liveness resets when the module is upgraded
+- EIP-1271 non-compliance potentially affecting smart wallets
+
+These audit findings were addressed through code improvements and operational safeguards, including enhanced logging and fallback behavior. Performance remained unaffected. The upgrade imposed **zero downtime**, with no need for client, sequencer, or infra updates. All changes are backward-compatible.
+
+## Rollout Strategy[³⁷](https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157/1)
+
+March 25, 2025 – Proposal Finalization and Voting Initiation
+
+- The final proposal for Protocol Upgrade #8 Guardian was posted on the Optimism Governance Forum, marking the start of community review and voting preparation.
+- This initiated the Token House vote process within Voting Cycle #23a, setting the stage for community approval and subsequent veto periods.
+
+April 15, 2025 – Token House Voting Completion
+
+- The Token House vote concluded after Voting Cycle #23a, with the community approving the upgrade, assuming no significant opposition based on the proposal's final status.
+- This triggered the Citizens’ House Veto Period, allowing additional community oversight before deployment.
+
+May 20, 2025 – Veto Period Ends
+
+- The Citizens’ House Veto Period ended, finalizing community consensus and clearing the upgrade for deployment, barring any veto actions.
+- OP Labs prepared for the execution phase, coordinating with auditors and developers to ensure readiness.
+
+June 5, 2025 – Mainnet Deployment
+
+- The upgrade was deployed to the Optimism Mainnet, executed atomically in a single transaction for all affected L1 contracts, requiring no node operator action.
+
 
 
 # **References**
@@ -736,7 +797,7 @@ In parallel, a focused **Sherlock “bug hunt” contest** targeted the system
 2. Floersch, K. (2019). *Ethereum Smart Contracts in L2: Optimistic Rollup.* Plasma Group Blog. Retrieved from https://medium.com/plasma-group/ethereum-smart-contracts-in-l2-optimistic-rollup-2c1cef2ec537
 3. The Optimism Collective. (2022). *A New Chapter.* Optimism Mirror. Retrieved from https://optimism.mirror.xyz/Fdpds7l4yE2VDpLN4AZQUCjpBYdoPrIHw6a4uzUepmw
 4. Optimism PBC. (2022). *The Future of Optimistic Ethereum*. Retrieved from https://medium.com/ethereum-optimism/the-future-of-optimistic-ethereum-7f22d987331
-5. OP Stack Specification. (2023). Cannon Fault Proof Virtual Machine. Retrieved from https://specs.optimism.io/fault-proof/cannon-fault-proof-vm.html 
+5. OP Stack Specification. (2023). *Cannon Fault Proof Virtual Machine*. Retrieved from https://specs.optimism.io/fault-proof/cannon-fault-proof-vm.html 
 6. Sutton, A. (2024). *Final Protocol Upgrade #7: Fault Proofs.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-protocol-upgrade-7-fault-proofs/8161
 7. Maurelian. (2024). *Final Protocol Upgrade #8: Guardian Security Council & Threshold Changes.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157
 8. Fichter, K. (2024). *Modular Rollup Theory Through the Lens of the OP Stack.* Devcon Bogotá. Retrieved from https://www.youtube.com/watch?v=jnVjhp41pcc
@@ -748,13 +809,13 @@ In parallel, a focused **Sherlock “bug hunt” contest** targeted the system
 14. The Optimism Collective. (2023). *Preparing Optimism for the Superchain Future*. Optimism Mirror. Retrieved from https://optimism.mirror.xyz/9ZMwZjst9SQpzIgEd4gN42UDjATyK3ZRClPFx9oMPp8
 15. Ben-Chain. (2023). *Upgrade #1: Bedrock Protocol Upgrade.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-1-bedrock-protocol-upgrade-v2/5548
 16. OP Stack Specification. (2023). *Protocol Upgrades: Regolith*. Retrieved from https://specs.optimism.io/protocol/regolith/overview.html
-17. Trianglesphere. (2023). Upgrade Proposal #2 Canyon. Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088
+17. Trianglesphere. (2023). *Upgrade Proposal #2 Canyon. Optimism Governance*. Retrieved from https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088
 18. Testinprod. (2024). *Upgrade Proposal #4 Delta.* Optimism Governance. Retrieved from https://gov.optimism.io/t/final-upgrade-proposal-3-delta-network-upgrade/7310
 19. Testinprod. (2024). *Span Batch Design Docs.* Op-Tip. Retrieved from https://www.notion.so/b85e599a47774dcdb8171cc84cab2476?pvs=21
 20. OP Stack Specification. (2023). *Span Batches.* Retrieved from https://specs.optimism.io/protocol/delta/span-batches.html 
 21. Maurelian. (2024). *Upgrade Proposal #5 Superchain Configuration.* Optimism Governance. Retrieved from: https://gov.optimism.io/t/upgrade-proposal-4/7534
-22. Maurelian. (2024). Superchain Config Specification.  Optimism Github. Retrieved from https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md
-23. Trust Security. (2024). Optimism Bedrock upgrade. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf
+22. Maurelian. (2024). *Superchain Config Specification.*  Optimism Github. Retrieved from https://github.com/ethereum-optimism/specs/blob/8eb74667841c9cf86747cd133175272c76dd86f0/specs/superchain-configuration.md
+23. Trust Security. (2024). *Optimism Bedrock upgrade.* Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf
 24. Bayardo, R. (2024). *Upgrade Proposal #5: Ecotone Network Upgrade.* Optimism Governance. Retrieved from https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669
 25. Optimism OP Stack Specs. (2024). *Ecotone Network Upgrade – Technical Specifications.* Retrieved from https://specs.optimism.io/protocol/ecotone/overview.html
 26. Diego. (2024). *Upgrade Proposal #6 Multi-Chain Prep L1.* Optimism Governance. Retrieved from https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677
@@ -764,7 +825,10 @@ In parallel, a focused **Sherlock “bug hunt” contest** targeted the system
 30. OP Labs. (2024). *Fault Proofs Overview.* OP Stack Specification. Retrieved from https://specs.optimism.io/fault-proof/index.html
 31. OP Labs. (2024). *Fault Proof System Documentation.* Optimism Github. Retrieved from https://github.com/ethereum-optimism/docs/blob/ef619668ae44276edecdfd657157254b9809e2d6/pages/builders/notices/fp-changes.mdx
 32. Optimism Release Notes. (2024). *v1.4.0-rc.4.* Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/releases/tag/op-contracts%2Fv1.4.0-rc.4
-33. OP Labs. (2024). OP Stack FP Sherlock contest Handbook. Op Labs Notion. Retrieved from https://oplabs.notion.site/Public-OP-Stack-Fault-Proofs-Sherlock-Competition-Handbook-e4cfdf210a5c45c79230af19653163cc
+33. OP Labs. (2024). *OP Stack FP Sherlock contest Handbook.* Op Labs Notion. Retrieved from https://oplabs.notion.site/Public-OP-Stack-Fault-Proofs-Sherlock-Competition-Handbook-e4cfdf210a5c45c79230af19653163cc
 34. Sherlock. (2024). *Optimism Fault Proofs Contest Results*. Sherlock Bug Hunt on OP Fault Proofs. Retrieved from https://audits.sherlock.xyz/contests/205/report
 35. OP Labs. (2024). *Initial findings from the fault proof program Sherlock audit*. OP Labs Blog. Retrieved from https://blog.oplabs.co/sherlock-audit-roundup/
 36. Sherlock. (2024). *Optimism Fault Proofs Contest Questions*. Sherlock Bug Hunt on OP Fault Proofs Retrieved from https://audits.sherlock.xyz/contests/205?filter=questions
+37. Maurelian. (2024). *Protocol Upgrade #8 Guardian*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157
+38. L2Beat. (2024). *Introducing the Stages Framework for rollups*. L2Beat blog. Retrieved from https://l2beat.com/blog/introducing-stages-framework 
+39. Cantina. (2024). *Optimism Safe Extensions Competition*. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_05_SafeLivenessExtensions-Cantina.pdf
