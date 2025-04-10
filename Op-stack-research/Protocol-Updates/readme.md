@@ -913,6 +913,62 @@ Protocol Upgrade #10 Granite was activated on September 11, 2024. It represents 
 
 - The permissioned fallback was removed, restoring permissionless output proposals under the hardened system.
 
+# Protocol Upgrade #11: Holocene
+
+This upgrade was co-developed by OP Labs and Base contributors and focuses on simplifying L2 chain derivation, introducing dynamic fee parameters, and updating the fault proof system. **Goals:** Improve the worst-case handling of L2 blocks for the Fault Proof system and interoperability, give operators more flexibility over gas economics, and ensure the fault proof contracts/supporting VM are compatible with the new execution logic. By tightening the block derivation rules and making fee parameters adjustable, Holocene lays groundwork for future **permissionless fault proofs** and cross-chain integration within the Superchain[⁴⁷](https://gov.optimism.io/t/upgrade-proposal-11-holocene-network-upgrade/9313).
+
+## Technical Features[⁴⁷](https://gov.optimism.io/t/upgrade-proposal-11-holocene-network-upgrade/9313)‘[⁴⁸](https://specs.optimism.io/protocol/holocene/system-config.html)’[⁴⁹](https://github.com/ethereum-optimism/optimism/blob/7719c8538b8d911519f861fc70085e7a3b4e6787/docs/security-reviews/2024_10-Cannon-FGETFD-3DocSecurity.md)
+
+- **Holocene Derivation Pipeline Updates**
+    
+     The L2 chain derivation process is overhauled for stricter ordering and simpler logic. Key changes include `Strict Batch Ordering`, `Partial Span Batch Validity`, `Fast Channel Invalidation`, and `Steady Block Derivation`. These ensure out-of-order or bad data is dropped immediately rather than buffered, simplifying node behavior and improving worst-case Fault Proof scenarios.
+    
+- **Dynamic EIP-1559 Parameters via `SystemConfig`**
+    
+    Makes fee parameters like block elasticity multiplier and base fee change denominator configurable. A new `ConfigUpdate` type (`EIP_1559_PARAMS`) is added to `SystemConfig`, allowing governors to modify gas dynamics via L1 contract calls. While OP Mainnet retained default values, the mechanism supports future tuning for performance or cost goals.
+    
+- **Simplified Fee Scalar Configuration**
+    
+    Introduces `ConfigUpdate.FEE_SCALARS` to cleanly update the base fee and blob fee scalars. This improves L2 fee tuning and reduces misconfiguration risk.
+    
+- **MIPS Contract & Fault Proof System Updates**
+    
+    Updated MIPS contract to support new Go 1.22 syscalls, audited by 3DOCSec with no major findings. FaultDisputeGame and PermissionedDisputeGame contracts updated to recognize post-Holocene logic, enabling correct dispute execution.
+    
+
+## Metrics & Performance [⁴⁷](https://gov.optimism.io/t/upgrade-proposal-11-holocene-network-upgrade/9313)‘[⁴⁸](https://specs.optimism.io/protocol/holocene/system-config.html)
+
+- **Efficiency Gains**
+    
+    Strict ordering eliminates buffering delays, reduces memory usage, and simplifies synchronization. Invalid payloads are replaced with dummy blocks, preventing unnecessary memory growth and delay.
+    
+- **Fault Proof Derivation**
+    
+    Stricter derivation reduces fault propagation and enhances determinism, aiding fault prover validation. Differential tests confirmed behavior alignment between op-program and Kona (Rust prover).
+    
+- **Gas & Cost Implications**
+    
+    No direct fee changes were enacted, but configurability paves the way for future cost tuning. Scalar updates and EIP-1559 control can improve pricing consistency and throughput.
+    
+
+## Rollout Strategy[⁴⁷](https://gov.optimism.io/t/upgrade-proposal-11-holocene-network-upgrade/9313)
+
+- **Nov 25, 2024 – Governance Proposal**
+    
+    Holocene was proposed via Optimism Governance Forum. DAB summary published Nov 29. Token House supported proposal in Special Voting Cycle #11.
+    
+- **Nov 26, 2024 – Testnet Activation**
+    
+    Holocene activated on Sepolia Superchain testnet. Tests confirmed normal operation.
+    
+- **Jan 9, 2025 – Mainnet Activation**
+    
+    Deployed to OP Mainnet at 18:00:01 UTC. Included MIPS and fault game contract updates. SystemConfig upgraded post-fork to v1.8.0.
+    
+- **Feb 2025 – Ecosystem Rollout**
+    
+    Adopted by Base (co-developer), Soneium (Feb 3), and Boba Network (Feb 5). Node and contract upgrade instructions standardized across OP Stack chains.
+
 
 # **References**
 
@@ -961,4 +1017,8 @@ Protocol Upgrade #10 Granite was activated on September 11, 2024. It represents 
 43. Spearbit. (2024). *Base Fault Proofs (No MIPS) – Security Review*. Spearbit Audit Report. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf
 44. Cantina. (2024). *Base Fault Proofs MIPS – Security Review*. Cantina Audit Report. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-MIPS_Cantina.pdf
 45. Code4rena. (2024). *Optimism July 2024 Audit Contest – Findings Report*. Code4rena Competition Report. Retrieved from GitHub: https://github.com/code-423n4/2024-07-optimism-findings 
-46.  Immunefi. (2025). *Optimism Bug Bounty Program*. Retrieved from https://immunefi.com/bug-bounty/optimism/information/
+46.  Immunefi. (2024). *Optimism Bug Bounty Program*. Retrieved from https://immunefi.com/bug-bounty/optimism/information/
+47. Dragan_ZzZ. (2024). *Upgrade Proposal #11: Holocene Network Upgrade.* Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-11-holocene-network-upgrade/9313
+48. OP Labs. (2024). *Holocene: System Configuration* OP Stack Specification. Retrieved from 
+https://specs.optimism.io/protocol/holocene/system-config.html
+49. 3DOC Security. (2024, October 3). *Audit Report - OP Cannon*. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/7719c8538b8d911519f861fc70085e7a3b4e6787/docs/security-reviews/2024_10-Cannon-FGETFD-3DocSecurity.md
