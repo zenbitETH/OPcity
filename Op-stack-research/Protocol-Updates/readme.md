@@ -1066,6 +1066,86 @@ Upgrade 13’s enhancements were qualitatively significant for security and gove
 
 - Upgrade deployed to OP Mainnet at 17:00 UTC. No sequencer or node software changes were required.
 
+# **Protocol Upgrade #14 & #15 – Isthmus upgrades**
+
+Protocol Upgrades #14 and #15, collectively known as the *Isthmus* upgrades, deliver foundational enhancements to Optimism's fault proof system. Upgrade #14 introduces the Multithreaded Cannon (MT-Cannon) Fault Proof VM, a 64-bit, multi-threaded emulator that replaces the prior 32-bit Cannon system, eliminating critical memory limitations and enabling significantly larger L2 block proofs. It also integrates an optional "Operator Fee" mechanism for future fee model flexibility[⁵⁷](https://gov.optimism.io/t/upgrade-proposal-14-isthmus-l1-contracts-mt-cannon/9796). Upgrade #15 activates these improvements through a network-wide hard fork and synchronizes Optimism with Ethereum’s Pectra upgrades, including support for new EIPs and block header fields[⁵⁸](https://gov.optimism.io/t/upgrade-proposal-15-isthmus-hard-fork/9804/1). Together, the Isthmus upgrades dramatically boost the OP Stack's scalability, performance, and readiness for a more decentralized and interoperable Superchain.
+
+## **Technical Features**[⁵⁷](https://gov.optimism.io/t/upgrade-proposal-14-isthmus-l1-contracts-mt-cannon/9796)**’**[⁵⁸](https://gov.optimism.io/t/upgrade-proposal-15-isthmus-hard-fork/9804/1)**’[⁵⁹](https://gov.optimism.io/t/proposal-preview-upgrading-the-cannon-fault-proof-vm-to-support-64-bit-and-multi-threading/9690)’[⁶⁰](https://specs.optimism.io/experimental/cannon-fault-proof-vm-mt.html)**
+
+1. **MT-Cannon Fault Proof VM**
+    
+    Replaces the 32-bit Cannon VM with a 64-bit MIPS architecture and supports cooperative multithreading, enabling better memory management (garbage collection, multi-threaded Go runtime) and lifting the 4GB memory cap on fault proof execution.
+    
+2. **Deterministic Thread Scheduler**
+    
+    Introduces round-robin thread scheduling within the VM to ensure consistent, traceable execution during fraud proofs while allowing internal Go threads to interleave without affecting external determinism.
+    
+3. **Expanded Syscall Safety**
+    
+    Unrecognized syscalls now halt execution (instead of silently continuing), enhancing predictability and debugging during proof evaluation.
+    
+4. **Preimage Oracle Bandwidth**
+    
+    Doubles the data read per VM step (8 bytes vs. 4), improving data access efficiency during proof replay.
+    
+5. **Operator Fee Framework**
+    
+    Adds L1 SystemConfig parameters to support future per-transaction fee models tailored to ZK-proof or Alt-DA rollups. Fee is disabled by default.
+    
+6. **L2 Withdrawals Root in Block Headers**
+    
+    Adds a Merkle root of L2-to-L1 withdrawals to L2 headers, improving output root reconstruction and enabling stateless client verification.
+    
+7. **Pectra EIPs Compatibility**
+    
+    Adopts Ethereum’s upcoming execution layer features (e.g. EIP-7702, EIP-2537) for transaction flexibility, cryptographic precompiles, and L2 developer readiness.
+    
+
+### **Impact on Fault Proofs**
+
+- MT-Cannon significantly increases execution capacity for dispute resolution by enabling 64-bit, parallel execution in the MIPS VM.
+- The Cannon64 prestate and dispute game logic updates are forward-compatible with zk-based enhancements.
+- These changes ensure OP Stack fault proofs can scale with user demand and Ethereum complexity, improving long-term decentralization.
+
+## **Metrics & Performance**[⁵⁷](https://gov.optimism.io/t/upgrade-proposal-14-isthmus-l1-contracts-mt-cannon/9796)**’**[⁵⁸](https://gov.optimism.io/t/upgrade-proposal-15-isthmus-hard-fork/9804/1)’[⁶¹](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_01-MT-Cannon-Spearbit.pdf)’[⁶²](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_01-MT-Cannon-Base.pdf)
+
+- **Scalability**
+    
+    MT-Cannon removes memory barriers to fraud proof size, allowing much larger blocks to be proven and unlocking higher L2 throughput.
+    
+- **Reliability**
+    
+    Garbage collection and cooperative threading avoid out-of-memory failures in large proofs. LL/SC instructions provide thread-safe concurrency.
+    
+- **Performance**
+    
+    Preimage reads are twice as fast. Optimized cryptographic precompiles (e.g. BLS12-381) ensure timely proof simulation of even complex Ethereum transactions.
+    
+- **Audit Results**
+    
+    Coinbase and Spearbit audits (Jan 2025) confirmed robustness with no critical issues. Remaining risks (e.g. livelocks, thread bugs) were mitigated via extensive testing and monitoring.
+    
+
+## Rollout Strategy[⁵⁷](https://gov.optimism.io/t/upgrade-proposal-14-isthmus-l1-contracts-mt-cannon/9796)**’**[⁵⁸](https://gov.optimism.io/t/upgrade-proposal-15-isthmus-hard-fork/9804/1)
+
+**March 2025 – Governance Forum Proposals and Review**
+
+- Upgrade Proposal #14 (Isthmus L1 Contracts + MT-Cannon) and Proposal #15 (Isthmus Hard Fork) were introduced in Voting Cycle #35. Proposal #15 was explicitly contingent on #14 passing.
+- Community preview posts were shared in late February 2025, with technical context provided by OP Labs, Base contributors, and members of the Developer Advisory Board.
+- During the forum discussion, governance delegates expressed broad support, highlighting the significance of MT-Cannon for performance and decentralization.
+
+**April 2025 – Governance Voting and Approval**
+
+- Both proposals were submitted for formal voting during Cycle #35 and passed with broad consensus.
+- Upgrade #14 was executed immediately after approval, deploying updated L1 contracts and off-chain fault proof components (e.g., SystemConfig, MIPS64.sol, op-program v1.5.1).
+- Challenger infrastructure was upgraded accordingly, but node software and consensus logic remained unchanged at this stage.
+
+**April–May 2025 – Deployment and Testing Phase**
+
+- The MT-Cannon system was deployed in a passive state, allowing integration with challenger services ahead of the L2 fork.
+- OP Labs conducted devnet and testnet trials, including testing Isthmus features against Pectra-compatible Ethereum devnets.
+- Sepolia L2 chains and OP Stack branches were updated with Cannon64 prestate and Isthmus specs for broader testing.
+
 
 # **References**
 
@@ -1121,8 +1201,14 @@ https://specs.optimism.io/protocol/holocene/system-config.html
 49. 3DOC Security. (2024, October 3). *Audit Report - OP Cannon*. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/7719c8538b8d911519f861fc70085e7a3b4e6787/docs/security-reviews/2024_10-Cannon-FGETFD-3DocSecurity.md
 50. Knee, G. (2025). *Upgrade Proposal #12: L1 Pectra Compatibility*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-12-l1-pectra-readiness/9706 
 51. Optimism. (2025) *Preparing for Pectra breaking changes.* Optimism Docs. Retrieved from https://docs.optimism.io/notices/pectra-changes
-52. Maurelian, Lewej, & Kelvin. (2025, March 7). *Upgrade Proposal #13: OPCM and Incident Response Improvements*. Optimism Governance Forum. https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739 
-53. Fichter, K. (2025, February 13). *Proposal Preview: Fault Proofs Incident Response Improvements*. Optimism Governance Forum. https://gov.optimism.io/t/proposal-preview-fault-proofs-incident-response-improvements/9659 
-54. Donnoh. (2025, January 29). *Stages update: A high-level guiding principle for Stage 1*. L2BEAT Forum. https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338 
-55. Offbeat Labs. (2025, January 24). *Optimism Incident Response Updates – Audit Report*. Optimism GitHub. https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_01-IRI-OffbeatLabs.pdf 
-56. Spearbit. (2025, March 5). *OP Stack Upgrade 13 – Security Audit Report*. Optimism GitHub. https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_02-Upgrade13-Spearbit.pdf
+52. Maurelian, Lewej, & Kelvin. (2025). *Upgrade Proposal #13: OPCM and Incident Response Improvements*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739 
+53. Fichter, K. (2025). *Proposal Preview: Fault Proofs Incident Response Improvements*. Optimism Governance Forum. Retrieved from  https://gov.optimism.io/t/proposal-preview-fault-proofs-incident-response-improvements/9659 
+54. Donnoh. (2025). *Stages update: A high-level guiding principle for Stage 1*. L2BEAT Forum. Retrieved from  https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338 
+55. Offbeat Labs. (2025). *Optimism Incident Response Updates – Audit Report*. Optimism GitHub. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_01-IRI-OffbeatLabs.pdf 
+56. Spearbit. (2025). *OP Stack Upgrade 13 – Security Audit Report*. Optimism GitHub. Retrieved from  https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_02-Upgrade13-Spearbit.pdf 
+57. 0xEscanor. (2025). *Upgrade Proposal #14: Isthmus L1 Contracts + MT-Cannon*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-14-isthmus-l1-contracts-mt-cannon/9796 
+58. 0xEscanor. (2025). *Upgrade Proposal #15: Isthmus Hard Fork*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-15-isthmus-hard-fork/9804/1 
+59. Dowman, P. (2025). *Proposal Preview: Upgrading the Cannon Fault Proof VM to support 64-bit and multi-threading*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/proposal-preview-upgrading-the-cannon-fault-proof-vm-to-support-64-bit-and-multi-threading/9690 
+60. Optimism. (2025). *OP Stack Specification – Multithreaded Cannon Fault Proof VM*. OP Stack Specs Repository. Retrieved from https://specs.optimism.io/experimental/cannon-fault-proof-vm-mt.html 
+61. Spearbit. (2025). *Security Audit Report: 64-bit Multithreaded Cannon (MIPS64.sol)*. Optimism Security Reviews. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_01-MT-Cannon-Spearbit.pdf 
+62. Coinbase. (2025). *Protocol Security Audit: Multi-thread & 64-bit Cannon*. Optimism Security Reviews. Retrieved from https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_01-MT-Cannon-Base.pdf
