@@ -1013,6 +1013,59 @@ April 2025 – Mainnet Readiness
 
 - By April 7, Optimism and all major OP Chains had completed their upgrades, ensuring readiness before Ethereum’s expected May 7, 2025 Pectra activation.
 
+# Protocol Upgrade #13: OPCM and Incident Response Improvements
+
+Protocol Upgrade #13 enhances the Optimism Collective's operational resilience through improved incident response, Guardian controls, and contract infrastructure. The upgrade strengthens the Optimism Chain Management Protocol (OPCM)[⁵²](https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739) and introduces new security mitigations in response to findings from Fault Proofs deployment[⁵³](https://gov.optimism.io/t/proposal-preview-fault-proofs-incident-response-improvements/9659) and the Stage 1 decentralization review. It aims to align the OP Stack with updated L2Beat[⁵⁴](https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338) expectations for decentralization maturity while improving emergency mitigation pathways and fallback mechanisms. The proposal was finalized on March 21, 2025, with mainnet deployment completed on April 10, 2025, following successful governance approval and pre-deployment testing.
+
+## Technical Features[⁵²](https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739)
+
+1. **OPCM Enhancements**
+    - Introduced new `OPChainManager` and `OPChainManagerV2` contracts, standardizing chain metadata (chainId, name, guardian, chainType, etc.) across the Superchain.
+    - Enabled chain-specific Guardian roles, allowing fine-grained emergency control without centralization.
+    - Facilitated permissionless OP Chain registration via `OPChainManagerV2`, including safe transition and configuration.
+2. **Improved Incident Response Mechanisms**
+    - Implemented a new `op-incident-response` repository to coordinate emergency actions and safeguard procedures across OP Chains.
+    - Incorporated formal Guardian documentation in each OP Chain's metadata, ensuring validators and developers have reference points in case of emergencies.
+    - Added fallback logic in the `op-program` and supporting infra, enabling more graceful behavior under emergency overrides.
+3. **Guardian Configuration Upgrades**
+    - Chain-specific Guardian addresses can now be registered or updated through the `OPChainManager`, supporting decentralization.
+    - Improved communication standards between Guardians, node operators, and core developers during mitigation events.
+4. **Contract & Infrastructure Upgrades**
+    - Deployed new OPCM and OPChainManager contracts with updated system roles and L1 ↔ L2 references.
+    - Aligned with current `SystemConfig` and `SuperchainConfig` standards.
+    - Standardized emergency pause mechanisms across bridge and messaging contracts using Guardian flags.
+
+## Metrics & Performance[⁵²](https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739)‘[⁵⁵](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_01-IRI-OffbeatLabs.pdf)’[⁵⁶](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_02-Upgrade13-Spearbit.pdf)
+
+Upgrade 13’s enhancements were qualitatively significant for security and governance, although they did not impact routine network throughput or costs. Security assessments by Offbeat Labs and Spearbit found no critical or high-severity issues. Minor findings were resolved before deployment, including:
+
+- Guardian role documentation inconsistencies (Offbeat 2.1)
+- Missing input validation in `OPChainManager` (Spearbit M-02)
+- Reentrancy and privilege edge cases (Spearbit M-03, L-02)
+
+## Rollout Strategy[⁵²](https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739)
+
+**March 21, 2025 – Proposal Finalization**
+
+- Upgrade Proposal #13 was posted to the Optimism Governance Forum for community review.
+
+**March 24, 2025 – Governance Voting Initiation**
+
+- Token House vote launched as part of Voting Cycle #26a.
+
+**April 3, 2025 – Governance Approval**
+
+- The proposal passed the Token House vote with broad support. No vetoes were issued during the Citizens' House period.
+
+**April 4–9, 2025 – Coordination and Client Preparation**
+
+- Node operators and Superchain partners were notified of contract addresses, including:
+    - `OPChainManagerV2`: 0x00000000000000000000000000000000004f5543
+
+**April 10, 2025 – Mainnet Activation**
+
+- Upgrade deployed to OP Mainnet at 17:00 UTC. No sequencer or node software changes were required.
+
 
 # **References**
 
