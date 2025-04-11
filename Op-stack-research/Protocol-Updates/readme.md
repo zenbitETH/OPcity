@@ -1121,3 +1121,8 @@ https://specs.optimism.io/protocol/holocene/system-config.html
 49. 3DOC Security. (2024, October 3). *Audit Report - OP Cannon*. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/7719c8538b8d911519f861fc70085e7a3b4e6787/docs/security-reviews/2024_10-Cannon-FGETFD-3DocSecurity.md
 50. Knee, G. (2025). *Upgrade Proposal #12: L1 Pectra Compatibility*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-12-l1-pectra-readiness/9706 
 51. Optimism. (2025) *Preparing for Pectra breaking changes.* Optimism Docs. Retrieved from https://docs.optimism.io/notices/pectra-changes
+52. Maurelian, Lewej, & Kelvin. (2025, March 7). *Upgrade Proposal #13: OPCM and Incident Response Improvements*. Optimism Governance Forum. https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739 
+53. Fichter, K. (2025, February 13). *Proposal Preview: Fault Proofs Incident Response Improvements*. Optimism Governance Forum. https://gov.optimism.io/t/proposal-preview-fault-proofs-incident-response-improvements/9659 
+54. Donnoh. (2025, January 29). *Stages update: A high-level guiding principle for Stage 1*. L2BEAT Forum. https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338 
+55. Offbeat Labs. (2025, January 24). *Optimism Incident Response Updates – Audit Report*. Optimism GitHub. https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_01-IRI-OffbeatLabs.pdf 
+56. Spearbit. (2025, March 5). *OP Stack Upgrade 13 – Security Audit Report*. Optimism GitHub. https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2025_02-Upgrade13-Spearbit.pdf
