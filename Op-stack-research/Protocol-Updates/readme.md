@@ -969,6 +969,50 @@ This upgrade was co-developed by OP Labs and Base contributors and focuses on si
     
     Adopted by Base (co-developer), Soneium (Feb 3), and Boba Network (Feb 5). Node and contract upgrade instructions standardized across OP Stack chains.
 
+# Protocol Upgrade #12: L1 Pectra Readiness
+
+**Protocol Upgrade #12 – L1 Pectra Readiness** ensures compatibility between the OP Stack (including Optimism Mainnet and Superchain OP chains) and Ethereum’s upcoming **Pectra hardfork**, which includes Prague (execution layer) and Electra (consensus layer) upgrades. Without this upgrade, OP Stack chains could encounter critical failures due to new L1 transaction formats and header fields introduced by Pectra. Upgrade #12 applies node software updates, system configuration changes, and fault proof adjustments to support Pectra, maintaining uninterrupted operation and Ethereum equivalence. The rollout began in **February 2025** with testing and culminated in full client and contract upgrades across all major OP Chains by **April 7, 2025**, ahead of Ethereum’s expected **May 7, 2025** Pectra activation[⁵⁰](https://gov.optimism.io/t/upgrade-proposal-12-l1-pectra-readiness/9706).
+
+## Technical Features[⁵⁰](https://gov.optimism.io/t/upgrade-proposal-12-l1-pectra-readiness/9706)’[⁵¹](https://docs.optimism.io/notices/pectra-changes)
+
+1. **Support for EIP-7702 (SetCode Transactions)**
+    - Introduced in Pectra, EIP-7702 allows externally owned accounts (EOAs) to include contract code within a single transaction. OP Stack derivation logic was updated to recognize and skip this new transaction type to prevent derivation errors or halts.
+2. **Support for EIP-7685 (Block Header Extension)**
+    - The Pectra fork adds a new `requestsHash` field to execution layer block headers. OP Stack components (notably `op-node`) were updated to correctly parse this field during L1 block verification.
+3. **Updated OP Stack Clients**
+    - `op-geth v1.101503` and `op-node v1.12.0` integrate upstream Ethereum changes, including Pectra transaction and block logic. This ensures OP Stack clients continue to process post-fork L1 data safely.
+4. **Fault Proof Compatibility Updates**
+    - A new Cannon `absolute prestate` was created using `op-program v1.5.0`, incorporating Pectra changes. New `FaultDisputeGame` and `PermissionedDisputeGame` contracts were deployed across Optimism and Superchain OP chains with updated prestate hashes and logic.
+5. **Fee Calculation Bug Fix**
+    - A bug in L1 blob fee calculations (still using pre-Pectra constants) was corrected to avoid L2 overcharging or unexpected halts post-fork.
+6. **No Change to Chain Parameters**
+    - No user-facing features or governance parameters were changed. The upgrade is fully backwards-compatible and charter-compliant.
+
+## Metrics & Performance[⁵⁰](https://gov.optimism.io/t/upgrade-proposal-12-l1-pectra-readiness/9706)’[⁵¹](https://docs.optimism.io/notices/pectra-changes)
+
+- **No Performance Impact:** Transaction throughput, latency, and gas costs remain unchanged. The upgrade is designed solely for L1 compatibility.
+- **Improved Stability:** Fixes to blob fee calculation prevent overcharging and potential liveness issues under high L1 base fees.
+- **Fault Proof Continuity:** Updated Cannon prestate and op-challenger v1.3.2 ensure continued validity of fraud proofs after L1 changes.
+- **Successful Testnet Results:** Sepolia and Holesky testnets demonstrated uninterrupted operation after their respective Pectra activations with upgraded nodes.
+
+## Rollout Strategy[⁵⁰](https://gov.optimism.io/t/upgrade-proposal-12-l1-pectra-readiness/9706)
+
+February–March 2025 – Specification Finalization and Testing
+
+- OP Labs tracked Ethereum’s finalized Pectra EIPs and tested changes across devnets and Holesky.
+
+March 11, 2025 – Client Release and Documentation
+
+- Published `op-geth v1.101503.0` and `op-node v1.12.0`. Upgraded documentation and governance proposal shared with node operators and Superchain partners.
+
+March–April 2025 – Superchain Coordination
+
+- Base, Zora, and other OP Chains upgraded clients and Cannon contracts using the new prestate. Some chains paused sequencers briefly for coordinated deployments.
+
+April 2025 – Mainnet Readiness
+
+- By April 7, Optimism and all major OP Chains had completed their upgrades, ensuring readiness before Ethereum’s expected May 7, 2025 Pectra activation.
+
 
 # **References**
 
@@ -1022,3 +1066,5 @@ This upgrade was co-developed by OP Labs and Base contributors and focuses on si
 48. OP Labs. (2024). *Holocene: System Configuration* OP Stack Specification. Retrieved from 
 https://specs.optimism.io/protocol/holocene/system-config.html
 49. 3DOC Security. (2024, October 3). *Audit Report - OP Cannon*. Optimism Github. Retrieved from https://github.com/ethereum-optimism/optimism/blob/7719c8538b8d911519f861fc70085e7a3b4e6787/docs/security-reviews/2024_10-Cannon-FGETFD-3DocSecurity.md
+50. Knee, G. (2025). *Upgrade Proposal #12: L1 Pectra Compatibility*. Optimism Governance Forum. Retrieved from https://gov.optimism.io/t/upgrade-proposal-12-l1-pectra-readiness/9706 
+51. Optimism. (2025) *Preparing for Pectra breaking changes.* Optimism Docs. Retrieved from https://docs.optimism.io/notices/pectra-changes
