@@ -96,6 +96,18 @@ Finally, **Protocol Upgrade #15: Isthmus** completed the transition by activatin
   <img src="./img/PUOPstack.png" alt="Evolution of the OP stack">
 </figure>
 
+### **Evolution of the Fault-Proof Mechanism**
+
+A critical component of the OP Stack’s security model is its **fault-proof mechanism**, which ensures the validity of Layer 2 state transitions through fraud detection rather than pre-execution verification. The initial implementation featured a monolithic **Cannon-based fault proof system**, which was later restructured to enhance modularity and reduce reliance on Optimism-specific execution logic.
+
+Key developments in fault proofs include:
+
+- **Cannon's Optimized Proof System**: Introduced an approach where the execution client compiles directly into the proof system, simplifying the verification process[⁵](https://specs.optimism.io/fault-proof/cannon-fault-proof-vm.html).
+- **Multi-Client Fault Proofs**: A strategic shift toward supporting multiple fault-proof implementations, increasing security resilience and minimizing the risks of single-client reliance[⁶](https://gov.optimism.io/t/final-protocol-upgrade-7-fault-proofs/8161).
+- **Introduction of Stage 1 Decentralization**: The **Guardian** upgrade improved security council threshold mechanisms, decentralizing the governance of fault proofs[⁷](https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157).
+- **Settlement Layer Refinement**: Modular proof verification was introduced, allowing future upgrades to transition toward **ZK-enabled rollups** without disrupting OP Stack’s core execution model[⁸](https://www.youtube.com/watch?v=jnVjhp41pcc).
+- **Modular Fraud Proofs Architecture**: A long-term goal of OP Stack fault proofs is **modular dispute resolution**, allowing new execution clients to integrate their own fraud-proof mechanisms
+
 # Milestone 1: Fault Proofs mechanisms research
 
 Fault proofs are a foundational component of optimistic rollups, enabling trustless verification of off-chain state transitions. As the OP Stack advances toward greater decentralization and modularity, the architecture and implementation of fault proof mechanisms have evolved significantly. This milestone documents our research into the key architectures shaping this landscape—beginning with Optimism’s default Canon FPVM, and expanding into cutting-edge systems like opML, oppAI, and Cartesi’s DAVE. Each mechanism offers unique trade-offs between performance, verifiability, and scalability, collectively enriching the design space for secure and efficient Layer 2 systems.
