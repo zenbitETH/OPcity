@@ -28,14 +28,12 @@ The culmination of these early experiments arrived with the **Bedrock Upgrade** 
 *From Optimism Collective Mirror*
 
 ## OP stack protocol upgrades
-
+*All referenced documents are available in our open repository for transparency and further review:* 🔗 [OP Stack Protocol Upgrades Review – Zenbit GitHub](https://github.com/zenbitETH/OPcity/tree/main/Op-stack-research/Protocol-Updates)
 Since the formalization of the OP Stack, the protocol has undergone **15 official upgrades**, ranging from foundational architectural transitions to fine-grained feature releases across the OP Stack’s modular layers. Our review spanned **62 curated sources**, including governance forum proposals, developer documentation, audit reports, and OP Stack specification entries. These materials were analyzed to trace the evolution of the OP Stack’s dispute system—from the launch of permissionless Cannon-based fault proofs in Protocol Upgrade #7, to the infrastructure pre-requisites for multi-threaded MIPS64 fault games in Upgrades #14 and #15. Sources such as governance threads, public audit reports, and design documents not only clarified technical intent, but also allowed us to assess how each upgrade contributed to meeting **Stage 1 decentralization criteria** from the L2BEAT framework.
 
 Through this analysis, we identified **13 upgrades** with direct impact on the **settlement layer**,  including **7 upgrades** that significantly advanced the **fault proof system** —transforming it from a trusted fallback into a fully modular, permissionless verification layer.
 
-*All referenced documents are available in our open repository for transparency and further review:*
 
-🔗 [OP Stack Protocol Upgrades Review – Zenbit GitHub](https://github.com/zenbitETH/OPcity/tree/main/Op-stack-research/Protocol-Updates)
 
 | Protocol Upgrade | Testnet Release Date | Mainnet Release Date | Upgrade Proposal ID | OP Gov Author | Author Affiliation | GH PR | OP Gov Voting | Audit Reports |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -114,7 +112,7 @@ Fault proofs are a foundational component of optimistic rollups, enabling trustl
 
 *All referenced documents are available in our open repository for transparency and further review:*
 
-🔗 [FP research reports – Zenbit GitHub](https://github.com/zenbitETH/OPcity/tree/812bf40acc013b60b96fd54c3b3a2c932104e8ba/research-reports)
+🔗 [FP research reports – Zenbit GitHub](https://github.com/zenbitETH/OPcity/tree/main/FPVM-Research)
 
 ## **Optimism's Fault Proofs & Canon FPVM**
 

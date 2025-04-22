@@ -1,4 +1,5 @@
 # Milestone 2: FPVM Comparative Analysis
+All referenced documents are available in our open repository for transparency and further review: 🔗 FP research reports – Zenbit GitHub
 
 Originally titled **“2. Research on oppAI compatibility with the OP Stack,”** this milestone was later renamed to **“2. FPVM Comparative Analysis”** to better reflect the broader scope of our investigation. While the initial focus centered on **oppAI** and **opML**, our research expanded to include a full evaluation of **Optimism’s Canon FPVM** and **Cartesi’s DAVE**—both foundational and alternative approaches to fault proof architecture. This milestone presents a structured comparison of these four mechanisms, each tackling a different facet of the fault proof challenge, from deterministic execution and computational efficiency to privacy-preserving inference and decentralized dispute resolution.
 
