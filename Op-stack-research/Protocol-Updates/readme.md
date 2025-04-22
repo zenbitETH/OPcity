@@ -1,23 +1,29 @@
-# 0. OP Stack Protocol Updates
+# 1. OP Stack Protocol Updates
 
-| Protocol Upgrade | Upgrade Type | Testnet Release Date | Mainnet Release Date | OP Prop ID | OP Gov Author | Author Affiliation | GH PR | OP Gov Voting |
-|-----------------------|--------------|----------------------|----------------------|------------|---------------|--------------------|-------|---------------|
-| [**OP Stack Announcement**](https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs) |  | October 17, 2022 |  |  |  |  |  |  |
-| [**Bedrock**](https://optimism.mirror.xyz/gFyEzwAeJQxqVunjlx5s5oEQHuUKbIy6BXzcCsh8qXs) |  |  | January 6, 2023 |  |  |  |  |  |
-| [**Regolith**]() | Hard Fork |  | March 17, 2023 | [**Upgrade #1**](https://gov.optimism.io/t/final-upgrade-1-bedrock-protocol-upgrade-v2/5548) | [ben-chain](https://gov.optimism.io/u/ben-chain) | `Optimism Foundation` | [#5010](https://github.com/ethereum-optimism/optimism/pull/5010) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/114732572201709734114347859370226754519763657304898989580338326275038680037913) |
-| [**Canyon**]() | Network Upgrade | November 14, 2023 | January 11, 2024 | [**Upgrade Proposal #2**](https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088) | [triangleshere](https://gov.optimism.io/u/trianglesphere/summary) | `OP Labs` | [#8569](https://github.com/ethereum-optimism/optimism/pull/8569) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/20327152654308054166942093105443920402082671769027198649343468266910325783863) |
-| [**Delta**]() | Hard Fork | December 22, 2023 | February 22, 2024 | [**Upgrade Proposal #3**](https://gov.optimism.io/t/final-upgrade-proposal-3-delta-network-upgrade/7310) | [testinprod_io](https://gov.optimism.io/u/testinprod_io) | `Test in Prod` | [#7454](https://github.com/ethereum-optimism/optimism/pull/7454) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/64861580915106728278960188313654044018229192803489945934331754023009986585740) |
-| [**Superchain Config**]() | Contracts Upgrade | January 19, 2024 |  | [**Upgrade Proposal #4**](https://gov.optimism.io/t/upgrade-proposal-4/7534) | [maurelian](https://gov.optimism.io/u/maurelian) | `OP Labs` | [#9109](https://github.com/ethereum-optimism/optimism/pull/9109) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/110376471005925230990107796624328147348746431603727026291575353089698990280147) |
-| [**Ecotone**]() | Hard Fork | February 21, 2024 | March 14, 2024 | [**Upgrade Proposal #5**](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669) | [bayardo](https://gov.optimism.io/u/bayardo) | `Base` | [#9695](https://github.com/ethereum-optimism/optimism/pull/9695) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/95119698597711750186734377984697814101707190887694311194110013874163880701970) |
-| [**Multi-Chain Prep (MCP) L1**]() | Contracts Upgrade | January 19, 2024 |  | [**Upgrade Proposal #6**](https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677) | [Diego](https://gov.optimism.io/u/Diego) | `OP Labs` | [#9476](https://github.com/ethereum-optimism/optimism/pull/9476) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/47253113366919812831791422571513347073374828501432502648295761953879525315523) |
-| [**Fault Proofs**]() | Protocol Upgrade, Contracts Upgrade | May 15, 2024 |  | [**Protocol Upgrade #7**](https://gov.optimism.io/t/final-protocol-upgrade-7-fault-proofs/8161) | [ajustton](https://gov.optimism.io/u/ajsutton/summary) | `OP Labs` | [#10544](https://github.com/ethereum-optimism/optimism/pull/10544) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/72085170435228531173144599119267762084652443676555508407874836206178427511368) |
-| [**Guardian**]() | Contracts Upgrade | May 22, 2024 |  | [**Protocol Upgrade #8**](https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157) | [maurelian](https://gov.optimism.io/u/maurelian) | `OP Labs` | [#10616](https://github.com/ethereum-optimism/optimism/pull/10616) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/89250535338859095270968116984279971013811713632639468811376241520756760598962) |
-| [**Fjord**]() | Hard Fork | May 29, 2024 | July 10, 2024 | [**Protocol Upgrade #9**](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236) | [bayardo](https://gov.optimism.io/u/bayardo) | `Base` | [#10735](https://github.com/ethereum-optimism/optimism/pull/10735) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/19894803675554157870919000647998468859257602050917884642551010462863037711179) |
-| [**Granite**]() | Contracts Upgrade, Hard Fork | August 12, 2024 | September 11, 2024 | [**Protocol Upgrade #10**](https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733) | [inphi](https://gov.optimism.io/u/inphi/summary) | `OP Labs` | [#11531](https://github.com/ethereum-optimism/optimism/pull/11531) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/46514799174839131952937755475635933411907395382311347042580299316635260952272) |
-| [**Holocene**]() | Hard Fork | November 26, 2024 | January 9, 2025 | [**Upgrade Proposal #11**](https://gov.optimism.io/t/upgrade-proposal-11-holocene-network-upgrade/9313) | [Dragan_ZzZ](https://gov.optimism.io/u/Dragan_ZzZ/summary) | `OP Labs` | [#13334](https://github.com/ethereum-optimism/optimism/pull/13334) | [✅ Proposal succeeded](https://vote.optimism.io/proposals/20127877429053636874064552098716749508236019236440427814457915785398876262515) |
-| **Isthmus** |  |  |  |  |  |  |  |  |
+| Protocol Upgrade | Testnet Release Date | Mainnet Release Date | Upgrade Proposal ID | OP Gov Author | Author Affiliation | GH PR | OP Gov Voting | Audit Reports|
+|------------------|----------------------|----------------------|----------------------|---------------|--------------------|-------|---------------|--------------|
+| [**UNIPIG Plasma**](#-op-stack-background) |  | Oct 2019 |  |  |  |  |  |  |
+| [**SNX**](#-op-stack-background) |  | Sep 2020 |  |  |  |  |  |  |
+| [**Mainnet launch**](#-op-stack-background) |  | Jan 2021 |  |  |  |  |  |  |
+| [**OVM (EVM Equivalence)**](#-op-stack-background) |  | Oct 2022 |  |  |  |  |  | [Open Zeppelin 🔗](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2021_03-OVM_and_Rollup-OpenZeppelin.pdf) |
+| [**Bedrock**](#bedrock) |  | Jan 2023 |  |  |  |  |  | |
+| [**Regolith**](#protocol-upgrade1-regolith) |  | Mar 2023 | [**UP #1** 🔗](https://gov.optimism.io/t/final-upgrade-1-bedrock-protocol-upgrade-v2/5548) | [ben-chain](https://gov.optimism.io/u/ben-chain) | `OP Foundation` | [#5010](https://github.com/ethereum-optimism/optimism/pull/5010) | [✅ Succeeded](https://vote.optimism.io/proposals/114732572201709734114347859370226754519763657304898989580338326275038680037913) |  |
+| [**Canyon**](#protocol-upgrade-2-canyon) | Nov 2023 | Jan 2024 | [**UP #2** 🔗](https://gov.optimism.io/t/final-upgrade-proposal-2-canyon-network-upgrade/7088) | [triangleshere](https://gov.optimism.io/u/trianglesphere/summary) | `OP Labs` | [#8569](https://github.com/ethereum-optimism/optimism/pull/8569) | [✅ Succeeded](https://vote.optimism.io/proposals/20327152654308054166942093105443920402082671769027198649343468266910325783863) |  |
+| [**Delta**](#protocol-upgrade-3-delta) | Dec 2023 | Feb 22, 2024 | [**UP #3** 🔗](https://gov.optimism.io/t/final-upgrade-proposal-3-delta-network-upgrade/7310) | [testinprod_io](https://gov.optimism.io/u/testinprod_io) | `Test in Prod` | [#7454](https://github.com/ethereum-optimism/optimism/pull/7454) | [✅ Succeeded](https://vote.optimism.io/proposals/64861580915106728278960188313654044018229192803489945934331754023009986585740) |  |
+| [**Superchain Config**](#protocol-upgrade-4-superchain-config) | Jan 2024 |  | [**UP #4** 🔗](https://gov.optimism.io/t/upgrade-proposal-4/7534) | [maurelian](https://gov.optimism.io/u/maurelian) | `OP Labs` | [#9109](https://github.com/ethereum-optimism/optimism/pull/9109) | [✅ Succeeded](https://vote.optimism.io/proposals/110376471005925230990107796624328147348746431603727026291575353089698990280147) | [Trust Security 🔗](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2023_12_SuperchainConfigUpgrade_Trust.pdf) |
+| [**Ecotone**](#protocol-upgrade-5-ecotone)| Feb 2024 | Mar 2024 | [**UP #5** 🔗](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669) | [bayardo](https://gov.optimism.io/u/bayardo) | `Base` | [#9695](https://github.com/ethereum-optimism/optimism/pull/9695) | [✅ Succeeded](https://vote.optimism.io/proposals/95119698597711750186734377984697814101707190887694311194110013874163880701970) |  |
+| [**Multi-Chain Prep (MCP) L1**](#protocol-upgrade-6-multi-chain-prep-mcp-l1) | Jan 2024 |  | [**UP #6** 🔗](https://gov.optimism.io/t/upgrade-proposal-6-multi-chain-prep-mcp-l1/7677) | [Diego](https://gov.optimism.io/u/Diego) | `OP Labs` | [#9476](https://github.com/ethereum-optimism/optimism/pull/9476) | [✅ Succeeded](https://vote.optimism.io/proposals/47253113366919812831791422571513347073374828501432502648295761953879525315523) | [Cantina 🔗](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_02-MCP_L1-Cantina.pdf) |
+| [**Fault Proofs**](#protocol-upgrade-7-fault-proofs) | May 2024 | Jun 2024 | [**UP #7** 🔗](https://gov.optimism.io/t/final-protocol-upgrade-7-fault-proofs/8161) | [ajustton](https://gov.optimism.io/u/ajsutton/summary) | `OP Labs` | [#10544](https://github.com/ethereum-optimism/optimism/pull/10544) | [✅ Succeeded](https://vote.optimism.io/proposals/72085170435228531173144599119267762084652443676555508407874836206178427511368) | [1 🔗](https://audits.sherlock.xyz/contests/205?filter=questions) / [2 🔗](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_05-FaultProofs-Sherlock.pdf)|
+| [**Guardian**](#protocol-upgrade-8-guardian) | May 2024 | Jun 2024 | [**UP #8** 🔗](https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157) | [maurelian](https://gov.optimism.io/u/maurelian) | `OP Labs` | [#10616](https://github.com/ethereum-optimism/optimism/pull/10616) | [✅ Succeeded](https://vote.optimism.io/proposals/89250535338859095270968116984279971013811713632639468811376241520756760598962) | [Cantina 🔗](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_05_SafeLivenessExtensions-Cantina.pdf) |
+| [**Fjord**](#protocol-upgrade-9-fjord) | May 2024 | Jul 2024 |[**UP #9** 🔗](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236) | [bayardo](https://gov.optimism.io/u/bayardo) | `Base` | [#10735](https://github.com/ethereum-optimism/optimism/pull/10735) | [✅ Succeeded](https://vote.optimism.io/proposals/19894803675554157870919000647998468859257602050917884642551010462863037711179) |  |
+| [**Granite**](#protocol-upgrade-10-granite) | Aug 2024 | Sep 2024 | [**UP #10** 🔗](https://gov.optimism.io/t/upgrade-proposal-10-granite-network-upgrade/8733) | [inphi](https://gov.optimism.io/u/inphi/summary) | `OP Labs` | [#11531](https://github.com/ethereum-optimism/optimism/pull/11531) | [✅ Succeeded](https://vote.optimism.io/proposals/46514799174839131952937755475635933411907395382311347042580299316635260952272) | [1 🔗](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf) / [2 🔗](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-MIPS_Cantina.pdf) / [3 🔗](https://github.com/code-423n4/2024-07-optimism-findings) / [4 🔗](https://immunefi.com/bug-bounty/optimism/information/)|
+| [**Holocene**](#protocol-upgrade-11-holocene) | Nov 2024 | Jan 2025 | [**UP #11** 🔗](https://gov.optimism.io/t/upgrade-proposal-11-holocene-network-upgrade/9313) | [Dragan_ZzZ](https://gov.optimism.io/u/Dragan_ZzZ/summary) | `OP Labs` | [#13334](https://github.com/ethereum-optimism/optimism/pull/13334) | [✅ Succeeded](https://vote.optimism.io/proposals/20127877429053636874064552098716749508236019236440427814457915785398876262515) | [3DOC 🔗](https://github.com/ethereum-optimism/optimism/blob/7719c8538b8d911519f861fc70085e7a3b4e6787/docs/security-reviews/2024_10-Cannon-FGETFD-3DocSecurity.md) |
+| [**L1 Pectra Readiness**](#protocol-upgrade-12-l1-pectra-readiness) | Feb 2025 | Apr 2025 | [**UP #12** 🔗](https://gov.optimism.io/t/upgrade-proposal-12-l1-pectra-readiness/9706) | geoknee | `OP Labs` | [#13958](https://github.com/ethereum-optimism/optimism/pull/13958) | [✅ Succeeded](https://vote.optimism.io/proposals/38506287861710446593663598830868940900144818754960277981092485594195671514829) |  |
+| [**OPCM & ICI**](#protocol-upgrade-12-l1-pectra-readiness) |  | Apr 2025 | [**UP #13** 🔗](https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739) | [maurelian](https://gov.optimism.io/u/maurelian) | `OP Labs` | [#14858](https://github.com/ethereum-optimism/optimism/pull/14858) | [✅ Succeeded](https://vote.optimism.io/proposals/84511922734478887667300419900648701566511387783615524992018614345859900443455) |  |
+| [**Isthmus L1 Contracts + MT-Cannon**](#protocol-upgrade-12-l1-pectra-readiness) | Apr 2025 | ~May 2025  | [**UP #14** 🔗](https://gov.optimism.io/t/upgrade-proposal-14-isthmus-l1-contracts-mt-cannon/9796) | [0xEscanor](https://gov.optimism.io/u/0xescanor/summary) | `OP Labs` | [#15363](https://github.com/ethereum-optimism/optimism/pull/15363) | [✅ Succeeded]() |  |
+| [**Isthmus**](#protocol-upgrade-12-l1-pectra-readiness) |  Apr 2025 | ~May 2025 | [**UP #15** 🔗](https://gov.optimism.io/t/upgrade-proposal-15-isthmus-hard-fork/9804) | [0xEscanor](https://gov.optimism.io/u/0xescanor/summary) | `OP Labs` | [#15363](https://github.com/ethereum-optimism/optimism/pull/15363) | [✅ Succeeded]() |  |
 
-# **1. Background: The Evolution of the OP Stack**
+## ** OP Stack Background**
 
 The OP Stack is a modular, Ethereum-aligned framework for scaling blockchain ecosystems, developed as part of Optimism’s mission to enhance Layer 2 scalability while maintaining Ethereum’s security and decentralization. Its origins trace back to the **Plasma Group**, a research collective that initially focused on Plasma-based solutions before transitioning to **Optimistic Rollups** due to Plasma's data availability and exit game limitations[¹](https://plasma.build/t/rollup-plasma-for-mass-exits-complex-disputes/90). The shift towards rollups culminated in the **Optimistic Virtual Machine (OVM)**, a precursor to today’s OP Stack architecture, enabling general-purpose smart contract execution on Layer 2 while leveraging Ethereum’s security[²](https://medium.com/plasma-group/ethereum-smart-contracts-in-l2-optimistic-rollup-2c1cef2ec537).
 
@@ -35,54 +41,23 @@ Before the formalization of the OP Stack, key **scalability and efficiency chall
     - Introduced **Layer 2 smart contract execution**, reducing reliance on Ethereum L1.
     - **Gas efficiency:** Transactions were processed **at 1/10th the cost of L1**.
     - **Latency improvements:** Reduced finalization time compared to Ethereum’s average block time.
-- **Mainnet Launch (Jan 2021 - OVM Era)**:
+- **Mainnet Launch (Jan 2021)**:
     - **Initial deployment:** Utilized a **custom Solidity transpiler**, introducing inefficiencies.
     - **Complexity challenge:** Large code footprint (~25,000+ custom lines), making upgrades cumbersome.
     - **State transition costs:** Higher than anticipated due to transpiler overhead.
-- **EVM Equivalence Upgrade (Oct 2021 - OVM)**:
+- **EVM Equivalence Upgrade (Oct 2021)**:
     - Removed the need for Solidity transpilers, achieving **full Ethereum compatibility**.
     - **Execution efficiency:** Reduced codebase complexity by aligning with Ethereum’s standard execution model.
     - **Throughput:** Improved to **~100 TPS**, setting the stage for further optimizations.
-- **Open Mainnet (Dec 2021 - OVM)**:
-    - Allowed **public smart contract deployment**, accelerating adoption and experimentation.
-    - **Developer adoption:** Marked the transition toward an **open ecosystem** for dApp developers.
 - **Bedrock Upgrade (2023)**:
     - Reduced the OP Stack’s **code complexity by 90%**, improving maintainability.
     - **Optimized gas costs**, making transactions **~30% cheaper**.
     - **Throughput:** Increased to **~450 TPS**, setting the foundation for future rollup scalability.
 
-## **OP Stack Evolution Timeline**
 
+# 2. Protocol Upgrades
 
-| Year  | Milestone                                    | Description |
-|-------|----------------------------------------------|-------------|
-| 2018  | **Plasma Group Founded**                    | Research nonprofit dedicated to scaling Ethereum via Plasma technology. |
-| 2019  | **Optimistic Rollups Introduced**           | Plasma limitations led to the development of the first Optimistic Rollup designs. |
-| Oct 2019  | **Unipig**                               | First Optimistic Rollup demo, developed with Uniswap to showcase transaction scalability. |
-| Sep 2020  | **SNX Testnet (OVM)**                   | Launched the first public testnet with Synthetix, testing Layer 2 smart contract interactions. |
-| Jan 2021  | **Mainnet Launch (OVM)**                | Optimism Layer 2 officially goes live on Ethereum mainnet with the OVM. |
-| Oct 2021  | **EVM Equivalence Upgrade (OVM)**       | Achieves full EVM compatibility, removing the need for Solidity transpilers. |
-| Dec 2021  | **Open Mainnet (OVM)**                  | Public deployment enabling any developer to deploy on Optimism. |
-| 2022  | **OP Stack Conceptualized**                 | Introduced as a modular blockchain framework separating execution, consensus, and settlement. |
-| 2023  | **Bedrock Upgrade Implemented**             | Reduced OP Stack code complexity, improved efficiency, and aligned with Ethereum Geth. |
-| 2024  | **Fault Proof Refinements & Superchain Expansion** | Introduction of modular fault proofs, Superchain network architecture, and expanded Layer 2 functionality. |
-
-
-### **Evolution of the Fault-Proof Mechanism**
-
-A critical component of the OP Stack’s security model is its **fault-proof mechanism**, which ensures the validity of Layer 2 state transitions through fraud detection rather than pre-execution verification. The initial implementation featured a monolithic **Cannon-based fault proof system**, which was later restructured to enhance modularity and reduce reliance on Optimism-specific execution logic.
-
-Key developments in fault proofs include:
-- **Cannon's Optimized Proof System**: Introduced an approach where the execution client compiles directly into the proof system, simplifying the verification process[⁵](https://specs.optimism.io/fault-proof/cannon-fault-proof-vm.html).
-- **Multi-Client Fault Proofs**: A strategic shift toward supporting multiple fault-proof implementations, increasing security resilience and minimizing the risks of single-client reliance[⁶](https://gov.optimism.io/t/final-protocol-upgrade-7-fault-proofs/8161).
-- **Introduction of Stage 1 Decentralization**: The **Guardian** upgrade improved security council threshold mechanisms, decentralizing the governance of fault proofs[⁷](https://gov.optimism.io/t/final-protocol-upgrade-8-guardian-security-council-threshold-and-l2-proxyadmin-ownership-changes-for-stage-1-decentralization/8157).
-- **Settlement Layer Refinement**: Modular proof verification was introduced, allowing future upgrades to transition toward **ZK-enabled rollups** without disrupting OP Stack’s core execution model[⁸](https://www.youtube.com/watch?v=jnVjhp41pcc).
-- **Modular Fraud Proofs Architecture**: A long-term goal of OP Stack fault proofs is **modular dispute resolution**, allowing new execution clients to integrate their own fraud-proof implementations efficiently[⁹](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/823).
-
----
-
-
-# 2. Upgrade process
+## Upgrade Process
 
 The upgrade process for the OP Stack and its Superchain ecosystem is designed to ensure smooth transitions across development, testing, and production environments. It involves three primary stages: **Devnet, Testnet, and Mainnet**. Each stage includes specific steps to ensure the integrity and compatibility of the upgrade[¹⁰](https://docs.optimism.io/operators/node-operators/network-upgrades).
 
@@ -582,7 +557,7 @@ No **critical, high-risk, or medium-risk vulnerabilities** were reported.
     - **Citizens’ House Veto Period:** Provided an opportunity for stakeholders to contest the decision before execution.
     - **Mainnet Activation:** The upgrade was successfully deployed with no downtime or disruptions, marking a smooth transition to the new multi-chain framework.
 
-# Upgrade #7: Fault Proofs
+# Protocol Upgrade #7: Fault Proofs
 
 The **Fault Proofs Upgrade** (Upgrade #7) marks a significant milestone in Optimism’s decentralization roadmap, introducing **permissionless validation** and **interactive fraud-proof dispute resolution**. Prior to this, OP Mainnet relied on a **trusted proposer model**, where a privileged actor submitted L2 state roots to Ethereum. With this upgrade, any participant can propose state roots and challenge fraudulent claims, eliminating reliance on a single entity and enhancing security. The upgrade was deployed in multiple phases, starting with **testnet activation on March 19, 2024[²⁸](https://blog.oplabs.co/open-source-and-feature-complete-fault-proofs-bring-permissionless-validation-to-the-op-sepolia-testnet/)**, followed by **governance approval on May 29, 2024**, and **mainnet activation in early June 2024[²⁹](https://gov.optimism.io/t/upgrade-proposal-7-fault-proofs/8161)**.
 
