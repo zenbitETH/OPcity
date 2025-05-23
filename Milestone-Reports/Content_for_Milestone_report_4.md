@@ -203,5 +203,3 @@ Based on the analysis of the implemented code, both OPcity implementations offer
 3. **Integration Testing**: Further testing of integration with the OP-Stack would ensure compatibility and identify any potential issues.
 
 4. **Documentation**: Detailed documentation of the dispute resolution process and integration requirements would facilitate adoption.
-
-These realistic metrics suggest that the OPcity implementations represent interesting alternatives to the standard OP-Stack fault proof system, each with its own strengths and trade-offs. The Multi-Phase implementation offers potential efficiency gains for complex disputes, while the Tournament-based implementation provides a novel approach to multi-participant dispute resolution.
