@@ -1,11 +1,10 @@
 # Milestone 5: Social Media Updates
 
 **Onchain:**
-
 - **Farcaster**
-    1. [OPcity: Research Compilation thread](https://warpcast.com/zenbit/0xd12a80e0)
-    2. [OPcity Research Report thread](https://warpcast.com/zenbit/0x385b2889)
-    3. OPcity Development Report thread
+    1. [OPcity: Research Compilation thread](https://farcaster.xyz/zenbit/0xd12a80e0)
+    2. [OPcity Research Report thread](https://farcaster.xyz/zenbit/0x385b2889)
+    3. [OPcity Development Report thread](https://farcaster.xyz/zenbit/0xb2a33039)
 - **Mirror**
     1. [OPcity: Research Compilation](https://mirror.xyz/zenbit.eth/atHQ_Nz1--bQbY6Vx7NzYO-aOtXibcQi70aLl_WhTzY)
     2. [OPcity: Compilación de investigación](https://mirror.xyz/zenbit.eth/oVZ_sYHUjTh3GkT7iPthr4Gl_2B3gH3-Xc1tR3WNC9Y)
@@ -19,12 +18,11 @@
     4. [OPcity Tournament-based Fault Proofs](https://zora.co/coin/base:0xf0b7d8dc8f8bf12f0b76ff1272deebfc60458b56)
 
 **Off-chain:**
-
 - **X**
     1. [OPcity Research Compilation thread](https://x.com/zenbitMX/status/1831368112790499455)
     2. [OPcity Research Report thread](https://x.com/zenbitMX/status/1916202615257317745)
-    3. OPcity Development Report thread
+    3. [OPcity Development Report thread](https://x.com/zenbitMX/status/1926053048087908696)
 - **LinkedIn**
     1. [OPcity Research Compilation](https://www.linkedin.com/feed/update/urn:li:activity:7237136691143036928)
     2. [OPcity Research Report](https://www.linkedin.com/feed/update/urn:li:activity:7322734001515872256)
-    3. OPcity Development Report
+    3. [OPcity Development Report](https://www.linkedin.com/feed/update/urn:li:activity:7331861952660439041)
